@@ -15,22 +15,33 @@ select
   height:34px;
 }
 .top-content {
-  background-image: url("../../img/login.jpg");
   background-size: cover;
-  color: white;
+  background: grey url("../../img/books.jpg");
+  color: blue;
   height: auto;
   padding-bottom: 500px;
   width: 100%;
+}
+.col-sm-offset-2 {
+  margin-left: 2.667% !important;
 }
 .container {
   background-color: rgba(0, 0, 0, 0.5);
   height: auto;
   margin: 0 auto;
-padding-bottom: 71px;
+  padding-bottom: 71px;
   padding-top: 26px;
   width: 45%;
   font-family: Roboto;
- }
+}
+.col-sm-8 {
+  width: 65.667%;
+  height: 74px !important;
+}
+.row
+{
+  margin-left:2px ! important;
+}
 .form-top-left {
   color: white;
 }
@@ -61,15 +72,23 @@ padding-bottom: 71px;
   width: 500px!important;
 }
 .btn {
-  background-color: #f45e5e;
-  height: 44px;
-  width: 500px;
+  background-color: #1e89dd;
   color: white;
+  height: 45px;
+  width: 500px;
+  margin-top: 12px;
+  font-size:15px;
 }
 .col-sm-6.col-sm-offset-3.form-box {
   width: 500px !important;
   margin-left: 42px !important;
-
+}
+.col-sm-8.col-sm-offset-2.text > img {
+  float: right;
+  left: 82px;
+  position: relative;
+  top: -58px;
+  width: 60px;
 }
 .form-content
 {
@@ -77,9 +96,12 @@ padding-bottom: 71px;
   width: 92%;
 
 }
+.col-sm-offset-2 {
+  margin-left: 14.667% !important;
+}
 .special
 {
- margin-left:40px !important;
+  margin-left:40px !important;
 }
 .col-sm-6 {
   width: 94%;
