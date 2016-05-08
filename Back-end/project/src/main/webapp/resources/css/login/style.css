@@ -125,3 +125,7 @@ select
 .form-password.form-control {
   height: 34px!important;
 }
+
+.message{
+  color: #bc000e;
+}

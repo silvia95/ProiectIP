@@ -1,4 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -33,6 +35,10 @@
                     <div class="form-top">
                         <div class="form-top-left">
                             <h3>Login</h3>
+
+                            <c:if test="${not empty error}">
+                                <p class="message">${error}</p>
+                            </c:if>
                             <p>Introduceti adresa de email si parola:</p>
                         </div>
                         <div class="form-top-right">
@@ -40,19 +46,19 @@
                         </div>
                     </div>
                     <div class="form-bottom test">
-                        <form role="form" action="container.php" method="post" class="login-form">
+                        <form:form action="j_spring_security_check" method="post" modelAttribute="user">
                             <div class="form-group login-form">
-                                <label class="sr-only" for="form-username">Email:</label>
-                                <input type="email" name="form-username" placeholder="@info.uaic.ro..."
-                                       class="form-username form-control" id="form-username">
+                                <label class="sr-only" for="email">Email:</label>
+                                <form:input id="email" path="email" placeholder="@info.uaic.ro..."
+                                            class="form-username form-control"/>
                             </div>
                             <div class="form-group login-form">
-                                <label class="sr-only" for="form-password">Parola</label>
-                                <input type="password" name="form-password" placeholder="Password..."
-                                       class="form-password form-control" id="form-password">
+                                <label class="sr-only" for="password">Parola</label>
+                                <form:input id="password" path="password" placeholder="Password..." type="password"
+                                            class="form-password form-control"/>
                             </div>
-                            <button type="submit" class="btn">Logare</button>
-                            </form>
+                            <input type="submit" value="Logare" class="btn"/>
+                        </form:form>
                     </div>
                 </div>
             </div>
