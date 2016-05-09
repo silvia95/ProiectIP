@@ -2,8 +2,31 @@ package com.ip.mvc.entities.model.users;
 
 public class User {
 
+    private String userID;
     private String email;
     private String password;
+    private String firstname;
+    private String lastname;
+
+    public String getUserID() { return userID; }
+
+    public void setUserID(String userID) { this.userID = userID; }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
     public String getEmail() {
         return email;
@@ -19,5 +42,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
     }
 }

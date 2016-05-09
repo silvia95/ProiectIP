@@ -1,23 +1,39 @@
 package com.ip.mvc.entities.model.users;
 
-public abstract class Teacher {
+import java.util.ArrayList;
+import java.util.List;
 
-    private String firstname;
-    private String lastname;
+public class Teacher extends User {
 
-    public String getFirstname() {
-        return firstname;
+    private String type;
+    private List<String> departments = new ArrayList<String>();
+
+
+    public String getType() {
+        return type;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getLastname() {
-        return lastname;
+    public List<String> getDepartments() {
+        return departments;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setDepartments(List<String> departments) {
+        this.departments = departments;
+    }
+
+    public void addDepartment(String department) {
+        departments.add(department);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "type='" + type + '\'' +
+                ", departments=" + departments +
+                '}';
     }
 }

@@ -7,4 +7,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="profileService" name="profileService" class="com.ip.mvc.entities.services.ProfileService">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
 </beans>
