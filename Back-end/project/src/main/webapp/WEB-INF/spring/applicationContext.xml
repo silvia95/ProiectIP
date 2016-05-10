@@ -11,4 +11,12 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="myActivityService" name="myActivityService" class="com.ip.mvc.entities.services.MyActivityService">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="scientificActivityService" name="scientificActivityService" class="com.ip.mvc.entities.services.ScientificActivityService">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
 </beans>

@@ -43,7 +43,7 @@ public class ProfileService {
     public Teacher getTeacherInfo(String userID) {
         Teacher teacherInfo = new Teacher();
         try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT u.USER_ID, u.EMAIL, u.PASSWORD, u.FIRST_NAME, u.LAST_NAME, t.TYPE  FROM USERS u JOIN TEACHERS t ON u.EMAIL = t.EMAIL WHERE u.USER_ID = ?";
+            String query = "SELECT u.USER_ID, u.EMAIL, u.PASSWORD, t.FIRST_NAME, t.LAST_NAME, t.TYPE  FROM USERS u JOIN TEACHERS t ON u.EMAIL = t.EMAIL WHERE u.USER_ID = ?";
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, userID);
@@ -107,13 +107,13 @@ public class ProfileService {
             if (profileForm.getLastname().equals("")) profileForm.setLastname(teacher.getLastname());
 
             try (Connection connection = dataSource.getConnection()) {
-                String query = "UPDATE Users SET FIRST_NAME = ? WHERE EMAIL = ? ";
+                String query = "UPDATE TEACHERS SET FIRST_NAME = ? WHERE EMAIL = ? ";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, profileForm.getFirstname());
                 statement.setString(2, teacher.getEmail());
                 statement.executeUpdate();
 
-                query = "UPDATE Users SET LAST_NAME = ? WHERE EMAIL = ? ";
+                query = "UPDATE T SET LAST_NAME = ? WHERE EMAIL = ? ";
                 statement = connection.prepareStatement(query);
                 statement.setString(1, profileForm.getLastname());
                 statement.setString(2, teacher.getEmail());

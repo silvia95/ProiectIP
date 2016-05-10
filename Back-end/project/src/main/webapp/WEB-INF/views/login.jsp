@@ -18,7 +18,7 @@
 </head>
 <body>
 <!-- Top content -->
-<div id="top-content2" style="display:none;  width: 100%; height: 500px;">
+<div articleID="top-content2" style="display:none;  width: 100%; height: 500px;">
 
 </div>
 <div class="top-content">
@@ -49,12 +49,12 @@
                         <form:form action="j_spring_security_check" method="post" modelAttribute="user">
                             <div class="form-group login-form">
                                 <label class="sr-only" for="email">Email:</label>
-                                <form:input id="email" path="email" placeholder="@info.uaic.ro..."
+                                <form:input articleID="email" path="email" placeholder="@info.uaic.ro..."
                                             class="form-username form-control"/>
                             </div>
                             <div class="form-group login-form">
                                 <label class="sr-only" for="password">Parola</label>
-                                <form:input id="password" path="password" placeholder="Password..." type="password"
+                                <form:input articleID="password" path="password" placeholder="Password..." type="password"
                                             class="form-password form-control"/>
                             </div>
                             <input type="submit" value="Logare" class="btn"/>

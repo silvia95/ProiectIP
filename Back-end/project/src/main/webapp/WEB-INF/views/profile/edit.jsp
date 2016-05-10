@@ -17,21 +17,21 @@
 <form:form action="/profile/edit" method="post" modelAttribute="profileForm">
     <div>
         <form:label path="email">E-mail: </form:label>
-        <form:input id="email" path="email" placeholder="${teacher.email}" disabled="true"/>
+        <form:input articleID="email" path="email" placeholder="${teacher.email}" disabled="true"/>
     </div>
     <div>
         <form:label path="firstname">First Name: </form:label>
-        <form:input id="firstname" path="firstname" placeholder="${teacher.firstname}"/>
+        <form:input articleID="firstname" path="firstname" placeholder="${teacher.firstname}"/>
     </div>
     <div>
         <form:label path="lastname">Last Name: </form:label>
-        <form:input id="lastname" path="lastname" placeholder="${teacher.lastname}"/>
+        <form:input articleID="lastname" path="lastname" placeholder="${teacher.lastname}"/>
     </div>
     <div>
         <form:label path="password">Password: </form:label>
-        <form:input id="password" path="password"/>
+        <form:input articleID="password" path="password"/>
         <form:label path="confirmedPassword">Confirm Password: </form:label>
-        <form:input id="confirmedPassword" path="confirmedPassword"/>
+        <form:input articleID="confirmedPassword" path="confirmedPassword"/>
     </div>
         <input type="submit" value="Save"/>
 </form:form>

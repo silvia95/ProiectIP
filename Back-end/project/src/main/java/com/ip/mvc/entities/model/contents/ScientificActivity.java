@@ -11,4 +11,11 @@ public abstract class ScientificActivity {
     public void setScore(Integer score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "ScientificActivity{" +
+                "score=" + score +
+                '}';
+    }
 }
