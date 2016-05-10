@@ -1,19 +1,26 @@
 package com.ip.mvc.entities.model.contents;
 
-import com.ip.mvc.entities.model.users.Teacher;
+public class Quotation {
 
-public class Quotation extends ScientificActivity {
-
-    private Article article;
+    private String userID;
+    private String articleID;
     private String text;
-    private Teacher author;
-    
-    public Article getArticle() {
-        return article;
+    private String year;
+
+    public String getUserID() {
+        return userID;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getArticleID() {
+        return articleID;
+    }
+
+    public void setArticleID(String articleID) {
+        this.articleID = articleID;
     }
 
     public String getText() {
@@ -24,11 +31,21 @@ public class Quotation extends ScientificActivity {
         this.text = text;
     }
 
-    public Teacher getAuthor() {
-        return author;
+    public String getYear() {
+        return year;
     }
 
-    public void setAuthor(Teacher author) {
-        this.author = author;
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "Quotation{" +
+                "userID='" + userID + '\'' +
+                ", articleID='" + articleID + '\'' +
+                ", text='" + text + '\'' +
+                ", year='" + year + '\'' +
+                '}';
     }
 }

@@ -12,7 +12,6 @@ public class Article extends ScientificActivity {
     private List<Teacher> authors;
     private String year;
     private String journalISSN;
-    private List<Quotation> quotations;
 
     public String getArticleID() {
         return articleID;
@@ -54,13 +53,6 @@ public class Article extends ScientificActivity {
         this.journalISSN = journalISSN;
     }
 
-    public List<Quotation> getQuotations() {
-        return quotations;
-    }
-
-    public void setQuotations(List<Quotation> quotations) {
-        this.quotations = quotations;
-    }
 
     @Override
     public String toString() {
@@ -70,7 +62,6 @@ public class Article extends ScientificActivity {
                 ", authors=" + authors +
                 ", year='" + year + '\'' +
                 ", journalISSN='" + journalISSN + '\'' +
-                ", quotations=" + quotations +
                 "} " + super.toString();
     }
 }

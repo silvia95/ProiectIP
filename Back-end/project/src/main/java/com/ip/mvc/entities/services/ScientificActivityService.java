@@ -1,5 +1,6 @@
 package com.ip.mvc.entities.services;
 
+import com.ip.mvc.entities.model.contents.Article;
 import com.ip.mvc.entities.model.contents.Journal;
 
 import javax.sql.DataSource;
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScientificActivityService {
 
@@ -40,4 +43,28 @@ public class ScientificActivityService {
         }
         return journal;
     }
+
+    public List<Article> getAllArticles() {
+        List<Article> articleList = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "SELECT * FROM ARTICLES";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Article article = new Article();
+                article.setTitle(resultSet.getString("TITLE"));
+                article.setArticleID(resultSet.getString("ARTICLE_ID"));
+                article.setYear(resultSet.getString("YEAR"));
+                article.setJournalISSN(resultSet.getString("JOURNAL_ISSN"));
+                articleList.add(article);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articleList;
+    }
+
+
 }

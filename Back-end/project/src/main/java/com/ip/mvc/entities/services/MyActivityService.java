@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Quotation;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -45,6 +46,23 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return articleList;
+    }
+
+    public boolean addQuotation(Quotation quotation) {
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "INSERT INTO Quotations(user_id, article_id, text, year) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, quotation.getUserID());
+            statement.setString(2, quotation.getArticleID());
+            statement.setString(3, quotation.getText());
+            statement.setString(4, quotation.getYear());
+
+            statement.executeQuery();
+        }
+        catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -10,7 +10,8 @@
 <a href="<c:url value="/profile/userdetails?userID=${teacherInfo.userID}"/>">View Profile</a>
 <a href="<c:url value="/profile/edit"/>">Edit Profile</a> <br>
 
-<a href="<c:url value="/scientific/myactivity"/>">My Activity</a>
+<a href="<c:url value="/scientific/myactivity"/>">My Activity</a> <br>
+<a href="<c:url value="/scientific/articles"/>">Articles</a>
 
 </body>
 </html>
