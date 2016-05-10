@@ -29,6 +29,8 @@
                 <li>${email}</li>
             </c:forEach>
         </ul>
+        <h3>Article Score: ${articleScore}</h3>
+        <h3>Quotation Score: ${quotationScore}</h3>
     </c:when>
 </c:choose>
 </body>

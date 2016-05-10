@@ -3,6 +3,7 @@ package com.ip.mvc.controllers;
 import com.ip.mvc.entities.model.forms.ProfileForm;
 import com.ip.mvc.entities.model.users.Teacher;
 import com.ip.mvc.entities.services.ProfileService;
+import com.ip.mvc.entities.services.ScientificActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +28,11 @@ public class ProfileController {
         Teacher teacherInfo = profileService.getTeacherInfo(userID);
         teacherInfo.setOtherEmails(profileService.getOtherEmails(teacherInfo.getEmail()));
         teacherInfo.setDepartments(profileService.getDepartments(teacherInfo.getEmail()));
+        int articleScore = profileService.articleScore(userID);
+        int quotationScore = profileService.quotationScore(userID);
 
+        model.addObject("articleScore", articleScore);
+        model.addObject("quotationScore", quotationScore);
         model.addObject("teacherInfo", teacherInfo);
 
         return model;
