@@ -2,7 +2,6 @@ package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.forms.ProfileForm;
 import com.ip.mvc.entities.model.users.Teacher;
-import com.ip.mvc.entities.model.users.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -41,54 +40,23 @@ public class ProfileService {
         return userID;
     }
 
-
-    public User getUserInfo(String userID) {
-        User userInfo = new User();
-
+    public Teacher getTeacherInfo(String userID) {
+        Teacher teacherInfo = new Teacher();
         try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT * FROM USERS WHERE USER_ID = ?";
+            String query = "SELECT u.USER_ID, u.EMAIL, u.PASSWORD, u.FIRST_NAME, u.LAST_NAME, t.TYPE  FROM USERS u JOIN TEACHERS t ON u.EMAIL = t.EMAIL WHERE u.USER_ID = ?";
+
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, userID);
 
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-
-                userInfo.setUserID(resultSet.getString("USER_ID"));
-                userInfo.setEmail(resultSet.getString("EMAIL"));
-                userInfo.setFirstname(resultSet.getString("FIRST_NAME"));
-                userInfo.setLastname(resultSet.getString("LAST_NAME"));
-                userInfo.setPassword(resultSet.getString("PASSWORD"));
-            }
-            else return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userInfo;
-    }
-
-    public Teacher getTeacherInfo(User user) {
-        Teacher teacherInfo = new Teacher();
-        try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT TYPE FROM TEACHERS WHERE EMAIL = ?";
-
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, user.getEmail());
-
-            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                teacherInfo.setType(resultSet.getString(1));
-
-                /* get departments */
-                query = "SELECT DEPARMENTNAME FROM DEPARTMENTS WHERE EMAIL = ?";
-                statement = dataSource.getConnection().prepareStatement(query);
-                statement.setString(1, user.getEmail());
-
-                resultSet = statement.executeQuery();
-
-                while (resultSet.next()) {
-                    teacherInfo.addDepartment(resultSet.getString(1));
-                }
+                teacherInfo.setUserID(resultSet.getString("USER_ID"));
+                teacherInfo.setEmail(resultSet.getString("EMAIL"));
+                teacherInfo.setPassword(resultSet.getString("PASSWORD"));
+                teacherInfo.setFirstname(resultSet.getString("FIRST_NAME"));
+                teacherInfo.setLastname(resultSet.getString("LAST_NAME"));
+                teacherInfo.setType(resultSet.getString("TYPE"));
             } else {
                 return null;
             }
@@ -98,12 +66,28 @@ public class ProfileService {
         return teacherInfo;
     }
 
-    public List<String> getOtherEmails(User user) {
+    public List<String> getDepartments(String email) {
+        List<String> departments = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "SELECT DEPARMENTNAME FROM DEPARTMENTS WHERE email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                departments.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return departments;
+    }
+
+    public List<String> getOtherEmails(String email) {
         List<String> emails = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT OTHER_EMAIL FROM EMAILS WHERE email = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, user.getEmail());
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 emails.add(resultSet.getString(1));
@@ -114,32 +98,31 @@ public class ProfileService {
         return emails;
     }
 
-    public boolean editProfile(ProfileForm profileForm, User user) {
+    public boolean editProfile(ProfileForm profileForm, Teacher teacher) {
 
-        if(!profileForm.getPassword().equals(user.getPassword()) ||
+        if(!profileForm.getPassword().equals(teacher.getPassword()) ||
                 !profileForm.getConfirmedPassword().equals(profileForm.getPassword())) return false;
         else {
-            if (profileForm.getFirstname().equals("")) profileForm.setFirstname(user.getFirstname());
-            if (profileForm.getLastname().equals("")) profileForm.setLastname(user.getLastname());
+            if (profileForm.getFirstname().equals("")) profileForm.setFirstname(teacher.getFirstname());
+            if (profileForm.getLastname().equals("")) profileForm.setLastname(teacher.getLastname());
 
             try (Connection connection = dataSource.getConnection()) {
                 String query = "UPDATE Users SET FIRST_NAME = ? WHERE EMAIL = ? ";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, profileForm.getFirstname());
-                statement.setString(2, user.getEmail());
+                statement.setString(2, teacher.getEmail());
                 statement.executeUpdate();
 
                 query = "UPDATE Users SET LAST_NAME = ? WHERE EMAIL = ? ";
                 statement = connection.prepareStatement(query);
                 statement.setString(1, profileForm.getLastname());
-                statement.setString(2, user.getEmail());
+                statement.setString(2, teacher.getEmail());
                 statement.executeUpdate();
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             return true;
         }
     }

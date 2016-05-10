@@ -1,8 +1,8 @@
 package com.ip.mvc.entities.model.forms;
 
-import com.ip.mvc.entities.model.users.User;
+import com.ip.mvc.entities.model.users.Teacher;
 
-public class ProfileForm extends User {
+public class ProfileForm extends Teacher {
 
     private String confirmedPassword;
 

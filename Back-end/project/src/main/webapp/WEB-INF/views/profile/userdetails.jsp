@@ -8,13 +8,13 @@
 <body>
 
 <c:choose>
-    <c:when test="${userInfo == null}">
+    <c:when test="${teacherInfo == null}">
         <h3>No user with this ID.</h3>
     </c:when>
-    <c:when test="${userInfo != null}">
-        <h3>Email: ${userInfo.email}</h3>
-        <h3>First Name: ${userInfo.firstname}</h3>
-        <h3>Last Name: ${userInfo.lastname}</h3>
+    <c:when test="${teacherInfo != null}">
+        <h3>Email: ${teacherInfo.email}</h3>
+        <h3>First Name: ${teacherInfo.firstname}</h3>
+        <h3>Last Name: ${teacherInfo.lastname}</h3>
         <h3>Function: ${teacherInfo.type}</h3>
         <h3>Departments:</h3>
         <ul>
@@ -25,7 +25,7 @@
 
         <h3>Emails:</h3>
         <ul>
-            <c:forEach items="${emails}" var="email">
+            <c:forEach items="${teacherInfo.otherEmails}" var="email">
                 <li>${email}</li>
             </c:forEach>
         </ul>

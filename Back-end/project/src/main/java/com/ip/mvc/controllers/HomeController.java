@@ -1,6 +1,6 @@
 package com.ip.mvc.controllers;
 
-import com.ip.mvc.entities.model.users.User;
+import com.ip.mvc.entities.model.users.Teacher;
 import com.ip.mvc.entities.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +21,9 @@ public class HomeController {
         ModelAndView model = new ModelAndView("home");
 
         String userID = profileService.getUserID(request.getUserPrincipal().getName());
+        Teacher teacherInfo = profileService.getTeacherInfo(userID);
 
-        User user = profileService.getUserInfo(userID);
-
-        model.addObject("user", user);
+        model.addObject("teacherInfo", teacherInfo);
 
         return model;
     }

@@ -17,15 +17,15 @@
 <form:form action="/profile/edit" method="post" modelAttribute="profileForm">
     <div>
         <form:label path="email">E-mail: </form:label>
-        <form:input id="email" path="email" placeholder="${user.email}" disabled="true"/>
+        <form:input id="email" path="email" placeholder="${teacher.email}" disabled="true"/>
     </div>
     <div>
         <form:label path="firstname">First Name: </form:label>
-        <form:input id="firstname" path="firstname" placeholder="${user.firstname}"/>
+        <form:input id="firstname" path="firstname" placeholder="${teacher.firstname}"/>
     </div>
     <div>
         <form:label path="lastname">Last Name: </form:label>
-        <form:input id="lastname" path="lastname" placeholder="${user.lastname}"/>
+        <form:input id="lastname" path="lastname" placeholder="${teacher.lastname}"/>
     </div>
     <div>
         <form:label path="password">Password: </form:label>
