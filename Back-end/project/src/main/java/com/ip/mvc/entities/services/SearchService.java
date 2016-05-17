@@ -50,7 +50,7 @@ public class SearchService {
 
                 input = "%" + input + "%";
             } else if(type.equals("an")){
-                query += "Articles WHERE year = ?";
+                query += " WHERE a.year = ?";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
