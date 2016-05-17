@@ -25,6 +25,7 @@
             <td>${article.title}</td>
             <td>${article.year}</td>
             <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
+            <td><a href="/edit/article?articleID=${article.articleID}" >Edit</a></td>
         </tr>
     </c:forEach>
 </table>

@@ -250,4 +250,26 @@ public class MyActivityService {
 
     }
 
+    public Article getArticle(String articleID) {
+        Article article = new Article();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM ARTICLES WHERE ARTICLE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, articleID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                article.setArticleID(resultSet.getString("ARTICLE_ID"));
+                article.setJournalISSN(resultSet.getString("JOURNAL_ISSN"));
+                article.setTitle(resultSet.getString("TITLE"));
+                article.setYear(resultSet.getString("YEAR"));
+            } else return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return article;
+    }
+
 }

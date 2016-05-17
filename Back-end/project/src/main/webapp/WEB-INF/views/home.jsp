@@ -13,6 +13,7 @@
 <a href="<c:url value="/scientific/myactivity"/>">My Activity</a> <br>
 <a href="<c:url value="/scientific/articles"/>">Articles</a>
 <a href="<c:url value="/scientific/quotations"/>">Quotations</a>
+<a href="<c:url value="search"/>">Search</a>
 
 </body>
 </html>

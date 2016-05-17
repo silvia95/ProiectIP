@@ -23,4 +23,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="editService" name="editService" class="com.ip.mvc.entities.services.EditService">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
 </beans>
