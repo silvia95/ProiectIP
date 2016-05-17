@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 
 import javax.sql.DataSource;
@@ -78,6 +79,38 @@ public class MyActivityService {
         return quotations;
     }
 
+    public List<Project> getProjects(String userID) {
+        List<Project> projects = new ArrayList<>();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT p.project_id, p.title, p.description, p.domain, p.start_date, p.finish_date, p.budget, p.score FROM Projects p\n" +
+                    "JOIN Project_Authors a ON a.project_id = p.project_id\n" +
+                    "WHERE a.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Project project = new Project();
+
+                project.setProjectID(resultSet.getString(1));
+                project.setTitle(resultSet.getString(2));
+                project.setDescription(resultSet.getString(3));
+                project.setDomain(resultSet.getString(4));
+                project.setStartDate(resultSet.getDate(5));
+                project.setFinishDate(resultSet.getDate(6));
+                project.setBudget(Integer.parseInt(resultSet.getString(7)));
+                project.setScore(Integer.parseInt(resultSet.getString(8)));
+
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
+
     public boolean addQuotation(Quotation quotation) {
         try (Connection connection = dataSource.getConnection()) {
             String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, authors) VALUES (?, ?, ?, ?, ?, ?)";
@@ -97,5 +130,6 @@ public class MyActivityService {
         }
         return true;
     }
+
 
 }
