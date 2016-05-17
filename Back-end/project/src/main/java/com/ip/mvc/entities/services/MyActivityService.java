@@ -71,7 +71,7 @@ public class MyActivityService {
                 quotation.setArticleName(resultSet.getString(4));
                 quotation.setLocation(resultSet.getString(5));
                 quotation.setAuthors(Integer.parseInt(resultSet.getString("AUTHORS")));
-                quotation.setUserID(resultSet.getString(6));
+                quotation.setUserID(resultSet.getString(7));
                 quotations.add(quotation);
             }
         } catch (SQLException e) {
@@ -295,6 +295,32 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return quotation;
+    }
+
+    public Project getProject(String projectID) {
+        Project project = new Project();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM PROJECTS WHERE PROJECT_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, projectID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                project.setProjectID(resultSet.getString(1));
+                project.setDirector(resultSet.getString(2));
+                project.setTitle(resultSet.getString(3));
+                project.setDomain(resultSet.getString(4));
+                project.setStartDate(resultSet.getString(5));
+                project.setFinishDate(resultSet.getString(6));
+                project.setDescription(resultSet.getString(7));
+                project.setBudget(resultSet.getInt(8));
+
+            } else return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
     }
 
 }

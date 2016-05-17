@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 
 import javax.sql.DataSource;
@@ -48,6 +49,27 @@ public class EditService {
             statement.setString(4, quotation.getLocation());
             statement.setInt(5, quotation.getAuthors());
             statement.setString(6, quotation.getArticleID());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editProject(Project project) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "UPDATE PROJECTS SET DIRECTOR = ?, TITLE = ?, DOMAIN = ?, START_DATE = ?, FINISH_DATE = ?, DESCRIPTION = ?, BUDGET = ? " +
+                    "WHERE PROJECT_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, project.getDirector());
+            statement.setString(2, project.getTitle());
+            statement.setString(3, project.getDomain());
+            statement.setString(4, project.getStartDate());
+            statement.setString(5, project.getFinishDate());
+            statement.setString(6, project.getDescription());
+            statement.setInt(7, project.getBudget());
+            statement.setString(8, project.getProjectID());
 
             statement.execute();
         } catch (SQLException e) {

@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -85,6 +85,7 @@
             <th>${project.finishDate}</th>
             <th>${project.description}</th>
             <th>${project.budget}</th>
+            <td><a href="/edit/project?projectID=${project.projectID}">Edit</a></td>
         </tr>
     </c:forEach>
 </table>
