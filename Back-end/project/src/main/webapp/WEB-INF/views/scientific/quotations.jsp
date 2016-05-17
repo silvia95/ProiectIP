@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrei
@@ -11,6 +12,23 @@
     <title>Quotations</title>
 </head>
 <body>
+
+<table border="1">
+    <tr>
+        <th>Article ID</th>
+        <th>Text</th>
+        <th>Year</th>
+    </tr>
+
+    <c:forEach items="${quotationList}" var="quotation" >
+        <tr>
+            <td>${quotation.articleID}</td>
+            <td>${quotation.text}</td>
+            <td>${quotation.year}</td>
+        </tr>
+    </c:forEach>
+
+</table>
 
 </body>
 </html>

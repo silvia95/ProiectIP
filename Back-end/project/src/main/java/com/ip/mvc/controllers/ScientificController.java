@@ -78,7 +78,6 @@ public class ScientificController {
     public RedirectView addQuotation(@ModelAttribute Quotation quotation) {
 
         myActivityService.addQuotation(quotation);
-
         return new RedirectView("articles");
     }
 
@@ -86,7 +85,12 @@ public class ScientificController {
     public ModelAndView displayQuotations() {
         ModelAndView model = new ModelAndView("scientific/quotations");
 
+        List<Quotation> quotationList = scientificActivityService.getAllQuotations();
+        model.addObject("quotationList", quotationList);
+
         return model;
     }
+
+
 
 }

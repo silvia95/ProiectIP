@@ -2,6 +2,7 @@ package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
 import com.ip.mvc.entities.model.contents.Journal;
+import com.ip.mvc.entities.model.contents.Quotation;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -64,5 +65,27 @@ public class ScientificActivityService {
             e.printStackTrace();
         }
         return articleList;
+    }
+
+    public List<Quotation> getAllQuotations() {
+        List<Quotation> quotationList = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "SELECT * FROM QUOTATIONS";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+            while ((resultSet.next())) {
+                Quotation quotation = new Quotation();
+                quotation.setUserID(resultSet.getString("USER_ID"));
+                quotation.setArticleID(resultSet.getString("ARTICLE_ID"));
+                quotation.setText(resultSet.getString("TEXT"));
+                quotation.setYear(resultSet.getString("YEAR"));
+                quotationList.add(quotation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quotationList;
     }
 }

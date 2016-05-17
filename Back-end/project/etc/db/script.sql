@@ -77,7 +77,7 @@ CREATE TABLE Article_Authors (
 );
 
 CREATE TABLE Quotations (
-    user_id    NUMBER(10) NOT NULL UNIQUE,
+    user_id    NUMBER(10) NOT NULL,
     article_id NUMBER(10),
     text VARCHAR2(128),
     year VARCHAR2(4),
@@ -116,3 +116,4 @@ INSERT INTO Article_Authors (article_id, user_id) VALUES ('2', '1');
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
 
 INSERT INTO Quotations(user_id, article_id, text, year) VALUES ('1', '1', 'This is a text', '2016');
+
