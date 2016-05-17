@@ -1,6 +1,7 @@
 package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Conference;
 import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 import com.ip.mvc.entities.services.EditService;
@@ -79,6 +80,24 @@ public class EditController {
     public RedirectView editArticle(@ModelAttribute Project project) {
 
         editService.editProject(project);
+
+        return new RedirectView("/scientific/myactivity");
+    }
+
+    @RequestMapping(value = "conference", method = RequestMethod.GET)
+    public ModelAndView displayConference(@RequestParam(value = "conferenceID") String conferenceID) {
+        ModelAndView model = new ModelAndView("edit/conference");
+
+        Conference conference = myActivityService.getConference(conferenceID);
+
+        model.addObject("conference", conference);
+        return model;
+    }
+
+    @RequestMapping(value = "conference", method = RequestMethod.POST)
+    public RedirectView editConference(@ModelAttribute Conference conference) {
+
+        editService.editConference(conference);
 
         return new RedirectView("/scientific/myactivity");
     }

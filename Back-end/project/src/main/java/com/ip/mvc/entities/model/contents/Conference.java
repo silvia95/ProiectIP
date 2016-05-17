@@ -56,4 +56,16 @@ public class Conference extends ScientificActivity {
     public void setDetails(String details) {
         this.details = details;
     }
+
+    @Override
+    public String toString() {
+        return "Conference{" +
+                "conferenceID='" + conferenceID + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", year='" + year + '\'' +
+                ", details='" + details + '\'' +
+                ", location='" + location + '\'' +
+                "} " + super.toString();
+    }
 }

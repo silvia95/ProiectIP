@@ -323,4 +323,30 @@ public class MyActivityService {
         return project;
     }
 
+    public Conference getConference(String conferenceID) {
+        Conference conference = new Conference();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM CONFERENCES WHERE CONFERENCE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, conferenceID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                conference.setConferenceID(resultSet.getString(1));
+                conference.setName(resultSet.getString(2));
+                conference.setYear(resultSet.getString(3));
+                conference.setLocation(resultSet.getString(4));
+                conference.setDetails(resultSet.getString(5));
+
+            } else return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return conference;
+    }
+
 }

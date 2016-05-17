@@ -105,6 +105,7 @@
             <th>${conference.location}</th>
             <th>${conference.year}</th>
             <th>${conference.details}</th>
+            <td><a href="/edit/conference?conferenceID=${conference.conferenceID}">Edit</a></td>
         </tr>
     </c:forEach>
 </table>

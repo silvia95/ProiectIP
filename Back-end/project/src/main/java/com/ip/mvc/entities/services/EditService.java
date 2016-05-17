@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Conference;
 import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 
@@ -70,6 +71,23 @@ public class EditService {
             statement.setString(6, project.getDescription());
             statement.setInt(7, project.getBudget());
             statement.setString(8, project.getProjectID());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editConference(Conference conference) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "UPDATE CONFERENCES SET CONFERENCE_NAME = ?, YEAR = ?, LOCATION = ?, DETAILS = ? WHERE CONFERENCE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, conference.getName());
+            statement.setString(2, conference.getYear());
+            statement.setString(3, conference.getLocation());
+            statement.setString(4, conference.getDetails());
+            statement.setString(5, conference.getConferenceID());
 
             statement.execute();
         } catch (SQLException e) {
