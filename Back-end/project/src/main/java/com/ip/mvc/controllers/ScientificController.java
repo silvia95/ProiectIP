@@ -99,6 +99,29 @@ public class ScientificController {
         return model;
     }
 
+    @RequestMapping(value = "/myactivity/addProject", method = RequestMethod.GET)
+    public ModelAndView displayAddProject() {
+        ModelAndView model = new ModelAndView("scientific/addproject");
+
+        model.addObject("project", new Project());
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addProject", method = RequestMethod.POST)
+    public RedirectView executeAddProject(@ModelAttribute Project project,
+                                          HttpServletRequest request) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        project.setUserID(userID);
+
+        myActivityService.addProject(project);
+
+        return model;
+    }
+
     @RequestMapping(value = "journaldetails", method = RequestMethod.GET)
     public ModelAndView displayJournal(@RequestParam(value = "journalISSN") String journalISSN) {
         ModelAndView model = new ModelAndView("scientific/journal");

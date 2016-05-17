@@ -67,25 +67,25 @@
 <table border="1">
     <tr>
         <th>Title</th>
+        <th>Director</th>
         <th>Domain</th>
         <th>Star date</th>
         <th>Finish Date</th>
         <th>Description</th>
         <th>Budget</th>
-        <th>Score</th>
     </tr>
     <c:forEach items="${projectList}" var="project" >
         <tr>
             <th>${project.title}</th>
+            <th>${project.director}</th>
             <th>${project.domain}</th>
             <th>${project.startDate}</th>
             <th>${project.finishDate}</th>
             <th>${project.description}</th>
             <th>${project.budget}</th>
-            <th>${project.score}</th>
         </tr>
     </c:forEach>
 </table>
-
+<a href="/scientific/myactivity/addProject"> <input type="submit" value="Add Project"></a>
 </body>
 </html>
