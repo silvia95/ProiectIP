@@ -48,14 +48,47 @@ public class MyActivityService {
         return articleList;
     }
 
+    public List<Quotation> getQuotations(String userID) {
+        List<Quotation> quotations = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT q.article_id, q.text, q.year, q.articleName, q.location, q.authors, ar.user_id FROM Quotations q " +
+                    "JOIN Article_Authors ar ON ar.article_id = q.article_id " +
+                    "WHERE ar.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Quotation quotation = new Quotation();
+                quotation.setArticleID(resultSet.getString(1));
+                quotation.setText(resultSet.getString(2));
+                quotation.setYear(resultSet.getString(3));
+                quotation.setArticleName(resultSet.getString(4));
+                quotation.setLocation(resultSet.getString(4));
+                quotation.setAuthors(Integer.parseInt(resultSet.getString("AUTHORS")));
+                quotation.setUserID(resultSet.getString(6));
+                quotations.add(quotation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quotations;
+    }
+
     public boolean addQuotation(Quotation quotation) {
         try (Connection connection = dataSource.getConnection()) {
-            String query = "INSERT INTO Quotations(user_id, article_id, text, year) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, authors) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, quotation.getUserID());
-            statement.setString(2, quotation.getArticleID());
-            statement.setString(3, quotation.getText());
-            statement.setString(4, quotation.getYear());
+
+            statement.setString(1, quotation.getArticleID());
+            statement.setString(2, quotation.getText());
+            statement.setString(3, quotation.getYear());
+            statement.setString(4, quotation.getArticleName());
+            statement.setString(5, quotation.getLocation());
+            statement.setInt(6, quotation.getAuthors());
 
             statement.executeQuery();
         }

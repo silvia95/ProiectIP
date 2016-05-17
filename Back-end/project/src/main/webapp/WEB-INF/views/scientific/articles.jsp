@@ -24,7 +24,6 @@
         <td>${article.title}</td>
         <td>${article.year}</td>
         <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
-        <td><a href="/scientific/addQuotation?articleID=${article.articleID}">Add Quotation </a></td>
     </tr>
     </c:forEach>
 </body>

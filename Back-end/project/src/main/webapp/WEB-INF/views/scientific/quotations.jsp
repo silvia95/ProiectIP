@@ -13,21 +13,24 @@
 </head>
 <body>
 
+<h3>Quotations</h3>
 <table border="1">
     <tr>
-        <th>Article ID</th>
-        <th>Text</th>
+        <th>Article Name</th>
         <th>Year</th>
+        <th>Text</th>
+        <th>Location</th>
+        <th>Authors</th>
     </tr>
-
     <c:forEach items="${quotationList}" var="quotation" >
         <tr>
-            <td>${quotation.articleID}</td>
-            <td>${quotation.text}</td>
+            <td>${quotation.articleName}</td>
             <td>${quotation.year}</td>
+            <td>${quotation.text}</td>
+            <td>${quotation.location}</td>
+            <td>${quotation.authors}</td>
         </tr>
     </c:forEach>
-
 </table>
 
 </body>

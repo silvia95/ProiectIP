@@ -38,6 +38,37 @@ public class ScientificController {
         List<Article> articleList = myActivityService.getArticles(userID);
         model.addObject("articleList", articleList);
 
+        List<Quotation> quotationList = myActivityService.getQuotations(userID);
+
+        model.addObject("quotationList", quotationList);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addQuotation", method = RequestMethod.GET)
+    public ModelAndView displayAddArticleQuotation(@RequestParam(value = "articleID") String articleID,
+                                            HttpServletRequest request) {
+
+        ModelAndView model = new ModelAndView("scientific/addquotation");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        model.addObject("userID", userID);
+        model.addObject("articleID", articleID);
+        model.addObject("quotation", new Quotation());
+
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addQuotation", method = RequestMethod.POST)
+    public RedirectView addArticleQuotation(@ModelAttribute Quotation quotation,
+                                            @RequestParam(value = "articleID") String articleID) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        quotation.setArticleID(articleID);
+        myActivityService.addQuotation(quotation);
+
         return model;
     }
 
@@ -59,26 +90,6 @@ public class ScientificController {
         model.addObject("articleList", articleList);
 
         return model;
-    }
-
-    @RequestMapping(value = "/addQuotation", method = RequestMethod.GET)
-    public ModelAndView displayAddQuotation(HttpServletRequest request,
-                                            @RequestParam(value = "articleID") String articleID) {
-        ModelAndView model = new ModelAndView("scientific/addquotation");
-        String userID = profileService.getUserID(request.getUserPrincipal().getName());
-
-        model.addObject("userID", userID);
-        model.addObject("articleID", articleID);
-        model.addObject("quotation", new Quotation());
-
-        return model;
-    }
-
-    @RequestMapping(value = "/addQuotation", method = RequestMethod.POST)
-    public RedirectView addQuotation(@ModelAttribute Quotation quotation) {
-
-        myActivityService.addQuotation(quotation);
-        return new RedirectView("articles");
     }
 
     @RequestMapping(value = "/quotations", method = RequestMethod.GET)
