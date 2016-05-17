@@ -29,14 +29,8 @@
     </c:forEach>
 </table>
 
-<form action="/scientific/myactivity/addQuotation" method="get">
-    <select name="articleID">
-        <c:forEach items="${articleList}" var="article">
-            <option value="${article.articleID}">${article.title}</option>
-        </c:forEach>
-    </select>
-    <input type="submit" value="Add Quotation">
-</form>
+<a href="/scientific/myactivity/addArticle"> <input type="submit" value="Add Article"></a>
+
 
 
 <h3>My Quotations</h3>
@@ -58,6 +52,16 @@
         </tr>
     </c:forEach>
 </table>
+
+<form action="/scientific/myactivity/addQuotation" method="get">
+    <select name="articleID">
+        <c:forEach items="${articleList}" var="article">
+            <option value="${article.articleID}">${article.title}</option>
+        </c:forEach>
+    </select>
+    <input type="submit" value="Add Quotation">
+</form>
+
 
 <h3>My Projects</h3>
 <table border="1">

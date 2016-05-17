@@ -45,8 +45,6 @@ public class ScientificController {
         List<Project> projectList = myActivityService.getProjects(userID);
         model.addObject("projectList", projectList);
 
-        System.out.println(projectList);
-
         return model;
     }
 
@@ -73,6 +71,30 @@ public class ScientificController {
 
         quotation.setArticleID(articleID);
         myActivityService.addQuotation(quotation);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addArticle", method = RequestMethod.GET)
+    public ModelAndView addArticle(HttpServletRequest request) {
+        ModelAndView model = new ModelAndView("scientific/addarticle");
+
+        model.addObject("article", new Article());
+
+        return model;
+    }
+    @RequestMapping(value = "/myactivity/addArticle", method = RequestMethod.POST)
+    public RedirectView executeAddArticle(@ModelAttribute Article article,
+                                          HttpServletRequest request) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        System.out.println(article);
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        article.setUserID(userID);
+
+        myActivityService.addArticle(article);
 
         return model;
     }

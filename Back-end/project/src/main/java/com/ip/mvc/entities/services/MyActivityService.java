@@ -131,5 +131,51 @@ public class MyActivityService {
         return true;
     }
 
+    public boolean addArticle(Article article) {
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, article.getJournalTitle());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String journalISSN = resultSet.getString("ISSN");
+                query = "INSERT INTO ARTICLES(TITLE, YEAR, JOURNAL_ISSN) VALUES (?, ?, ?)";
+
+                statement = connection.prepareStatement(query);
+
+                statement.setString(1, article.getTitle());
+                statement.setString(2, article.getYear());
+                statement.setString(3, journalISSN);
+
+                statement.execute();
+
+                query = "SELECT ARTICLE_ID FROM ARTICLES WHERE TITLE = ?";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, article.getTitle());
+                resultSet = statement.executeQuery();
+
+                resultSet.next();
+                String articleID = resultSet.getString(1);
+
+                query = "INSERT INTO ARTICLE_AUTHORS(ARTICLE_ID, USER_ID) VALUES (?, ?)";
+                statement = connection.prepareStatement(query);
+
+                statement.setString(1, articleID);
+                statement.setString(2, article.getUserID());
+
+                statement.execute();
+
+                return true;
+            } else return false;
+
+        }
+        catch (SQLException e) {
+            return false;
+        }
+    }
+
 
 }
