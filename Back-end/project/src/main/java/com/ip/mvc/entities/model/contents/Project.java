@@ -7,12 +7,30 @@ import java.util.List;
 
 public class Project extends ScientificActivity {
 
+    private String projectID;
     private String title;
     private String domain;
     private Date startDate;
     private Date finishDate;
     private String description;
     private List<Teacher> contributors;
+    private int budget;
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
 
     public String getTitle() {
         return title;
@@ -60,5 +78,19 @@ public class Project extends ScientificActivity {
 
     public void setContributors(List<Teacher> contributors) {
         this.contributors = contributors;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectID='" + projectID + '\'' +
+                ", title='" + title + '\'' +
+                ", domain='" + domain + '\'' +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                ", description='" + description + '\'' +
+                ", contributors=" + contributors +
+                ", budget=" + budget +
+                "} " + super.toString();
     }
 }

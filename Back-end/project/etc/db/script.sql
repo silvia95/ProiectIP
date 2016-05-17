@@ -1,4 +1,3 @@
-
 ALTER TABLE IPUSER.EMAILS DROP CONSTRAINT EMAILS_FK;
 ALTER TABLE IPUSER.DEPARTMENTS DROP CONSTRAINT DEPARTMENTS_FK;
 ALTER TABLE IPUSER.ARTICLE_AUTHORS DROP CONSTRAINT ARTICLE_AUTHORS_FK1;
@@ -135,3 +134,15 @@ INSERT INTO Articles (title, year, journal_issn) VALUES ('Title3' , '2015', '016
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('1', '1');
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('2', '1');
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
+
+CREATE TABLE Projects (
+    project_id NUMBER(10),
+    title VARCHAR2(128),
+    domain VARCHAR2(128),
+    start_date DATE,
+    finish_date DATE,
+    description VARCHAR2(512),
+    budget NUMBER(10),
+    score NUMBER(1)
+
+);

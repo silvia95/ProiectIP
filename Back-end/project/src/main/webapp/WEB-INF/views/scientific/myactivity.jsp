@@ -35,7 +35,7 @@
             <option value="${article.articleID}">${article.title}</option>
         </c:forEach>
     </select>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Add Quotation">
 </form>
 
 
@@ -55,6 +55,30 @@
             <td>${quotation.text}</td>
             <td>${quotation.location}</td>
             <td>${quotation.authors}</td>
+        </tr>
+    </c:forEach>
+</table>
+
+<h3>My Projects</h3>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Domain</th>
+        <th>Star date</th>
+        <th>Finish Date</th>
+        <th>Description</th>
+        <th>Budget</th>
+        <th>Score</th>
+    </tr>
+    <c:forEach items="${projectList}" var="project" >
+        <tr>
+            <th>${project.title}</th>
+            <th>${project.domain}</th>
+            <th>${project.startDate}</th>
+            <th>${project.finishDate}</th>
+            <th>${project.description}</th>
+            <th>${project.budget}</th>
+            <th>${project.score}</th>
         </tr>
     </c:forEach>
 </table>

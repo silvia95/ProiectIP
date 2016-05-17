@@ -2,6 +2,7 @@ package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.contents.Article;
 import com.ip.mvc.entities.model.contents.Journal;
+import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 import com.ip.mvc.entities.services.MyActivityService;
 import com.ip.mvc.entities.services.ProfileService;
@@ -39,8 +40,12 @@ public class ScientificController {
         model.addObject("articleList", articleList);
 
         List<Quotation> quotationList = myActivityService.getQuotations(userID);
-
         model.addObject("quotationList", quotationList);
+
+        List<Project> projectList = myActivityService.getProjects(userID);
+        model.addObject("projectList", projectList);
+
+        System.out.println(projectList);
 
         return model;
     }
