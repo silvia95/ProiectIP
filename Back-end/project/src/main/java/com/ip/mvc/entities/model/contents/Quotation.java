@@ -6,6 +6,9 @@ public class Quotation {
     private String articleID;
     private String text;
     private String year;
+    private String articleName;
+    private String location;
+    private int authors;
 
     public String getUserID() {
         return userID;
@@ -39,6 +42,30 @@ public class Quotation {
         this.year = year;
     }
 
+    public String getArticleName() {
+        return articleName;
+    }
+
+    public void setArticleName(String articleName) {
+        this.articleName = articleName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(int authors) {
+        this.authors = authors;
+    }
+
     @Override
     public String toString() {
         return "Quotation{" +
@@ -46,6 +73,9 @@ public class Quotation {
                 ", articleID='" + articleID + '\'' +
                 ", text='" + text + '\'' +
                 ", year='" + year + '\'' +
+                ", articleName='" + articleName + '\'' +
+                ", location='" + location + '\'' +
+                ", authors=" + authors +
                 '}';
     }
 }

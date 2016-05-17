@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrei
@@ -26,7 +27,37 @@
             <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
         </tr>
     </c:forEach>
-
 </table>
+
+<form action="/scientific/myactivity/addQuotation" method="get">
+    <select name="articleID">
+        <c:forEach items="${articleList}" var="article">
+            <option value="${article.articleID}">${article.title}</option>
+        </c:forEach>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+<h3>My Quotations</h3>
+<table border="1">
+    <tr>
+        <th>Article Name</th>
+        <th>Year</th>
+        <th>Text</th>
+        <th>Location</th>
+        <th>Authors</th>
+    </tr>
+    <c:forEach items="${quotationList}" var="quotation" >
+        <tr>
+            <td>${quotation.articleName}</td>
+            <td>${quotation.year}</td>
+            <td>${quotation.text}</td>
+            <td>${quotation.location}</td>
+            <td>${quotation.authors}</td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>
