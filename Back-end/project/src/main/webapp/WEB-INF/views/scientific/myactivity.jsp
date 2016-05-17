@@ -50,6 +50,7 @@
             <td>${quotation.text}</td>
             <td>${quotation.location}</td>
             <td>${quotation.authors}</td>
+            <td><a href="/edit/quotation?articleID=${quotation.articleID}">Edit</a></td>
         </tr>
     </c:forEach>
 </table>

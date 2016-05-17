@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Quotation;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -34,7 +35,24 @@ public class EditService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public void editQuotation(Quotation quotation) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "UPDATE QUOTATIONS SET TEXT = ?, YEAR = ?, ARTICLENAME = ?, LOCATION = ?, AUTHORS = ? WHERE ARTICLE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, quotation.getText());
+            statement.setString(2, quotation.getYear());
+            statement.setString(3, quotation.getArticleName());
+            statement.setString(4, quotation.getLocation());
+            statement.setInt(5, quotation.getAuthors());
+            statement.setString(6, quotation.getArticleID());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

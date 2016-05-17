@@ -1,6 +1,7 @@
 package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Quotation;
 import com.ip.mvc.entities.services.EditService;
 import com.ip.mvc.entities.services.MyActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,26 @@ public class EditController {
                                     @RequestParam(value = "articleID") String articleID) {
 
         article.setArticleID(articleID);
-
         editService.editArticle(article);
 
-        System.out.println(article);
+        return new RedirectView("/scientific/myactivity");
+    }
+
+    @RequestMapping(value = "quotation", method = RequestMethod.GET)
+    public ModelAndView displayQuotation(@RequestParam(value = "articleID") String articleID) {
+        ModelAndView model = new ModelAndView("edit/quotation");
+
+        Quotation quotation = myActivityService.getQuotation(articleID);
+        model.addObject("quotation", quotation);
+        model.addObject("articleID", articleID);
+
+        return model;
+    }
+
+    @RequestMapping(value = "quotation", method = RequestMethod.POST)
+    public RedirectView editArticle(@ModelAttribute Quotation quotation) {
+
+        editService.editQuotation(quotation);
 
         return new RedirectView("/scientific/myactivity");
     }

@@ -69,7 +69,7 @@ public class MyActivityService {
                 quotation.setText(resultSet.getString(2));
                 quotation.setYear(resultSet.getString(3));
                 quotation.setArticleName(resultSet.getString(4));
-                quotation.setLocation(resultSet.getString(4));
+                quotation.setLocation(resultSet.getString(5));
                 quotation.setAuthors(Integer.parseInt(resultSet.getString("AUTHORS")));
                 quotation.setUserID(resultSet.getString(6));
                 quotations.add(quotation);
@@ -270,6 +270,31 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return article;
+    }
+
+    public Quotation getQuotation(String articleID) {
+        Quotation quotation = new Quotation();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT ARTICLE_ID, TEXT, YEAR, ARTICLENAME, LOCATION, AUTHORS FROM QUOTATIONS WHERE ARTICLE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, articleID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                quotation.setArticleID(resultSet.getString(1));
+                quotation.setText(resultSet.getString(2));
+                quotation.setYear(resultSet.getString(3));
+                quotation.setArticleName(resultSet.getString(4));
+                quotation.setLocation(resultSet.getString(5));
+                quotation.setAuthors(resultSet.getInt(6));
+            } else return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quotation;
     }
 
 }
