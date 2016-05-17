@@ -8,13 +8,46 @@ import java.util.List;
 public class Project extends ScientificActivity {
 
     private String projectID;
+    private String director;
     private String title;
     private String domain;
-    private Date startDate;
-    private Date finishDate;
+    private String startDate;
+    private String finishDate;
     private String description;
     private List<Teacher> contributors;
     private int budget;
+    private String userID;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectID='" + projectID + '\'' +
+                ", director='" + director + '\'' +
+                ", title='" + title + '\'' +
+                ", domain='" + domain + '\'' +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                ", description='" + description + '\'' +
+                ", contributors=" + contributors +
+                ", budget=" + budget +
+                "} " + super.toString();
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
 
     public String getProjectID() {
         return projectID;
@@ -48,19 +81,19 @@ public class Project extends ScientificActivity {
         this.domain = domain;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getFinishDate() {
+    public String getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(Date finishDate) {
+    public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
 
@@ -80,17 +113,4 @@ public class Project extends ScientificActivity {
         this.contributors = contributors;
     }
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectID='" + projectID + '\'' +
-                ", title='" + title + '\'' +
-                ", domain='" + domain + '\'' +
-                ", startDate=" + startDate +
-                ", finishDate=" + finishDate +
-                ", description='" + description + '\'' +
-                ", contributors=" + contributors +
-                ", budget=" + budget +
-                "} " + super.toString();
-    }
 }

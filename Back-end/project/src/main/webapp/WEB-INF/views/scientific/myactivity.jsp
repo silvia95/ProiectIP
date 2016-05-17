@@ -29,14 +29,8 @@
     </c:forEach>
 </table>
 
-<form action="/scientific/myactivity/addQuotation" method="get">
-    <select name="articleID">
-        <c:forEach items="${articleList}" var="article">
-            <option value="${article.articleID}">${article.title}</option>
-        </c:forEach>
-    </select>
-    <input type="submit" value="Add Quotation">
-</form>
+<a href="/scientific/myactivity/addArticle"> <input type="submit" value="Add Article"></a>
+
 
 
 <h3>My Quotations</h3>
@@ -59,29 +53,59 @@
     </c:forEach>
 </table>
 
+<form action="/scientific/myactivity/addQuotation" method="get">
+    <select name="articleID">
+        <c:forEach items="${articleList}" var="article">
+            <option value="${article.articleID}">${article.title}</option>
+        </c:forEach>
+    </select>
+    <input type="submit" value="Add Quotation">
+</form>
+
+
 <h3>My Projects</h3>
 <table border="1">
     <tr>
         <th>Title</th>
+        <th>Director</th>
         <th>Domain</th>
         <th>Star date</th>
         <th>Finish Date</th>
         <th>Description</th>
         <th>Budget</th>
-        <th>Score</th>
     </tr>
     <c:forEach items="${projectList}" var="project" >
         <tr>
             <th>${project.title}</th>
+            <th>${project.director}</th>
             <th>${project.domain}</th>
             <th>${project.startDate}</th>
             <th>${project.finishDate}</th>
             <th>${project.description}</th>
             <th>${project.budget}</th>
-            <th>${project.score}</th>
         </tr>
     </c:forEach>
 </table>
+<a href="/scientific/myactivity/addProject"> <input type="submit" value="Add Project"></a>
+
+<h3>My Conferences</h3>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Year</th>
+        <th>Details</th>
+    </tr>
+    <c:forEach items="${conferenceList}" var="conference" >
+        <tr>
+            <th>${conference.name}</th>
+            <th>${conference.location}</th>
+            <th>${conference.year}</th>
+            <th>${conference.details}</th>
+        </tr>
+    </c:forEach>
+</table>
+
 
 </body>
 </html>

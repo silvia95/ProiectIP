@@ -1,9 +1,6 @@
 package com.ip.mvc.controllers;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Journal;
-import com.ip.mvc.entities.model.contents.Project;
-import com.ip.mvc.entities.model.contents.Quotation;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.services.MyActivityService;
 import com.ip.mvc.entities.services.ProfileService;
 import com.ip.mvc.entities.services.ScientificActivityService;
@@ -45,7 +42,8 @@ public class ScientificController {
         List<Project> projectList = myActivityService.getProjects(userID);
         model.addObject("projectList", projectList);
 
-        System.out.println(projectList);
+        List<Conference> conferenceList = myActivityService.getConferences(userID);
+        model.addObject("conferenceList", conferenceList);
 
         return model;
     }
@@ -73,6 +71,53 @@ public class ScientificController {
 
         quotation.setArticleID(articleID);
         myActivityService.addQuotation(quotation);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addArticle", method = RequestMethod.GET)
+    public ModelAndView addArticle(HttpServletRequest request) {
+        ModelAndView model = new ModelAndView("scientific/addarticle");
+
+        model.addObject("article", new Article());
+
+        return model;
+    }
+    @RequestMapping(value = "/myactivity/addArticle", method = RequestMethod.POST)
+    public RedirectView executeAddArticle(@ModelAttribute Article article,
+                                          HttpServletRequest request) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        System.out.println(article);
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        article.setUserID(userID);
+
+        myActivityService.addArticle(article);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addProject", method = RequestMethod.GET)
+    public ModelAndView displayAddProject() {
+        ModelAndView model = new ModelAndView("scientific/addproject");
+
+        model.addObject("project", new Project());
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addProject", method = RequestMethod.POST)
+    public RedirectView executeAddProject(@ModelAttribute Project project,
+                                          HttpServletRequest request) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        project.setUserID(userID);
+
+        myActivityService.addProject(project);
 
         return model;
     }

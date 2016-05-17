@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Conference;
 import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 
@@ -82,8 +83,8 @@ public class MyActivityService {
     public List<Project> getProjects(String userID) {
         List<Project> projects = new ArrayList<>();
         try (Connection connection = getDataSource().getConnection()) {
-            String sql = "SELECT p.project_id, p.title, p.description, p.domain, p.start_date, p.finish_date, p.budget, p.score FROM Projects p\n" +
-                    "JOIN Project_Authors a ON a.project_id = p.project_id\n" +
+            String sql = "SELECT p.PROJECT_ID, p.title, p.description, p.domain, p.start_date, p.finish_date, p.budget, p.director FROM Projects p " +
+                    "JOIN Project_Authors a ON a.PROJECT_ID = p.PROJECT_ID\n" +
                     "WHERE a.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -98,10 +99,10 @@ public class MyActivityService {
                 project.setTitle(resultSet.getString(2));
                 project.setDescription(resultSet.getString(3));
                 project.setDomain(resultSet.getString(4));
-                project.setStartDate(resultSet.getDate(5));
-                project.setFinishDate(resultSet.getDate(6));
+                project.setStartDate(resultSet.getString(5));
+                project.setFinishDate(resultSet.getString(6));
                 project.setBudget(Integer.parseInt(resultSet.getString(7)));
-                project.setScore(Integer.parseInt(resultSet.getString(8)));
+                project.setDirector(resultSet.getString(8));
 
                 projects.add(project);
             }
@@ -109,6 +110,36 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return projects;
+    }
+
+    public List<Conference> getConferences(String userID) {
+        List<Conference> conferenceList = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT c.CONFERENCE_ID, c.CONFERENCE_NAME, c.YEAR, c.DETAILS, c.LOCATION FROM CONFERENCES c " +
+                    "JOIN CONFERENCES_ATTENDING ca ON ca.CONFERENCE_ID = c.CONFERENCE_ID " +
+                    "WHERE ca.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Conference conference = new Conference();
+
+                conference.setConferenceID(resultSet.getString(1));
+                conference.setName(resultSet.getString(2));
+                conference.setYear(resultSet.getString(3));
+                conference.setDetails(resultSet.getString(4));
+                conference.setLocation(resultSet.getString(5));
+
+                conferenceList.add(conference);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return conferenceList;
     }
 
     public boolean addQuotation(Quotation quotation) {
@@ -131,5 +162,92 @@ public class MyActivityService {
         return true;
     }
 
+    public boolean addArticle(Article article) {
+        try (Connection connection = dataSource.getConnection()) {
+            String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, article.getJournalTitle());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String journalISSN = resultSet.getString("ISSN");
+                query = "INSERT INTO ARTICLES(TITLE, YEAR, JOURNAL_ISSN) VALUES (?, ?, ?)";
+
+                statement = connection.prepareStatement(query);
+
+                statement.setString(1, article.getTitle());
+                statement.setString(2, article.getYear());
+                statement.setString(3, journalISSN);
+
+                statement.execute();
+
+                query = "SELECT ARTICLE_ID FROM ARTICLES WHERE TITLE = ?";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, article.getTitle());
+                resultSet = statement.executeQuery();
+
+                resultSet.next();
+                String articleID = resultSet.getString(1);
+
+                query = "INSERT INTO ARTICLE_AUTHORS(ARTICLE_ID, USER_ID) VALUES (?, ?)";
+                statement = connection.prepareStatement(query);
+
+                statement.setString(1, articleID);
+                statement.setString(2, article.getUserID());
+
+                statement.execute();
+
+                return true;
+            } else return false;
+
+        }
+        catch (SQLException e) {
+            return false;
+        }
+    }
+
+
+    public boolean addProject(Project project) {
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String query = "INSERT INTO PROJECTS(DIRECTOR, TITLE, DOMAIN, START_DATE, FINISH_DATE, DESCRIPTION, BUDGET) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, project.getDirector());
+            statement.setString(2, project.getTitle());
+            statement.setString(3, project.getDomain());
+            statement.setString(4, project.getStartDate());
+            statement.setString(5, project.getFinishDate());
+            statement.setString(6, project.getDescription());
+            statement.setInt(7, project.getBudget());
+
+            statement.execute();
+
+            query = "SELECT PROJECT_ID FROM PROJECTS WHERE TITLE = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, project.getTitle());
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            String projectID = resultSet.getString(1);
+
+
+            query = "INSERT INTO PROJECT_AUTHORS(PROJECT_ID, USER_ID) VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+
+            statement.setString(1, projectID);
+            statement.setString(2, project.getUserID());
+            statement.execute();
+
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 
 }

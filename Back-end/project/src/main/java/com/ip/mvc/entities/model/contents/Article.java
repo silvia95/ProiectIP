@@ -8,10 +8,37 @@ import java.util.List;
 public class Article extends ScientificActivity {
 
     private String articleID;
+    private String userID;
     private String title;
     private List<Teacher> authors;
     private String year;
     private String journalISSN;
+    private String journalTitle;
+    private String authorsText;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getAuthorsText() {
+        return authorsText;
+    }
+
+    public void setAuthorsText(String authorsText) {
+        this.authorsText = authorsText;
+    }
+
+    public String getJournalTitle() {
+        return journalTitle;
+    }
+
+    public void setJournalTitle(String journalTitle) {
+        this.journalTitle = journalTitle;
+    }
 
     public String getArticleID() {
         return articleID;
@@ -62,6 +89,8 @@ public class Article extends ScientificActivity {
                 ", authors=" + authors +
                 ", year='" + year + '\'' +
                 ", journalISSN='" + journalISSN + '\'' +
+                ", journalTitle='" + journalTitle + '\'' +
+                ", authorsText='" + authorsText + '\'' +
                 "} " + super.toString();
     }
 }
