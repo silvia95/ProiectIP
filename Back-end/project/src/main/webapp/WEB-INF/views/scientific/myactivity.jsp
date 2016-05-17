@@ -87,5 +87,25 @@
     </c:forEach>
 </table>
 <a href="/scientific/myactivity/addProject"> <input type="submit" value="Add Project"></a>
+
+<h3>My Conferences</h3>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Year</th>
+        <th>Details</th>
+    </tr>
+    <c:forEach items="${conferenceList}" var="conference" >
+        <tr>
+            <th>${conference.name}</th>
+            <th>${conference.location}</th>
+            <th>${conference.year}</th>
+            <th>${conference.details}</th>
+        </tr>
+    </c:forEach>
+</table>
+
+
 </body>
 </html>

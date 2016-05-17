@@ -1,14 +1,29 @@
 package com.ip.mvc.entities.model.contents;
 
-import java.util.Date;
-
 public class Conference extends ScientificActivity {
 
+    private String conferenceID;
     private String name;
     private String title;
-    private Date date;
+    private String year;
     private String details;
+    private String location;
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getConferenceID() {
+        return conferenceID;
+    }
+
+    public void setConferenceID(String conferenceID) {
+        this.conferenceID = conferenceID;
+    }
 
     public String getName() {
         return name;
@@ -26,12 +41,12 @@ public class Conference extends ScientificActivity {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public String getYear() {
+        return year;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getDetails() {

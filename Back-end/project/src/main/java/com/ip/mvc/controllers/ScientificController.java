@@ -1,9 +1,6 @@
 package com.ip.mvc.controllers;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Journal;
-import com.ip.mvc.entities.model.contents.Project;
-import com.ip.mvc.entities.model.contents.Quotation;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.services.MyActivityService;
 import com.ip.mvc.entities.services.ProfileService;
 import com.ip.mvc.entities.services.ScientificActivityService;
@@ -44,6 +41,9 @@ public class ScientificController {
 
         List<Project> projectList = myActivityService.getProjects(userID);
         model.addObject("projectList", projectList);
+
+        List<Conference> conferenceList = myActivityService.getConferences(userID);
+        model.addObject("conferenceList", conferenceList);
 
         return model;
     }

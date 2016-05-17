@@ -17,6 +17,7 @@ DROP TABLE IPUSER.ARTICLES;
 DROP TABLE IPUSER.USERS;
 DROP TABLE IPUSER.PROJECTS;
 DROP TABLE IPUSER.JOURNALS;
+DROP TABLE IPUSER.CONFERENCES;
 
 DROP SEQUENCE ARTICLES_SEQ;
 DROP SEQUENCE USERS_SEQ;
@@ -120,9 +121,9 @@ INSERT INTO Users(email, password)
 VALUES ('adiftene@info.uaic.ro', 'a');
 
 INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
-VALUES ('adiftene@info.uaic.ro','Iftene', 'Adrian', 'Conf. dr.');
+VALUES ('adiftene@info.uaic.ro','Adrian', 'Iftene', 'Conf. dr.');
 INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
-VALUES ('mmoruz@info.uaic.ro', 'Moruz', 'Mihai Alex', 'Lect. dr.');
+VALUES ('mmoruz@info.uaic.ro', 'Mihai Alex', 'Moruz', 'Lect. dr.');
 
 INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D1');
 INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D2');
@@ -173,4 +174,15 @@ CREATE TABLE Project_Authors (
     CONSTRAINT Project_Authors_pk PRIMARY KEY (project_id, user_id),
     CONSTRAINT Project_Authors_fk1 FOREIGN KEY(project_id) REFERENCES Projects(project_id),
     CONSTRAINT Project_Authors_fk2 FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE CONFERENCES
+(
+    CONFERENCE_ID NUMBER(10),
+    CONFERENCE_NAME VARCHAR2(200),
+    YEAR DATE,
+    LOCATION VARCHAR2(200),
+    DETAILS VARCHAR2(3200),
+
+    CONSTRAINT CONFERENCE_PK PRIMARY KEY (CONFERENCE_ID)
 );

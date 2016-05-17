@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Conference;
 import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
 
@@ -109,6 +110,36 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return projects;
+    }
+
+    public List<Conference> getConferences(String userID) {
+        List<Conference> conferenceList = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT c.CONFERENCE_ID, c.CONFERENCE_NAME, c.YEAR, c.DETAILS, c.LOCATION FROM CONFERENCES c " +
+                    "JOIN CONFERENCES_ATTENDING ca ON ca.CONFERENCE_ID = c.CONFERENCE_ID " +
+                    "WHERE ca.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Conference conference = new Conference();
+
+                conference.setConferenceID(resultSet.getString(1));
+                conference.setName(resultSet.getString(2));
+                conference.setYear(resultSet.getString(3));
+                conference.setDetails(resultSet.getString(4));
+                conference.setLocation(resultSet.getString(5));
+
+                conferenceList.add(conference);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return conferenceList;
     }
 
     public boolean addQuotation(Quotation quotation) {
