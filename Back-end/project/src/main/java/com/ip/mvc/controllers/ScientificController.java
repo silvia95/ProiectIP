@@ -122,6 +122,26 @@ public class ScientificController {
         return model;
     }
 
+    @RequestMapping(value = "/myactivity/addConference", method = RequestMethod.GET)
+    public ModelAndView displayAddConference() {
+        ModelAndView model = new ModelAndView("scientific/addconference");
+
+        model.addObject("conference", new Conference());
+
+        return model;
+    }
+    @RequestMapping(value = "/myactivity/addConference", method = RequestMethod.POST)
+    public RedirectView executeAddConference(@ModelAttribute Conference conference,
+                                          HttpServletRequest request) {
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        myActivityService.addConference(conference, userID);
+
+        return model;
+    }
+
     @RequestMapping(value = "journaldetails", method = RequestMethod.GET)
     public ModelAndView displayJournal(@RequestParam(value = "journalISSN") String journalISSN) {
         ModelAndView model = new ModelAndView("scientific/journal");

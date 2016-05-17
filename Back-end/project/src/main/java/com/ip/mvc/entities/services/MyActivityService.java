@@ -250,6 +250,42 @@ public class MyActivityService {
 
     }
 
+    public boolean addConference(Conference conference, String userID) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "INSERT INTO CONFERENCES (CONFERENCE_NAME, LOCATION, YEAR, DETAILS) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, conference.getName());
+            statement.setString(2, conference.getLocation());
+            statement.setString(3, conference.getYear());
+            statement.setString(4, conference.getDetails());
+
+            statement.execute();
+
+            sql = "SELECT CONFERENCE_ID FROM CONFERENCES WHERE CONFERENCE_NAME = ?";
+            statement = connection.prepareStatement(sql);
+
+            statement.setString(1, conference.getName());
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            String conferenceID = resultSet.getString(1);
+
+            sql = "INSERT INTO CONFERENCES_ATTENDING(USER_ID, CONFERENCE_ID) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+            statement.setString(2, conferenceID);
+
+            statement.execute();
+
+
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
     public Article getArticle(String articleID) {
         Article article = new Article();
 

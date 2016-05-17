@@ -109,6 +109,7 @@
         </tr>
     </c:forEach>
 </table>
+<a href="/scientific/myactivity/addConference"> <input type="submit" value="Add Conference"></a>
 
 
 </body>
