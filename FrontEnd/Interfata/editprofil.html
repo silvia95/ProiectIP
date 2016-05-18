@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Editare formular</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../css/style_edit.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: transparent;
+            color: #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+<form   class="myForm" id="myForm">	
+    <div class="titlu">
+        <h2>Editare Profil</h2>
+    </div>
+				
+    <div class="scubtitlu">
+        <h4>Schimbare E-mail</h4>
+    </div>
+        <section class="schimbare_email" id="schimbare">    
+            <div class="input-group">		
+	    	   <label class="subtitlu2" id="subtitlu_email">Email</label>
+                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                 <input type="text" class="reset_email" id="email"  placeholder="Username@info.uaic.ro">
+               
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                  <input type="password"  class="reset_email" id="parola"  placeholder="Parola pentru validare">
+            </div>
+        </section>                     
+                    
+                   				
+    <div class="subtitlu">
+        <h4>Schimbare parola</h4>
+    </div>
+	    <section class="schimbare_parola" id="schimbare_pass"> 
+		    <div class="input-group">
+                <label class="subtitlu2"  id="subtitlu_pass">Parola</label>              
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                   <input type="password" class="reset_pass" id="parola"  placeholder="Parola actuala">
+                                            
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+                  <input type="password" class="reset_pass" id="parola_noua"   placeholder="Noua parola">
+                </div>
+        </section>           
+				
+				
+    <div class="subtitlu">
+        <h4>Despre mine</h4>
+    </div>
+	    <section class="despre_mine" id="despre_me"> 
+		    <div class="input-group" id="nume_prenume">
+                <label class="subtitlu2" id="subtitlu_nume">Nume</label>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-font"></span></span>
+                    <input type="text" class="date_personale" id="nume" placeholder="Numele">
+            
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-font"></span></span>
+                    <input type="text" class="date_personale" id="prenume"   placeholder="Prenumele">
+            </div>
+                                   
+            <div class="">
+             <label class="subtitlu2" id="subtitlu_tipul">Tipul</label>
+                <label class="radio-inline"><input type="checkbox"  id="student">Student</label>
+                <label class="radio-inline"><input type="checkbox"  id="profesor">Profesor</label>
+                <label class="radio-inline"><input type="checkbox" id="colaborator">Colaborator</label>
+                <label class="radio-inline"><input type="checkbox" id="asistent">Asistent</label>
+			</div>
+            
+                           
+            <label class="subtitlu2" id="subtitlu_functie">Functie:</label>
+            <select class="functie">
+                                    <option value="an1">Student an1</option>
+                                    <option value="an2">Student an2</option>
+                                    <option value="an3">Student an3</option>
+                                    <option value="an3">Master an1</option>
+                                    <option value="an3">Master an2</option>
+                                    <option value="dran1">Doctorand an1</option>
+                                    <option value="dran2">Doctorand an2</option>
+                                    <option value="profesor">Profesor</option>
+                                    <option value="profesorD">Profesor Dr</option>
+                                    <option value="lector">Lector</option>
+                                    <option value="lectorD">Lector Dr</option>
+                                    <option value="asitent">Asisten Dr</option>
+                </select>
+                      
+			<div class="subtitlu2"	>	
+                <div class="input-group" >			
+                <label class="subtitlu2" id="subtitlu_domeniu" >Domeniul de  cercetare</label>				
+                 <span class="input-group-addon"><span  class="glyphicon glyphicon-briefcase"></span></span>
+                 <input type="text" class="domeniu" id="domeniu"  placeholder="Domeniu cercetare">
+                 </div> 
+			</div> 
+                              
+
+             <div class="input-group">
+              <label class="subtitlu2" id="subtitlu_EMAILsuplimentar">E-mail suplimentar</label>
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                   <input type="text" class="email_suplimentar" id="EmailNou"  placeholder="Username">       
+                
+                    <select name="yahoo_gmail">
+                      <option value="yahoo">@yahoo.com</option>
+                      <option value="gmail">@gmail.com</option>
+                    </select>
+             </div>
+                         
+         </section> 
+            
+        
+
+        <div class="form-actions">
+            <button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button>
+		    <button type="reset" onclick="resetForm()" value="Reset form" class="resetare">Resetare</button>     
+        </div>
+                
+			<script>
+			 function resetForm() {
+                    document.getElementById("myForm").reset();
+					alert('Reintroduceti datele!');
+			                    }
+			 function Submit() {
+                    document.getElementById("myForm").submit();
+					alert('Datele dumneavoastra au fost salvate cu succes!');
+					}
+			 
+            </script>
+  </form>
+
+</body>
+</html>

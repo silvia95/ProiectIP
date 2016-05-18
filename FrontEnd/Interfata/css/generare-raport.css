@@ -1,0 +1,29 @@
+@import url("bootstrap.css");
+
+body{
+	color:#aaaaaa;
+}
+
+#chckitem{
+	list-style: none;
+}
+
+#items{
+	padding-left: 1%;
+}
+
+#perioada_de_la{
+    width:100px;
+}
+
+#perioada_pana_la{
+    width:100px;
+}
+
+#punctaj_de_la{
+	width: 100px;
+}
+
+#punctaj_pana_la{
+	width:100px;
+}

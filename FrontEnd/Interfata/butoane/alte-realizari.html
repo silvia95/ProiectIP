@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>edit-alte-realizari</title>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/AC.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  	<script type="text/javascript">
+	$( document ).ready(function() {
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "none";
+				document.getElementById('organizare-evenimente').style.display = "none";
+				document.getElementById('brevete').style.display = "none";
+				document.getElementById('prof-invitat').style.display = "none";
+				document.getElementById('carti-autor').style.display = "none";
+				});
+			
+			function director_show(){
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "block";
+				document.getElementById('organizare-evenimente').style.display = "none";
+				document.getElementById('brevete').style.display = "none";
+				document.getElementById('prof-invitat').style.display = "none";
+				document.getElementById('carti-autor').style.display = "none";
+			}
+			function oraganizare_evenimente_show(){
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "none";
+				document.getElementById('organizare-evenimente').style.display = "block";
+				document.getElementById('brevete').style.display = "none";
+				document.getElementById('prof-invitat').style.display = "none";
+				document.getElementById('carti-autor').style.display = "none";
+				}
+			function brevete_show(){
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "none";
+				document.getElementById('organizare-evenimente').style.display = "none";
+				document.getElementById('brevete').style.display = "block";
+				document.getElementById('prof-invitat').style.display = "none";
+				document.getElementById('carti-autor').style.display = "none";
+				}
+			function prof_invitat_show(){
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "none";
+				document.getElementById('organizare-evenimente').style.display = "none";
+				document.getElementById('brevete').style.display = "none";
+				document.getElementById('prof-invitat').style.display = "block";
+				document.getElementById('carti-autor').style.display = "none";
+				}
+			function carti_autor_show(){
+				document.getElementById('edit-alte-realizari').style.display = "block";
+				document.getElementById('director').style.display = "none";
+				document.getElementById('organizare-evenimente').style.display = "none";
+				document.getElementById('brevete').style.display = "none";
+				document.getElementById('prof-invitat').style.display = "none";
+				document.getElementById('carti-autor').style.display = "block";
+				}
+			function Submit() {
+                    document.getElementById("myForm").submit();
+					alert('Datele dumneavoastra au fost salvate cu succes!');
+					}
+	</script>
+</head>
+<body>
+	<section id="edit-alte-realizari">
+		<label>Tip de activitate:</label>
+		 <div class="btn-group">
+            <button type="button" class="btn btn-small btn-default dropdown-toggle" data-toggle="dropdown">Selecteaza activitatea de cercetare <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+            <li><a href="#" onclick="director_show()">Director (coordonator/responsabil) | membru al unui grant/proiect/contract/program de cercetare national/international</a></li>
+            <li><a href="#" onclick="oraganizare_evenimente_show()">Organizare evenimente stiintifice/scoli de vara</a></li>
+            <li><a href="#" onclick="brevete_show()">Brevete si inventii active</a></li>
+            <li><a href="#" onclick="prof_invitat_show()">Profesor/researcher asociat/visiting la o universitate </a></li>
+            <li><a href="#" onclick="carti_autor_show()">Carti autor/editate si capitole publicate</a></li>
+            </ul>
+            </div>
+	</section>
+
+	<!-- display just one choice -->
+<section id="director">
+<section id="view-director">
+	<table class="table table-striped table-hover" id="directortab">
+			<thead>
+				<tr class="row">
+					<th class="sorting">Nr Crt</th>
+					<th class="sorting">Nume proiect</th>
+					<th class="sorting">Director</th>
+					<th class="sorting">Calitate</th>
+					<th class="sorting">Perioada</th>
+					<th class="sorting">Valoare Euro</th>
+					<th class="sorting">Valoare RON</th>
+					<th class="sorting">Punctaj</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+		</tbody>
+	</table>
+</section>
+
+<section id="edit-director">
+	<h3 style="color:white;">Director (coordonator/responsabil) | membru al unui grant/proiect/contract/program de cercetare national/international</h3>
+			<form role="form-inline" action="" method="post" class="edit-director-form">
+				<div class="input-group">
+					<label>Nume proiect: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Director: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Perioada: </label>
+					<input type="date" id="datepicker" class="form-control" placeholder="Data publicarii">
+				</div>
+				<div class="input-group">
+					<label>Valoare Euro: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Valoare RON: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Punctaj: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="form-actions">
+            		<button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button> 
+        		</div>
+				</form>
+</section>
+</section>
+
+<section id="organizare-evenimente">
+<section id="view-organizare-evenimente">
+<table class="table table-striped table-hover" id="oraganizaretab">
+			<thead>
+				<tr class="row">
+					<th class="sorting">Nr Crt</th>
+					<th class="sorting">Nume eveniment</th>
+					<th class="sorting">Calitate</th>
+					<th class="sorting">An</th>
+					<th class="sorting">Link</th>
+					<th class="sorting">Punctaj</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				
+				</tr>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					
+				</tr>
+		</tbody>
+	</table>
+</section>
+
+<section id="edit-oraganizare-evenimente">
+	<h3 style="color:white;">Organizare evenimente stiintifice/scoli de vara</h3>
+			<form role="form-inline" action="" method="post" class="edit-organizare-evenimente-form">
+				<div class="input-group">
+					<label>Nume eveniment: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Calitate: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Link: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Punctaj: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="form-actions">
+            		<button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button> 
+        		</div>
+				</form>
+</section>
+</section>
+
+<section id="brevete">
+<section id="view-brevete">
+<table class="table table-striped table-hover" id="brevetetab">
+			<thead>
+				<tr class="row">
+					<th class="sorting">Nr Crt</th>
+					<th class="sorting">Nume brevet</th>
+					<th class="sorting">Autori</th>
+					<th class="sorting">An</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				
+				</tr>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+			</tbody>
+		</table>
+</section>
+
+<section id="edit-oraganizare-evenimente">
+	<h3 style="color:white;">Brevete si inventii active</h3>
+			<form role="form-inline" action="" method="post" class="edit-organizare-evenimente-form">
+				<div class="input-group">
+					<label>Nume brevet: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Adauga autor:</label>
+					<div class="btn-group">
+					<button type="button" class="btn btn-small btn-default dropdown-toggle" data-toggle="dropdown">Selecteaza autor <span class="caret"></span></button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Optiune1</a></li>
+						<li><a href="#">Optiune2</a></li>
+						<li><a href="#">Optiune3</a></li>
+					</ul>
+					</div>
+				</div>
+				<div class="input-group">
+					<label>An: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="form-actions">
+            		<button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button> 
+        		</div>
+				</form>
+</section>
+</section>
+
+<section id="prof-invitat">
+<section id="view-prof-invitat">
+<table class="table table-striped table-hover" id="prof-invitattab">
+			<thead>
+				<tr class="row">
+					<th class="sorting">Nr Crt</th>
+					<th class="sorting">Nume universitate</th>
+					<th class="sorting">Scopul cercetarii</th>
+					<th class="sorting">Nr luni</th>
+					<th class="sorting">An</th>
+					<th class="sorting">Punctaj</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				
+				</tr>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+			</tbody>
+		</table>
+</section>
+
+<section id="edit-prof-invitat">
+	<h3 style="color:white;">Profesor/researcher asociat/visiting la o universitate</h3>
+			<form role="form-inline" action="" method="post" class="edit-prof-invitat-form">
+				<div class="input-group">
+					<label>Nume universitate: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Scopul cercetarii: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Nr luni: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>An: </label>
+					<input type="text" class="form-control"></input>
+				</div>
+				<div class="input-group">
+					<label>Punctaj: </label>
+					<input type="text" class="form-control"></input>
+				<div class="form-actions">
+            		<button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button> 
+        		</div>
+</section>
+</section>
+
+<section id="carti-autor">
+<section id="view-carti-autor">
+<table class="table table-striped table-hover" id="carti-autortab">
+			<thead>
+				<tr class="row">
+					<th class="sorting">Nr Crt</th>
+					<th class="sorting">Nume volum</th>
+					<th class="sorting">Autori/Editori</th>
+					<th class="sorting">Nr autori/editori</th>
+					<th class="sorting">An</th>
+					<th class="sorting">Editura</th>
+					<th class="sorting">Punctaj</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+					<tr role="row" class="odd">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+				<tr role="row" class="even">
+					<th scope="row"></th>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+					<td contenteditable="true">test</td>
+				</tr>
+			</tbody>
+		</table>
+</section>
+
+<section id="edit-carti-autor">
+<h3 style="color:white;">Carti autor/editate si capitole publicate</h3>
+	<form role="form-inline" action="" method="post" class="carti-autor-form">
+		<div class="input-group">
+			<label>Nume volum: </label>
+			<input type="text" class="form-control"></input>
+		</div>
+		<div class="input-group">
+					<label>Adauga autor/editor:</label>
+					<div class="btn-group">
+					<button type="button" class="btn btn-small btn-default dropdown-toggle" data-toggle="dropdown">Selecteaza autor/editor <span class="caret"></span></button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Optiune1</a></li>
+						<li><a href="#">Optiune2</a></li>
+						<li><a href="#">Optiune3</a></li>
+					</ul>
+					</div>
+				</div>
+		<div class="input-group">
+			<label>Nr autori/editori: </label>
+			<input type="text" class="form-control"></input>
+		</div>
+		<div class="input-group">
+			<label>An: </label>
+			<input type="text" class="form-control"></input>
+		</div>
+		<div class="input-group">
+			<label>Editura:</label>
+			<input type="text" class="form-control"></input>
+		</div>
+		<div class="input-group">
+			<label>Punctaj: </label>
+			<input type="text" class="form-control"></input>
+		</div>
+		<div class="form-actions">
+            <button type="submit" onclick="Submit()" value="Submit form" class="salvare" id="myBtn">Salvare</button> 
+        </div>
+		</form>
+</section>
+</section>
+	
+
+</body>
+</html>

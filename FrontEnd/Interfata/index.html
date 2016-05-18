@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+
+        <title> Login Form </title>
+
+        <!-- CSS -->
+         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+         <link rel="stylesheet" href="css/bootstrap.min.css">
+         <link rel="stylesheet" href="css/style.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script language="javascript">
+            function required()
+            {
+                var emp_username = document.forms["login-form"]["form-username"].value;
+                var emp_password = document.forms["login-form"]["form-password"].value;
+                if (emp_username == "" && emp_password == ""){
+                    alert("Please fill the login form");
+                    document.getElementById('form-login').action = "";
+                    return false;
+                }
+                else if (emp_password == ""){
+                    alert("Please fill the password area.");
+                    document.getElementById('form-login').action = "";
+                    return false;
+                }
+                else if (emp_username == ""){
+                    alert("Please fill the email area.");
+                    document.getElementById('form-login').action = "";
+                    return false;
+                }
+
+                if (emp_password != "" && emp_username != ""){
+                    document.getElementById('form-login').action = "container.php";
+                    return true;
+                }
+            }
+			function myAlert()
+			{
+			     alert("Va rog completi campul pentru email si apoi apasati butonul de inregistrare");
+			}
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="loader" style=" display:none; position: fixed; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); color: #fff;  z-index: 9999999;"><img src="load.gif" style="position: absolute; top:20%; left:40%;"></div>
+        <!-- Top content -->
+        <div id="top-content2" style="display:none;  width: 100%; height: 500px;">
+
+        </div>
+        <div class="top-content">
+        	<div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1>Formular de logare</h1>
+							<img src="img/logo-fii.png">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-box form-content special">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Login</h3>
+                            		<p>Introduceti adresa de email si parola:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom test">
+			                    <form role="form" action="" method="post" class="login-form" name="login-form" onsubmit="required()" id="form-login">
+			                    	<div class="form-group login-form">
+			                    		<label class="sr-only" for="form-username">Email:</label>
+			                        	<input type="email" name="form-username" placeholder="@info.uaic.ro..." class="form-username form-control" id="form-username">
+			                        </div>
+			                        <div class="form-group login-form">
+			                        	<label class="sr-only" for="form-password">Parola</label>
+			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+			                        </div>
+			                        <button type="submit" class="btn" id="submitButton">Logare</button>
+									<p> Sau te poti inregistra</p>
+									<button type="submit" onclick="myAlert()" class="btn" id="register">Inregistrare</button>
+
+		                    </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    <!--<script src="js/empty-form.js"></script>-->
+    </body>
+
+</html>
