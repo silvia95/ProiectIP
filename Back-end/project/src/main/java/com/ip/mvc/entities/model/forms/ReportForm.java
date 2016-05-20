@@ -6,6 +6,15 @@ package com.ip.mvc.entities.model.forms;
 public class ReportForm {
 
     private ScientificProduction scientificProduction;
+    private ScientificProduction scientificImpact;
+
+    public ScientificProduction getScientificImpact() {
+        return scientificImpact;
+    }
+
+    public void setScientificImpact(ScientificProduction scientificImpact) {
+        this.scientificImpact = scientificImpact;
+    }
 
     public ScientificProduction getScientificProduction() {
         return scientificProduction;

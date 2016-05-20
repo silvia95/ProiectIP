@@ -53,11 +53,51 @@
             <form:input path="scientificProduction.toYear"/>
         </div>
 
+        <br>
+
+        <label>
+            <input type="checkbox" name="impactCheckBox">
+        </label>Scientific Impact
+        <div>
+            <form:label path="scientificImpact.name">Article Name: </form:label>
+            <form:input path="scientificImpact.name"/>
+        </div>
+        <div>
+            <form:label path="scientificImpact.authorsText">Authors: </form:label>
+            <form:input path="scientificImpact.authorsText"/>
+        </div>
+        <div>
+            <form:label path="scientificImpact.journalName">Journal Name: </form:label>
+            <form:input path="scientificImpact.journalName"/>
+        </div>
+        <div>
+            <form:label path="scientificImpact.classification">Classification: </form:label>
+            <form:input path="scientificImpact.classification"/>
+        </div>
+        <div>
+            <form:label path="scientificImpact.articleType">Article Type: </form:label>
+            <form:input path="scientificImpact.articleType"/>
+        </div>
+        <div>
+            Score
+            <form:label path="scientificImpact.fromScore">From: </form:label>
+            <form:input path="scientificImpact.fromScore"/>
+            <form:label path="scientificImpact.toScore">To: </form:label>
+            <form:input path="scientificImpact.toScore"/>
+        </div>
+        <div>
+            Year
+            <form:label path="scientificImpact.fromYear">From: </form:label>
+            <form:input path="scientificImpact.fromYear"/>
+            <form:label path="scientificImpact.toYear">To: </form:label>
+            <form:input path="scientificImpact.toYear"/>
+        </div>
+
         <input type="submit" value="Generate Report">
     </form:form>
 
-<c:if test="${articlesInfo.size() > 0}">
-    <h3>Report View</h3>
+<c:if test="${articlesProduction.size() > 0}">
+    <h3>Scientific Production</h3>
     <table border="1">
         <tr>
             <th>Title</th>
@@ -68,7 +108,7 @@
             <th>Authors</th>
             <th>Other Authors</th>
         </tr>
-        <c:forEach items="${articlesInfo}" var="article" >
+        <c:forEach items="${articlesProduction}" var="article" >
             <tr>
                 <th>${article.title}</th>
                 <th>${article.year}</th>
@@ -81,5 +121,33 @@
         </c:forEach>
     </table>
 </c:if>
+
+
+    <c:if test="${articlesImpact.size() > 0}">
+        <h3>Scientific Impact</h3>
+        <table border="1">
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>JournalISSN</th>
+                <th>Journal Name</th>
+                <th>Score</th>
+                <th>Authors</th>
+                <th>Other Authors</th>
+            </tr>
+            <c:forEach items="${articlesImpact}" var="article" >
+                <tr>
+                    <th>${article.title}</th>
+                    <th>${article.year}</th>
+                    <th>${article.journalISSN}</th>
+                    <th>${article.journalTitle}</th>
+                    <th>${article.score}</th>
+                    <th><c:forEach items="${article.authors}" var="author" varStatus="loop">${author.firstname} ${author.lastname}<c:if test="${!loop.last}">,</c:if> </c:forEach></th>
+                    <th><c:forEach items="${article.otherAuthors}" var="author" varStatus="loop">${author}<c:if test="${!loop.last}">,</c:if> </c:forEach></th>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+
 </body>
 </html>

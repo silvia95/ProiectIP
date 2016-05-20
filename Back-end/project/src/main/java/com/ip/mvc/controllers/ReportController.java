@@ -43,22 +43,33 @@ public class ReportController {
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public ModelAndView executeReportView(@ModelAttribute ReportForm reportForm,
                                           @RequestParam(value = "productionCheckBox", required = false) String productionCheckBox,
+                                          @RequestParam(value = "impactCheckBox", required = false) String impactCheckBox,
                                           HttpServletRequest request) {
 
         ModelAndView model = new ModelAndView("report");
 
         String userID = profileService.getUserID(request.getUserPrincipal().getName());
 
-        List<Article> articlesInfo = new ArrayList<>();
+        List<Article> articlesProduction = new ArrayList<>();
+        List<Article> articlesImpact = new ArrayList<>();
+
         if (productionCheckBox != null) {
             ScientificProduction scientificProduction = reportForm.getScientificProduction();
             List<Article> articleList = reportService.getScientificProduction(userID, scientificProduction);
             for (Article article : articleList) {
-                articlesInfo.add(myActivityService.getArticleInfo(article.getArticleID()));
+                articlesProduction.add(myActivityService.getArticleInfo(article.getArticleID()));
+            }
+        }
+        if (impactCheckBox != null) {
+            ScientificProduction scientificImpact = reportForm.getScientificImpact();
+            List<Article> articleList = reportService.getScientificImpact(userID, scientificImpact);
+            for (Article article : articleList) {
+                articlesImpact.add(myActivityService.getArticleInfo(article.getArticleID()));
             }
         }
 
-        model.addObject("articlesInfo", articlesInfo);
+        model.addObject("articlesProduction", articlesProduction);
+        model.addObject("articlesImpact", articlesImpact);
         model.addObject("reportForm", new ReportForm());
 
         return model;
