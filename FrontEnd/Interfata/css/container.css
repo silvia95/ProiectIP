@@ -1,0 +1,172 @@
+@import url("bootstrap.css");
+
+body {
+    /*background-image: url("../img/Huge-Backgrounds-63.jpg");*/
+    /*background-image: url("http://bestwallpaperhd.com/wp-content/uploads/2014/09/Book-Wallpaper.jpg");*/
+	background-color: grey;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#main_section {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#header_section {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    height: 4%;
+    margin-top: 0.5%;
+    padding-bottom: 5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    padding-top: 12px;
+    padding-left: 20px;
+}
+
+#da_big_section {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top: 0.5%;
+    height: 80%;
+    border-radius: 10px;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-bottom: 50px;
+    padding-right: 1%;
+    color: #aaaaaa;
+}
+
+#footer_section {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 12%;
+    margin-top: 0.5%;
+    border-radius: 10px;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    padding-top: 1%;
+    padding-left: 1%;
+}
+
+#logo {
+    padding-left: 20px;
+    width: 6%;
+}
+
+/* editare profil button */
+#editare-profil {
+    margin-left: 1%;
+}
+
+#editare-profil > a:hover {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 6%;
+    /*background-color:rgba(255, 255, 255, 0.5);
+    color:#006cd9;
+    border-color:rgba(0, 0, 0, 0.5);*/
+}
+
+#editare-profil > a:visited {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 6%;
+    /*background-color:#9797a6;
+    color:rgba(0, 0, 0, 0.5);
+    border-color:#9797a6;*/
+}
+
+/* activitate de cercetare button */
+#activitate-cercetare {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:#006cd9;
+    color:rgba(0, 0, 0, 0.5);
+    border-color:#006cd9;*/
+}
+
+#activitate-cercetare > a:hover {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:rgba(255, 255, 255, 0.5);
+    color:#006cd9;
+    border-color:rgba(0, 0, 0, 0.5);*/
+}
+
+#activitate-cercetare > a:visited {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:#9797a6;
+    color:rgba(0, 0, 0, 0.5);
+    border-color:#9797a6;*/
+}
+
+/* generare raport button */
+#generare-raport {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:#006cd9;
+    color:rgba(0, 0, 0, 0.5);
+    border-color:#006cd9;*/
+}
+
+#generare-raport > a:hover {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:rgba(255, 255, 255, 0.5);
+    color:#006cd9;
+    border-color:rgba(0, 0, 0, 0.5);*/
+}
+
+#generare-raport > a:visited {
+    padding-top: 0.2%;
+    padding-bottom: -0.2%;
+    margin-left: 0.5%;
+    /*background-color:#9797a6;
+    color:rgba(0, 0, 0, 0.5);
+    border-color:#9797a6;*/
+}
+
+/* header align right*/
+#align-right {
+    position: absolute;
+    right: 1%;
+    top: 0;
+    padding-top: 0.3%;
+}
+
+#button-search {
+    margin-right: 10%;
+}
+
+#textbox-search {
+    height: 28px;
+    width: 200px;
+    float: right;
+}
+
+/*uaic*/
+#uaic {
+    color: #3388CC;
+}
+
+#fii {
+    top: -1%;
+    color: #3388CC;
+}
+
+.input-group {
+    border-collapse: separate;
+    display: table;
+    float: right;
+    padding-right: 20px;
+    padding-top: 20px;
+    position: relative;
+}

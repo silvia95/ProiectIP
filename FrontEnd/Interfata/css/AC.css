@@ -1,0 +1,83 @@
+body {
+	background:none;
+}
+
+#view-prod-stiintifica, 
+#view-impact-stiintific,
+#view-prez-conferinta,
+#view-proiect-cercetare{
+	width: 90%;
+	margin: 5%;
+	background: none;
+}
+
+#add-prod-st{
+	margin-left: 45%;
+}
+
+#edit-prod-stiintifica,
+#edit-impact-stiintific,
+#edit-alte-realizari,
+#edit-conferinta,
+#edit-proiect-cercetare{
+	margin-left: 5%;
+}
+
+#utiliz-curent{
+	opacity: 0.7;
+}
+
+#add-citare{
+	margin: 2%;
+}
+
+section{
+	padding: 10px;
+}
+
+.input-group{
+	padding: 7px;
+}
+
+  #myBtn{
+  display: inline-block;
+  padding: 5px 30px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;	
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #3366FF;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px #999;
+  width: 350px;
+  margin-top: 15px;
+}
+
+form {
+  position: left;
+  font-size: 14px;
+  line-height: 35px;
+  width: 800px;
+  padding: 2em;  
+  margin:5px 0 0 10px;
+}
+
+.even{
+	color: white;
+}
+
+.even:hover{
+	background-color: white;
+	color: black;
+}
+
+thead{
+	color: white;
+}
+
+label{
+	color: white;
+}
