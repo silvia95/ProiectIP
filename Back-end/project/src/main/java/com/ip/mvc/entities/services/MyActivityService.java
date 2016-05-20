@@ -4,6 +4,7 @@ import com.ip.mvc.entities.model.contents.Article;
 import com.ip.mvc.entities.model.contents.Conference;
 import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.contents.Quotation;
+import com.ip.mvc.entities.model.users.Teacher;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -163,6 +164,7 @@ public class MyActivityService {
     }
 
     public boolean addArticle(Article article) {
+        System.out.println(article.getAuthors());
         try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -199,6 +201,36 @@ public class MyActivityService {
 
                 statement.execute();
 
+                /* insert authors */
+                List<Teacher> authors = article.getAuthors();
+                if (authors.size() > 0) {
+                    for (Teacher author : authors) {
+                        query = "SELECT  u.USER_ID FROM TEACHERS t JOIN USERS u ON t.EMAIL = u.EMAIL WHERE FIRST_NAME = ? AND LAST_NAME = ? ";
+                        statement = connection.prepareStatement(query);
+                        statement.setString(1, author.getFirstname());
+                        statement.setString(2, author.getLastname());
+
+                        resultSet = statement.executeQuery();
+                        if (resultSet.next()) {
+                            /* author is already in db */
+                            query = "INSERT INTO ARTICLE_AUTHORS(ARTICLE_ID, USER_ID) VALUES (?, ?)";
+                            statement = connection.prepareStatement(query);
+
+                            statement.setString(1, articleID);
+                            statement.setString(2, resultSet.getString("USER_ID"));
+                            statement.execute();
+                        } else {
+                            /* author is not in db */
+                            query = "INSERT INTO ARTICLE_OTHER_AUTHORS(ARTICLE_ID, NAME) VALUES (?, ?)";
+                            statement = connection.prepareStatement(query);
+
+                            statement.setString(1, articleID);
+                            statement.setString(2, author.getFirstname() + " " + author.getLastname());
+
+                            statement.execute();
+                        }
+                    }
+                }
                 return true;
             } else return false;
 

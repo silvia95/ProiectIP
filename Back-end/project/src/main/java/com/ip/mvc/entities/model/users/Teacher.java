@@ -10,6 +10,15 @@ public class Teacher extends User {
     private String type;
     private List<String> departments = new ArrayList<>();
 
+    public Teacher() {
+
+    }
+
+    public Teacher(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -49,8 +58,8 @@ public class Teacher extends User {
     @Override
     public String toString() {
         return "Teacher{" +
-                "type='" + type + '\'' +
-                ", departments=" + departments +
-                '}';
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                "} " + super.toString();
     }
 }

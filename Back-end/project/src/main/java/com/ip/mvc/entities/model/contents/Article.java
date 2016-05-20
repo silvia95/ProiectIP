@@ -10,7 +10,7 @@ public class Article extends ScientificActivity {
     private String articleID;
     private String userID;
     private String title;
-    private List<Teacher> authors;
+    private List<Teacher> authors = new ArrayList<>();
     private String year;
     private String journalISSN;
     private String journalTitle;
@@ -30,6 +30,12 @@ public class Article extends ScientificActivity {
 
     public void setAuthorsText(String authorsText) {
         this.authorsText = authorsText;
+        String[] authors = authorsText.split(",");
+        for (String author : authors) {
+            String[] names = author.split(" ");
+            Teacher teacher = new Teacher(names[0], names[1]);
+            this.authors.add(teacher);
+        }
     }
 
     public String getJournalTitle() {
