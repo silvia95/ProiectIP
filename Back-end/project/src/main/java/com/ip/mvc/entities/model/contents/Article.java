@@ -2,6 +2,8 @@ package com.ip.mvc.entities.model.contents;
 
 import com.ip.mvc.entities.model.users.Teacher;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,29 @@ public class Article extends ScientificActivity {
     private String journalISSN;
     private String journalTitle;
     private String authorsText;
+    private List<String> otherAuthors = new ArrayList<>();
+
+    public Article() {
+
+    }
+
+    public Article(ResultSet resultSet) throws SQLException {
+        setArticleID(resultSet.getString(1));
+        setTitle(resultSet.getString(2));
+        setYear(resultSet.getString(3));
+        setJournalISSN(resultSet.getString(4));
+        setJournalTitle(resultSet.getString(5));
+        setScore(resultSet.getInt(6));
+    }
+
+
+    public List<String> getOtherAuthors() {
+        return otherAuthors;
+    }
+
+    public void setOtherAuthors(List<String> otherAuthors) {
+        this.otherAuthors = otherAuthors;
+    }
 
     public String getUserID() {
         return userID;
@@ -24,19 +49,19 @@ public class Article extends ScientificActivity {
         this.userID = userID;
     }
 
-    public String getAuthorsText() {
-        return authorsText;
-    }
-
-    public void setAuthorsText(String authorsText) {
-        this.authorsText = authorsText;
-        String[] authors = authorsText.split(",");
-        for (String author : authors) {
-            String[] names = author.split(" ");
-            Teacher teacher = new Teacher(names[0], names[1]);
-            this.authors.add(teacher);
+        public String getAuthorsText() {
+            return authorsText;
         }
-    }
+
+        public void setAuthorsText(String authorsText) {
+            this.authorsText = authorsText;
+            String[] authors = authorsText.split(",");
+            for (String author : authors) {
+                String[] names = author.split(" ");
+                Teacher teacher = new Teacher(names[0], names[1]);
+                this.authors.add(teacher);
+            }
+        }
 
     public String getJournalTitle() {
         return journalTitle;
@@ -86,17 +111,23 @@ public class Article extends ScientificActivity {
         this.journalISSN = journalISSN;
     }
 
+    public void addAuthor(Teacher teacher) {
+        authors.add(teacher);
+    }
+
 
     @Override
     public String toString() {
         return "Article{" +
                 "articleID='" + articleID + '\'' +
+                ", userID='" + userID + '\'' +
                 ", title='" + title + '\'' +
                 ", authors=" + authors +
                 ", year='" + year + '\'' +
                 ", journalISSN='" + journalISSN + '\'' +
                 ", journalTitle='" + journalTitle + '\'' +
                 ", authorsText='" + authorsText + '\'' +
+                ", otherAuthors=" + otherAuthors +
                 "} " + super.toString();
     }
 }

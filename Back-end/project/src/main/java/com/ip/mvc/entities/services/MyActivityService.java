@@ -417,4 +417,46 @@ public class MyActivityService {
         return conference;
     }
 
+    public Article getArticleInfo(String articleID) {
+        Article article = new Article();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT A.ARTICLE_ID, A.JOURNAL_ISSN, A.TITLE, A.YEAR, J.journal_name, J.score FROM Articles A\n" +
+                    "JOIN Journals J ON J.ISSN = A.journal_issn WHERE A.ARTICLE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, articleID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) article = new Article(resultSet);
+
+            sql = "SELECT T.first_name, T.last_name FROM Article_Authors A\n" +
+                    "JOIN Users U ON U.user_id = A.user_id\n" +
+                    "JOIN Teachers T ON T.email = U.email\n" +
+                    "WHERE A.article_id = ? ";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, articleID);
+
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Teacher author = new Teacher(resultSet.getString(1), resultSet.getString(2));
+                article.addAuthor(author);
+            }
+
+            sql = "SELECT NAME FROM ARTICLE_OTHER_AUTHORS WHERE ARTICLE_ID = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, articleID);
+
+            resultSet = statement.executeQuery();
+            List<String> authors = new ArrayList<>();
+            while (resultSet.next()) {
+                authors.add(resultSet.getString(1));
+            }
+            article.setOtherAuthors(authors);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return article;
+    }
+
 }
