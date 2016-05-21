@@ -23,6 +23,8 @@ public class HomeController {
         String userID = profileService.getUserID(request.getUserPrincipal().getName());
         Teacher teacherInfo = profileService.getTeacherInfo(userID);
 
+        request.getSession().setAttribute("userID", userID);
+
         model.addObject("teacherInfo", teacherInfo);
 
         return model;
