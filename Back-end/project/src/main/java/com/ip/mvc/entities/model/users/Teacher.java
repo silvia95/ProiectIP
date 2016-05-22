@@ -1,5 +1,7 @@
 package com.ip.mvc.entities.model.users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,13 @@ public class Teacher extends User {
 
     public Teacher() {
 
+    }
+
+    public Teacher(ResultSet resultSet) throws SQLException {
+        this.setEmail(resultSet.getString(1));
+        this.setFirstname(resultSet.getString(2));
+        this.setLastname(resultSet.getString(3));
+        this.setType(resultSet.getString(4));
     }
 
     public Teacher(String firstname, String lastname) {
