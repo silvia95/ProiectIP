@@ -45,20 +45,20 @@
 
     <section id="da_big_section">
 <form:form action="/edit/article" method="post" modelAttribute="article">
-    <div>
+    <div class="form-group">
         <form:label path="title">Title: </form:label>
-        <form:input path="title" placeholder="${article.title}"/>
+        <form:input cssClass="form-control" path="title" placeholder="${article.title}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="year">Year: </form:label>
-        <form:input path="year" placeholder="${article.year}"/>
+        <form:input cssClass="form-control" path="year" placeholder="${article.year}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="journalISSN">Journal ISSN: </form:label>
-        <form:input  path="journalISSN" placeholder="${article.journalISSN}"/>
+        <form:input cssClass="form-control"  path="journalISSN" placeholder="${article.journalISSN}"/>
     </div>
     <input type="hidden" name="articleID"  value="${article.articleID}">
-    <input type="submit" value="Save"/>
+    <input type="submit" class="btn btn-primary" value="Save"/>
 </form:form>
 
 </body>
