@@ -120,7 +120,7 @@
 
 <c:if test="${articlesProduction.size() > 0}">
     <h3>Scientific Production</h3>
-    <table border="1">
+    <table class="table table-bordered" border="1">
         <tr>
             <th>Title</th>
             <th>Year</th>
@@ -147,7 +147,7 @@
 
     <c:if test="${articlesImpact.size() > 0}">
         <h3>Scientific Impact</h3>
-        <table border="1">
+        <table class="table table-bordered" border="1">
             <tr>
                 <th>Title</th>
                 <th>Year</th>
