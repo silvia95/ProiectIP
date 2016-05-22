@@ -31,16 +31,7 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">

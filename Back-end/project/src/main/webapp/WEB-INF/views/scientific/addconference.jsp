@@ -31,38 +31,29 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/scientific/myactivity/addConference" method="post" modelAttribute="conference">
-    <div>
+    <div class="form-group">
         <form:label path="name">Name: </form:label>
-        <form:input id="name" path="name"/>
+        <form:input cssClass="form-control" id="name" path="name"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="location">Location: </form:label>
-        <form:input id="year" path="location"/>
+        <form:input cssClass="form-control" id="year" path="location"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="year">Year: </form:label>
-        <form:input id="year" path="year"/>
+        <form:input cssClass="form-control" id="year" path="year"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="details">Details: </form:label>
-        <form:input id="details" path="details"/>
+        <form:input cssClass="form-control" id="details" path="details"/>
     </div>
     <input type="hidden" name="conferenceID" value=${conference.conferenceID}>
-    <input type="submit" value="Add Quotation"/>
+    <input type="submit" class="btn btn-primary" value="Add Quotation"/>
 </form:form>
     </section>
 

@@ -31,44 +31,35 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 
 <form:form action="/scientific/myactivity/addQuotation" method="post" modelAttribute="quotation">
-    <div>
+    <div class="form-group">
         <form:label path="text">Text: </form:label>
-        <form:input id="text" path="text"/>
+        <form:input cssClass="form-control" id="text" path="text"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="year">Year: </form:label>
-        <form:input id="year" path="year"/>
+        <form:input cssClass="form-control" id="year" path="year"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="articleName">Article Name: </form:label>
-        <form:input id="articleName" path="articleName"/>
+        <form:input cssClass="form-control" id="articleName" path="articleName"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="location">Location: </form:label>
-        <form:input id="location" path="location"/>
+        <form:input cssClass="form-control" id="location" path="location"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="authors">Authors</form:label>
-        <form:input id="authors" path="authors"/>
+        <form:input cssClass="form-control" id="authors" path="authors"/>
     </div>
     <input type="hidden" name="userID" value=${userID}>
     <input type="hidden" name="articleID" value=${articleID}>
-    <input type="submit" value="Add Quotation"/>
+    <input type="submit" class="btn btn-primary" value="Add Quotation"/>
 </form:form>
     </section>
 

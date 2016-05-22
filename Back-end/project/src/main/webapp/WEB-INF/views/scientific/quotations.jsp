@@ -14,7 +14,7 @@
 <body>
 
 <h3>Quotations</h3>
-<table border="1">
+<table class="table table-bordered" border="1">
     <tr>
         <th>Article Name</th>
         <th>Year</th>

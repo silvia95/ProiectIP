@@ -174,3 +174,12 @@ body {
 .table {
     background-color: #fff;
 }
+#da_big_section > form {
+    width: 50%;
+    margin: 0 auto;
+}
+.search-btn {
+    float: right;
+    margin-top: 20px;
+    margin-right: 47px;
+}

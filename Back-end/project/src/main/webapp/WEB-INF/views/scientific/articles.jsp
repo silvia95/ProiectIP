@@ -13,7 +13,7 @@
 </head>
 <body>
 <h3>Articles</h3>
-<table border="1">
+<table class="table table-bordered" border="1">
     <tr>
         <th>Title</th>
         <th>Year</th>

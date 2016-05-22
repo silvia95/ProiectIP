@@ -31,51 +31,41 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/scientific/myactivity/addProject" method="post" modelAttribute="project">
-    <div>
+    <div class="form-group">
         <form:label path="title">Title: </form:label>
-        <form:input id="title" path="title"/>
+        <form:input cssClass="form-control" id="title" path="title"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="domain">Domain: </form:label>
-        <form:input id="domain" path="domain"/>
+        <form:input cssClass="form-control" id="domain" path="domain"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="director">Direct: </form:label>
-        <form:input id="director" path="director"/>
+        <form:input cssClass="form-control" id="director" path="director"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="startDate">Start Date: </form:label>
-        <form:input id="startDate" path="startDate"/>
+        <form:input cssClass="form-control" id="startDate" path="startDate"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="finishDate">Finish Date: </form:label>
-        <form:input id="finishDate" path="finishDate"/>
+        <form:input cssClass="form-control" id="finishDate" path="finishDate"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="description">Description: </form:label>
-        <form:input id="description" path="description"/>
+        <form:input cssClass="form-control" id="description" path="description"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="budget">Budget: </form:label>
-        <form:input id="budget" path="budget"/>
+        <form:input cssClass="form-control" id="budget" path="budget"/>
     </div>
 
-
-    <input type="submit" value="Add Project"/>
+    <input type="submit" class="btn btn-primary" value="Add Project"/>
 </form:form>
     </section>
 

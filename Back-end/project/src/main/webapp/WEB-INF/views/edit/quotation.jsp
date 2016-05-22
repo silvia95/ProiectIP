@@ -31,43 +31,34 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/edit/quotation" method="post" modelAttribute="quotation">
-<div>
+<div class="form-group">
     <form:label path="articleName">Article Name: </form:label>
-    <form:input path="articleName" placeholder="${quotation.articleName}"/>
+    <form:input cssClass="form-control" path="articleName" placeholder="${quotation.articleName}"/>
 </div>
-<div>
+<div class="form-group">
     <form:label path="year">Year: </form:label>
-    <form:input path="year" placeholder="${quotation.year}"/>
+    <form:input cssClass="form-control" path="year" placeholder="${quotation.year}"/>
 </div>
-<div>
+<div class="form-group">
     <form:label path="text">Text: </form:label>
-    <form:input path="text" placeholder="${quotation.text}"/>
+    <form:input cssClass="form-control" path="text" placeholder="${quotation.text}"/>
 </div>
-<div>
+<div  class="form-group">
     <form:label path="location">Location: </form:label>
-    <form:input path="location" placeholder="${quotation.location}"/>
+    <form:input cssClass="form-control" path="location" placeholder="${quotation.location}"/>
 </div>
-<div>
+<div class="form-group">
     <form:label path="authors">Authors: </form:label>
-    <form:input path="authors" placeholder="${quotation.authors}"/>
-</div>
+    <form:input cssClass="form-control" path="authors" placeholder="${quotation.authors}"/>
+</div class="form-group">
 
 <input type="hidden" name="articleID"  value="${articleID}">
-<input type="submit" value="Save"/>
+<input type="submit" class="btn btn-primary" value="Save"/>
 </form:form>
 
 </body>

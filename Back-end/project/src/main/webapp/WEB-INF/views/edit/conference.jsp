@@ -31,38 +31,29 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/edit/conference" method="post" modelAttribute="conference">
-    <div>
+    <div class="form-group">
         <form:label path="name">Name: </form:label>
-        <form:input path="name" placeholder="${conference.name}"/>
+        <form:input cssClass="form-control" path="name" placeholder="${conference.name}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="location">Location: </form:label>
-        <form:input path="location" placeholder="${conference.location}"/>
+        <form:input cssClass="form-control" path="location" placeholder="${conference.location}"/>
     </div>
     <div>
         <form:label path="year">Year: </form:label>
-        <form:input path="year" placeholder="${conference.year}"/>
+        <form:input cssClass="form-control" path="year" placeholder="${conference.year}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="details">Details: </form:label>
-        <form:input path="details" placeholder="${conference.details}"/>
+        <form:input cssClass="form-control" path="details" placeholder="${conference.details}"/>
     </div>
     <input type="hidden" name="conferenceID"  value="${conference.conferenceID}">
-    <input type="submit" value="Save"/>
+    <input type="submit" class="btn btn-primary" value="Save"/>
 </form:form>
 </body>
 </html>

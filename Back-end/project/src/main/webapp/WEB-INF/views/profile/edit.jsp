@@ -30,40 +30,33 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 
         <form:form action="/profile/edit" method="post" modelAttribute="profileForm">
-            <div>
+            <div class="form-group">
                 <form:label path="email">E-mail: </form:label>
-                <form:input articleID="email" path="email" placeholder="${teacher.email}" disabled="true"/>
+                <form:input cssClass="form-control" articleID="email" path="email" placeholder="${teacher.email}" disabled="true"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="firstname">First Name: </form:label>
-                <form:input articleID="firstname" path="firstname" placeholder="${teacher.firstname}"/>
+                <form:input cssClass="form-control" articleID="firstname" path="firstname" placeholder="${teacher.firstname}"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="lastname">Last Name: </form:label>
-                <form:input articleID="lastname" path="lastname" placeholder="${teacher.lastname}"/>
+                <form:input cssClass="form-control" articleID="lastname" path="lastname" placeholder="${teacher.lastname}"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="password">Password: </form:label>
-                <form:input articleID="password" path="password"/>
-                <form:label path="confirmedPassword">Confirm Password: </form:label>
-                <form:input articleID="confirmedPassword" path="confirmedPassword"/>
+                <form:input cssClass="form-control" articleID="password" path="password"/>
             </div>
-            <input type="submit" value="Save"/>
+            <div class="form-group">
+                <form:label path="confirmedPassword">Confirm Password: </form:label>
+                <form:input cssClass="form-control" articleID="confirmedPassword" path="confirmedPassword"/>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save"/>
         </form:form>
 
         <c:if test="${message != null}">

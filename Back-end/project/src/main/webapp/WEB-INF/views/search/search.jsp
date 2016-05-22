@@ -30,34 +30,28 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
-<form:form action="/search/" method="post">
-    <div>
-        <label for="search">Search query:</label>
-        <input id="search" type="text" name="s" placeholder="Search">
-        <label for="search">Search type:</label>
-        <select name="searchType">
-            <option value="persoana">Nume persoana</option>
-            <option value="citat">Citat</option>
-            <option value="an">An</option>
-        </select>
-    </div>
-    <input type="submit" value="Search"/>
-</form:form>
+    <form:form action="/search/" method="post">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="search">Search query:</label>
+                <input id="search" class="form-control" type="text" name="s" placeholder="Search">
+            </div>
+            <div class="form-group">
+                <label for="search">Search type:</label>
+                <select class="form-control" name="searchType">
+                    <option value="persoana">Nume persoana</option>
+                    <option value="citat">Citat</option>
+                    <option value="an">An</option>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Search"/>
+        </form>
+    </form:form>
     </section>
-
     <section id="footer_section">
         <p id="uaic">Universitatea "Alexandru Ioan Cuza" Iasi</p>
 

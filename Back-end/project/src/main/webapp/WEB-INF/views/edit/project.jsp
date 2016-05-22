@@ -31,50 +31,41 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/edit/project" method="post" modelAttribute="project">
-<div>
+<div class="form-group">
     <form:label path="title">Title: </form:label>
-    <form:input path="title" placeholder="${project.title}"/>
+    <form:input cssClass="form-control" path="title" placeholder="${project.title}"/>
 </div>
-<div>
+<div class="form-group">
     <form:label path="director">Director: </form:label>
-    <form:input path="director" placeholder="${project.director}"/>
+    <form:input cssClass="form-control" path="director" placeholder="${project.director}"/>
 </div>
-<div>
+<div class="form-group">
     <form:label path="domain">Domain: </form:label>
-    <form:input  path="domain" placeholder="${project.domain}"/>
+    <form:input cssClass="form-control"  path="domain" placeholder="${project.domain}"/>
 </div>
-    <div>
+    <div class="form-group">
         <form:label path="startDate">Star date: </form:label>
-        <form:input  path="startDate" placeholder="${project.startDate}"/>
+        <form:input cssClass="form-control"  path="startDate" placeholder="${project.startDate}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="finishDate">Finish Date: </form:label>
-        <form:input  path="finishDate" placeholder="${project.finishDate}"/>
+        <form:input cssClass="form-control"  path="finishDate" placeholder="${project.finishDate}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="description">Description: </form:label>
-        <form:input  path="description" placeholder="${project.description}"/>
+        <form:input cssClass="form-control" path="description" placeholder="${project.description}"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="budget">Budget: </form:label>
-        <form:input  path="budget" placeholder="${project.budget}"/>
+        <form:input cssClass="form-control" path="budget" placeholder="${project.budget}"/>
     </div>
 <input type="hidden" name="projectID"  value="${projectID}">
-<input type="submit" value="Save"/>
+<input type="submit" class="btn btn-primary" value="Save"/>
 </form:form>
 </body>
 </html>

@@ -31,37 +31,28 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
-        <section id="align-right">
-            <form id="navbar-search" role="search">
-                <section class="input-group">
-                    <section class="input-group-btn">
-                        <a href="/search/" class="btn btn-default">Search</a>
-
-                    </section>
-                </section>
-            </form>
-        </section>
+        <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
 <form:form action="/scientific/myactivity/addArticle" method="post" modelAttribute="article">
-    <div>
+    <div class="form-group">
         <form:label path="title">Title: </form:label>
-        <form:input id="title" path="title"/>
+        <form:input cssClass="form-control" id="title" path="title"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="year">Year: </form:label>
-        <form:input id="year" path="year"/>
+        <form:input cssClass="form-control" id="year" path="year"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="journalTitle">Journal Title: </form:label>
-        <form:input id="journalTitle" path="journalTitle"/>
+        <form:input cssClass="form-control" id="journalTitle" path="journalTitle"/>
     </div>
-    <div>
+    <div class="form-group">
         <form:label path="authorsText">Authors</form:label>
-        <form:input id="authorsText" path="authorsText"/>
+        <form:input cssClass="form-control" id="authorsText" path="authorsText"/>
     </div>
-    <input type="submit" value="Add Article"/>
+    <input type="submit" class="btn btn-primary" value="Add Article"/>
 </form:form>
     </section>
 
