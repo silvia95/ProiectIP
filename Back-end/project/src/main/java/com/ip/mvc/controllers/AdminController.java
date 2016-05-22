@@ -42,6 +42,7 @@ public class AdminController {
 
         adminService.deleteAccount(email);
 
+
         return new RedirectView("/admin/accounts");
     }
 }
