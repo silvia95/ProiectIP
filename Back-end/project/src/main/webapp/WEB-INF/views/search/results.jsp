@@ -35,28 +35,30 @@
     </section>
 
     <section id="da_big_section">
-<h3>Results</h3>
-<table border="1">
-    <tr>
-        <th>Title</th>
-        <th>Year</th>
-        <th>Journal ISSN</th>
-    </tr>
-    <c:forEach items="${results}" var="article" >
-    <tr>
-        <td>${article.title}</td>
-        <td>${article.year}</td>
-        <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
-    </tr>
-    </c:forEach>
+        <h3>Results</h3>
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Journal ISSN</th>
+            </tr>
+            <c:forEach items="${results}" var="article">
+                <tr>
+                    <td>${article.title}</td>
+                    <td>${article.year}</td>
+                    <td>
+                        <a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </section>
-
     <section id="footer_section">
         <p id="uaic">Universitatea "Alexandru Ioan Cuza" Iasi</p>
 
         <p id="fii">Facultatea de Informatica</p>
     </section>
-    </section>
+</section>
 
 </body>
 </html>
