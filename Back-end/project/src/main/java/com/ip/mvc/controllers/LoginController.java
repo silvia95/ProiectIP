@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class LoginController {
 
@@ -22,7 +24,13 @@ public class LoginController {
     }
 
     @RequestMapping("favicon.ico")
-    public RedirectView favicon() {
-        return new RedirectView("/");
+    public RedirectView favicon(HttpServletRequest request) {
+        if(request.isUserInRole("favicon: ROLE_USER")) {
+            System.out.println("ROLE_USER");
+            return new RedirectView("/");
+        } else if (request.isUserInRole("ROLE_ADMIN")) {
+            System.out.println("favicon: ROLE_ADMIN");
+            return new RedirectView("/admin");
+        } else return null;
     }
 }

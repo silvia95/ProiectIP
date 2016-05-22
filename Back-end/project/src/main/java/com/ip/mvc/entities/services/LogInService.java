@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +39,10 @@ public class LogInService implements AuthenticationProvider {
             List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
             return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), grantedAuths);
+        } else if(this.isValidAdmin(user)) {
+            List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), grantedAuths);
         } else return null;
     }
 
@@ -58,6 +63,22 @@ public class LogInService implements AuthenticationProvider {
             return counter != 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean isValidAdmin(User user) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String query = "SELECT * FROM ADMINS WHERE EMAIL = ? AND PASSWORD = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }

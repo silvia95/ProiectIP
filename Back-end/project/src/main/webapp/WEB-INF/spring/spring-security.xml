@@ -13,9 +13,20 @@
                 authentication-failure-url="/login?error"
                 username-parameter="email"
                 password-parameter="password"/>
+
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <intercept-url pattern="favicon.ico" access="permitAll"/>
+
+        <intercept-url pattern="/" access="isAuthenticated()"/>
+
+        <intercept-url pattern="/edit/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/profile/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/report" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/scientific/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/search/**" access="hasRole('ROLE_USER')"/>
+
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
     </http>
 
     <authentication-manager>
