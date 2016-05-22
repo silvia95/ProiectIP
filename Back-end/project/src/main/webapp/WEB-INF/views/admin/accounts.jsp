@@ -46,7 +46,7 @@
                     <th>${account.firstname}</th>
                     <th>${account.lastname}</th>
                     <th>${account.type}</th>
-                    <th><a href="/admin/account/delete">Delete</a></th>
+                    <th><form action="/admin/account/delete" method="post"><input type="hidden" name="email" value="${account.email}"><input type="submit" value="Delete"></form></th>
                 </tr>
             </c:forEach>
         </table>

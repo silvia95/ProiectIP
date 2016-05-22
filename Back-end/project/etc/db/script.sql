@@ -23,11 +23,13 @@ DROP TABLE IPUSER.USERS;
 DROP TABLE IPUSER.PROJECTS;
 DROP TABLE IPUSER.JOURNALS;
 DROP TABLE IPUSER.CONFERENCES;
+DROP TABLE IPUSER.ADMINS;
 
 DROP SEQUENCE ARTICLES_SEQ;
 DROP SEQUENCE USERS_SEQ;
 DROP SEQUENCE projects_seq;
 DROP SEQUENCE conferences_seq;
+DROP SEQUENCE admins_seq;
 
 CREATE TABLE Users (
     user_id      NUMBER(10) NOT NULL UNIQUE,
@@ -61,14 +63,14 @@ CREATE TABLE Teachers (
     last_name varchar(25) NOT NULL,
     type varchar(10) NOT NULL,
     CONSTRAINT Teachers_pk PRIMARY KEY (email),
-    CONSTRAINT Teachers_fk FOREIGN KEY (email) REFERENCES Users(email)
+    CONSTRAINT Teachers_fk FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 CREATE TABLE Departments (
     email varchar(25) NOT NULL,
     deparmentName varchar(15) NOT NULL,
     CONSTRAINT Departments_pk PRIMARY KEY (email, deparmentName),
-    CONSTRAINT Departments_fk FOREIGN KEY (email) REFERENCES Teachers(email)
+    CONSTRAINT Departments_fk FOREIGN KEY (email) REFERENCES Teachers(email) ON DELETE CASCADE
 );
 
 CREATE TABLE Journals (

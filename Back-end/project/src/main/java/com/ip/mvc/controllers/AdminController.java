@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -33,5 +35,13 @@ public class AdminController {
         model.addObject("accounts", accounts);
 
         return model;
+    }
+
+    @RequestMapping(value = "/account/delete", method = RequestMethod.POST)
+    public RedirectView deleteAccount(@RequestParam(value = "email") String email) {
+
+        adminService.deleteAccount(email);
+
+        return new RedirectView("/admin/accounts");
     }
 }

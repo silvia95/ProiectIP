@@ -38,4 +38,18 @@ public class AdminService {
         }
         return accounts;
     }
+
+    public void deleteAccount(String email) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "DELETE FROM TEACHERS WHERE EMAIL = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, email);
+
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
