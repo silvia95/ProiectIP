@@ -45,4 +45,9 @@ public class AdminController {
 
         return new RedirectView("/admin/accounts");
     }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    public ModelAndView displayUpload() {
+        return new ModelAndView("/admin/upload");
+    }
 }
