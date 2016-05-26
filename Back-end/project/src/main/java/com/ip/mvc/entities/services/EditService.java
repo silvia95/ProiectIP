@@ -48,7 +48,6 @@ public class EditService {
             statement.setString(2, quotation.getYear());
             statement.setString(3, quotation.getArticleName());
             statement.setString(4, quotation.getLocation());
-            statement.setInt(5, quotation.getAuthors());
             statement.setString(6, quotation.getArticleID());
 
             statement.execute();

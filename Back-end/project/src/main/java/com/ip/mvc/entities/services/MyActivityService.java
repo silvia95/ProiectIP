@@ -73,7 +73,6 @@ public class MyActivityService {
                 quotation.setYear(resultSet.getString(3));
                 quotation.setArticleName(resultSet.getString(4));
                 quotation.setLocation(resultSet.getString(5));
-                quotation.setAuthors(Integer.parseInt(resultSet.getString("AUTHORS")));
                 quotation.setUserID(resultSet.getString(7));
                 quotations.add(quotation);
             }
@@ -147,7 +146,7 @@ public class MyActivityService {
 
     public boolean addQuotation(Quotation quotation) {
         try (Connection connection = dataSource.getConnection()) {
-            String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, authors) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, quotation.getArticleID());
@@ -155,9 +154,13 @@ public class MyActivityService {
             statement.setString(3, quotation.getYear());
             statement.setString(4, quotation.getArticleName());
             statement.setString(5, quotation.getLocation());
-            statement.setInt(6, quotation.getAuthors());
+            statement.setString(6, quotation.getAuthorsText());
 
             statement.executeQuery();
+
+
+
+
         } catch (SQLException e) {
             return false;
         }
@@ -430,7 +433,7 @@ public class MyActivityService {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) article = new Article(resultSet);
 
-            sql = "SELECT T.first_name, T.last_name FROM Article_Authors A\n" +
+            sql = "SELECT DISTINCT T.first_name, T.last_name FROM Article_Authors A\n" +
                     "JOIN Users U ON U.user_id = A.user_id\n" +
                     "JOIN Teachers T ON T.email = U.email\n" +
                     "WHERE A.article_id = ? ";

@@ -56,33 +56,7 @@
 
 
 
-<h3>My Quotations</h3>
-<c:choose>
-    <c:when test="${!empty projectList}">
-        <table class="table table-bordered" border="1">
-            <tr>
-                <th>Article Name</th>
-                <th>Year</th>
-                <th>Text</th>
-                <th>Location</th>
-                <th>Authors</th>
-            </tr>
-            <c:forEach items="${quotationList}" var="quotation" >
-                <tr>
-                    <td>${quotation.articleName}</td>
-                    <td>${quotation.year}</td>
-                    <td>${quotation.text}</td>
-                    <td>${quotation.location}</td>
-                    <td>${quotation.authors}</td>
-                    <td><a href="/edit/quotation?articleID=${quotation.articleID}">Edit</a></td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:when>
-    <c:otherwise>
-        <h5>No quotations yet</h5>
-    </c:otherwise>
-</c:choose>
+
 <form action="/scientific/myactivity/addQuotation" method="get">
     <select class="form-control" name="articleID">
         <c:forEach items="${articleList}" var="article">

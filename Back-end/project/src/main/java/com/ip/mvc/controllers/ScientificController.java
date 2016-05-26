@@ -70,6 +70,7 @@ public class ScientificController {
         RedirectView model = new RedirectView("/scientific/myactivity");
 
         quotation.setArticleID(articleID);
+
         myActivityService.addQuotation(quotation);
 
         return model;
