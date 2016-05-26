@@ -178,7 +178,7 @@ body {
     width: 50%;
     margin: 0 auto;
 }
-.search-btn {
+.search-btn, .logout-btn {
     float: right;
     margin-top: 20px;
     margin-right: 47px;

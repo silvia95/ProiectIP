@@ -27,6 +27,8 @@
         <a href="/"><img id="logo" src="/resources/img/logo-fii.png"/></a>
         <a href="/admin/upload" class="btn btn-default">Upload Document</a>
         <a href="/admin/accounts" class="btn btn-default">Accounts</a>
+
+        <a href="/logout" class="btn btn-default logout-btn">Logout</a>
     </section>
 
     <section id="da_big_section">
