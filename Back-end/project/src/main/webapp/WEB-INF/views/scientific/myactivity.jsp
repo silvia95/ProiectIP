@@ -30,6 +30,7 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
+        <a href="/logout" class="btn btn-default logout-btn">Logout</a>
         <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
@@ -40,13 +41,13 @@
     <tr>
         <th>Title</th>
         <th>Year</th>
-        <th>Journal Name</th>
+        <th>Journal ISSN</th>
     </tr>
     <c:forEach items="${articleList}" var="article" >
         <tr>
-            <td><a href="/scientific/articleDetails?articleID=${article.articleID}">${article.title}</a></td>
+            <td>${article.title}</td>
             <td>${article.year}</td>
-            <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalTitle} </a></td>
+            <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
             <td><a href="/edit/article?articleID=${article.articleID}" >Edit</a></td>
         </tr>
     </c:forEach>
@@ -56,7 +57,33 @@
 
 
 
-
+<h3>My Quotations</h3>
+<c:choose>
+    <c:when test="${!empty projectList}">
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>Article Name</th>
+                <th>Year</th>
+                <th>Text</th>
+                <th>Location</th>
+                <th>Authors</th>
+            </tr>
+            <c:forEach items="${quotationList}" var="quotation" >
+                <tr>
+                    <td>${quotation.articleName}</td>
+                    <td>${quotation.year}</td>
+                    <td>${quotation.text}</td>
+                    <td>${quotation.location}</td>
+                    <td>${quotation.authors}</td>
+                    <td><a href="/edit/quotation?articleID=${quotation.articleID}">Edit</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:when>
+    <c:otherwise>
+        <h5>No quotations yet</h5>
+    </c:otherwise>
+</c:choose>
 <form action="/scientific/myactivity/addQuotation" method="get">
     <select class="form-control" name="articleID">
         <c:forEach items="${articleList}" var="article">

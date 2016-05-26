@@ -31,6 +31,7 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
+        <a href="/logout" class="btn btn-default logout-btn">Logout</a>
         <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
@@ -50,12 +51,12 @@
         <form:input cssClass="form-control" id="articleName" path="articleName"/>
     </div>
     <div class="form-group">
-        <form:label path="location">Journal Name: </form:label>
+        <form:label path="location">Location: </form:label>
         <form:input cssClass="form-control" id="location" path="location"/>
     </div>
     <div class="form-group">
-        <form:label path="authorsText">Authors: </form:label>
-        <form:input cssClass="form-control" id="authorsText" path="authorsText"/>
+        <form:label path="authors">Authors</form:label>
+        <form:input cssClass="form-control" id="authors" path="authors"/>
     </div>
     <input type="hidden" name="userID" value=${userID}>
     <input type="hidden" name="articleID" value=${articleID}>
