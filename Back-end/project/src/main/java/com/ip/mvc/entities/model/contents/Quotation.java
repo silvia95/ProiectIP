@@ -1,7 +1,11 @@
 package com.ip.mvc.entities.model.contents;
 
+import com.ip.mvc.entities.model.users.Teacher;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Quotation {
 
@@ -12,6 +16,8 @@ public class Quotation {
     private String articleName;
     private String location;
     private int authors;
+    private String authorsText;
+    private List<Teacher> authorsList = new ArrayList<>();
 
     public Quotation() {
 
@@ -23,6 +29,7 @@ public class Quotation {
         this.year = resultSet.getString(3);
         this.articleName = resultSet.getString(4);
         this.location = resultSet.getString(5);
+        this.authorsText = resultSet.getString(6);
     }
 
     public String getUserID() {
@@ -79,6 +86,32 @@ public class Quotation {
 
     public void setAuthors(int authors) {
         this.authors = authors;
+    }
+
+    public String getAuthorsText() {
+        return authorsText;
+    }
+
+    public void setAuthorsText(String authorsText) {
+        this.authorsText = authorsText;
+        String[] authors = authorsText.split(",");
+        for (String author : authors) {
+            String[] names = author.split(" ");
+            Teacher teacher = new Teacher(names[0], names[1]);
+            this.authorsList.add(teacher);
+        }
+    }
+
+    public List<Teacher> getAuthorsList() {
+        return authorsList;
+    }
+
+    public void setAuthorsList(List<Teacher> authorsList) {
+        this.authorsList = authorsList;
+    }
+
+    public void addAuthor(Teacher author) {
+        this.authorsList.add(author);
     }
 
     @Override

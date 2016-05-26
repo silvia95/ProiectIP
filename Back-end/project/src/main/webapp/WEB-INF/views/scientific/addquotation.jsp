@@ -54,8 +54,8 @@
         <form:input cssClass="form-control" id="location" path="location"/>
     </div>
     <div class="form-group">
-        <form:label path="authors">Authors</form:label>
-        <form:input cssClass="form-control" id="authors" path="authors"/>
+        <form:label path="authorsText">Authors: </form:label>
+        <form:input cssClass="form-control" id="authorsText" path="authorsText"/>
     </div>
     <input type="hidden" name="userID" value=${userID}>
     <input type="hidden" name="articleID" value=${articleID}>

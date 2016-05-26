@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Article Details</title>
     <link rel="stylesheet" href="<spring:url value="/resources/css/container.css"/>"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
@@ -35,21 +35,54 @@
     </section>
 
     <section id="da_big_section">
-<form:form action="/scientific/myactivity/addArticle" method="post" modelAttribute="article">
-    <div class="form-group">
-        <form:label path="title">Title: </form:label>
-        <form:input cssClass="form-control" id="title" path="title"/>
-    </div>
-    <div class="form-group">
-        <form:label path="year">Year: </form:label>
-        <form:input cssClass="form-control" id="year" path="year"/>
-    </div>
-    <div class="form-group">
-        <form:label path="journalTitle">Journal Title: </form:label>
-        <form:input cssClass="form-control" id="journalTitle" path="journalTitle"/>
-    </div>
-    <input type="submit" class="btn btn-primary" value="Add Article"/>
-</form:form>
+
+        <div><b>Title:</b> ${article.title}</div>
+        <div><b>Journal Name:</b> ${article.journalTitle}</div>
+        <div><b>Year:</b> ${article.year}</div>
+
+        <h3>Authors</h3>
+
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            <c:forEach items="${article.authors}" var="author" >
+                <tr>
+                    <td>${author.firstname}</td>
+                    <td>${author.lastname}</td>
+                </tr>
+            </c:forEach>
+            <c:forEach items="${article.others}" var="author" >
+                <tr>
+                    <td>${author.firstname}</td>
+                    <td>${author.lastname}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
+        <h3>Quotations</h3>
+
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>Article Name</th>
+                <th>Year</th>
+                <th>Text</th>
+                <th>Location</th>
+                <th>Authors</th>
+            </tr>
+            <c:forEach items="${article.quotationList}" var="quotation" >
+                <tr>
+                    <td>${quotation.articleName}</td>
+                    <td>${quotation.year}</td>
+                    <td>${quotation.text}</td>
+                    <td>${quotation.location}</td>
+                    <td>${quotation.authorsText}</td>
+
+                </tr>
+            </c:forEach>
+        </table>
+
     </section>
 
     <section id="footer_section">
