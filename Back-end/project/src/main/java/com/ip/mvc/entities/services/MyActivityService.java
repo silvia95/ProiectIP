@@ -283,6 +283,31 @@ public class MyActivityService {
             statement.setString(2, project.getUserID());
             statement.execute();
 
+            /* insert authors */
+            List<Teacher> authors = project.getAuthorsList();
+            if (authors.size() > 0) {
+                for (Teacher author : authors) {
+                    query = "SELECT  u.USER_ID FROM TEACHERS t JOIN USERS u ON t.EMAIL = u.EMAIL WHERE FIRST_NAME = ? AND LAST_NAME = ? ";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, author.getFirstname());
+                    statement.setString(2, author.getLastname());
+
+                    resultSet = statement.executeQuery();
+                    if (resultSet.next()) {
+                            /* author is already in db */
+                        query = "INSERT INTO PROJECT_AUTHORS(PROJECT_ID, USER_ID) VALUES (?, ?)";
+                        statement = connection.prepareStatement(query);
+
+                        statement.setString(1, projectID);
+                        statement.setString(2, resultSet.getString("USER_ID"));
+                        statement.execute();
+                    } else {
+                            /* author is not in db */
+
+                    }
+                }
+            }
+
 
             return true;
 
@@ -438,7 +463,14 @@ public class MyActivityService {
             statement.setString(1, articleID);
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) article = new Article(resultSet);
+            if (resultSet.next()) {
+                article.setArticleID(resultSet.getString(1));
+                article.setJournalISSN(resultSet.getString(2));
+                article.setTitle(resultSet.getString(3));
+                article.setYear(resultSet.getString(4));
+                article.setJournalTitle(resultSet.getString(5));
+                article.setScore(resultSet.getInt(6));
+            }
 
             sql = "SELECT DISTINCT T.first_name, T.last_name FROM Article_Authors A\n" +
                     "JOIN Users U ON U.user_id = A.user_id\n" +
@@ -542,6 +574,42 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return article;
+    }
+
+    public Project getProjectDetails(String projectID) {
+
+        Project project = new Project();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM PROJECTS WHERE PROJECT_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, projectID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                project = new Project(resultSet);
+
+                sql = "SELECT DISTINCT t.FIRST_NAME, t.LAST_NAME FROM PROJECT_AUTHORS pa " +
+                        "JOIN USERS U ON U.USER_ID = pa.USER_ID " +
+                        "JOIN TEACHERS t ON t.EMAIL = u.EMAIL " +
+                        "WHERE PROJECT_ID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, projectID);
+
+                resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Teacher author = new Teacher();
+                    author.setFirstname(resultSet.getString(1));
+                    author.setLastname(resultSet.getString(2));
+
+                    project.addAuthor(author);
+                }
+            } else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
     }
 
 }

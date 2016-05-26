@@ -81,7 +81,7 @@
             </tr>
             <c:forEach items="${projectList}" var="project" >
                 <tr>
-                    <th>${project.title}</th>
+                    <th><a href="/scientific/projectDetails?projectID=${project.projectID}">${project.title}</a></th>
                     <th>${project.director}</th>
                     <th>${project.domain}</th>
                     <th>${project.startDate}</th>

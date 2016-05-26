@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Project Details</title>
     <link rel="stylesheet" href="<spring:url value="/resources/css/container.css"/>"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
@@ -35,44 +35,33 @@
     </section>
 
     <section id="da_big_section">
-<form:form action="/scientific/myactivity/addProject" method="post" modelAttribute="project">
-    <div class="form-group">
-        <form:label path="title">Title: </form:label>
-        <form:input cssClass="form-control" id="title" path="title"/>
-    </div>
-    <div class="form-group">
-        <form:label path="domain">Domain: </form:label>
-        <form:input cssClass="form-control" id="domain" path="domain"/>
-    </div>
-    <div class="form-group">
-        <form:label path="director">Director: </form:label>
-        <form:input cssClass="form-control" id="director" path="director"/>
-    </div>
-    <div class="form-group">
-        <form:label path="startDate">Start Date: </form:label>
-        <form:input cssClass="form-control" id="startDate" path="startDate"/>
-    </div>
-    <div class="form-group">
-        <form:label path="finishDate">Finish Date: </form:label>
-        <form:input cssClass="form-control" id="finishDate" path="finishDate"/>
-    </div>
-    <div class="form-group">
-        <form:label path="description">Description: </form:label>
-        <form:input cssClass="form-control" id="description" path="description"/>
-    </div>
-    <div class="form-group">
-        <form:label path="authorsText">Authors: </form:label>
-        <form:input cssClass="form-control" id="authorsText" path="authorsText"/>
-    </div>
 
-    <div class="form-group">
-        <form:label path="budget">Budget: </form:label>
-        <form:input cssClass="form-control" id="budget" path="budget"/>
-    </div>
+        <h3>Project Details</h3>
+
+        <div><b>Title </b> ${project.title}</div>
+        <div><b>Domain </b> ${project.domain}</div>
+        <div><b>Start Date </b> ${project.startDate}</div>
+        <div><b>Finish Date </b> ${project.finishDate}</div>
+        <div><b>Description </b> ${project.description}</div>
+        <div><b>Budget </b> ${project.budget}</div>
 
 
-    <input type="submit" class="btn btn-primary" value="Add Project"/>
-</form:form>
+        <h3>Collaborators</h3>
+
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            <c:forEach items="${project.authorsList}" var="coll" >
+                <tr>
+                    <td>${coll.firstname}</td>
+                    <td>${coll.lastname}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
+
     </section>
 
     <section id="footer_section">

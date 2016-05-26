@@ -186,5 +186,19 @@ public class ScientificController {
         return model;
     }
 
+    @RequestMapping(value = "projectDetails", method = RequestMethod.GET)
+    public ModelAndView displayProjectDetails(@RequestParam(value = "projectID") String projectID) {
+
+        ModelAndView model = new ModelAndView("scientific/project");
+
+
+        Project project = myActivityService.getProjectDetails(projectID);
+
+        model.addObject("project", project);
+
+        return model;
+
+    }
+
 
 }
