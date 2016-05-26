@@ -1,5 +1,8 @@
 package com.ip.mvc.entities.model.contents;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Quotation {
 
     private String userID;
@@ -9,6 +12,18 @@ public class Quotation {
     private String articleName;
     private String location;
     private int authors;
+
+    public Quotation() {
+
+    }
+
+    public Quotation(ResultSet resultSet) throws SQLException {
+        this.articleID = resultSet.getString(1);
+        this.text = resultSet.getString(2);
+        this.year = resultSet.getString(3);
+        this.articleName = resultSet.getString(4);
+        this.location = resultSet.getString(5);
+    }
 
     public String getUserID() {
         return userID;

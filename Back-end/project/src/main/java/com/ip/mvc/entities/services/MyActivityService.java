@@ -33,7 +33,7 @@ public class MyActivityService {
         try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT Articles.article_id, Articles.title, Articles.year, Articles.journal_issn, J.JOURNAL_NAME FROM Articles " +
                     "JOIN Article_Authors ON Article_Authors.article_id = Articles.article_id " +
-                    "JOIN JOURNALS J On J.ISSN = ARTICLES.JOURNAL_ISSN WHERE Article_Authors.user_id = ?";
+                    "JOIN JOURNALS J ON J.ISSN = ARTICLES.JOURNAL_ISSN WHERE Article_Authors.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, userID);
 
@@ -158,8 +158,7 @@ public class MyActivityService {
             statement.setInt(6, quotation.getAuthors());
 
             statement.executeQuery();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return false;
         }
         return true;
@@ -236,8 +235,7 @@ public class MyActivityService {
                 return true;
             } else return false;
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -454,6 +452,63 @@ public class MyActivityService {
                 authors.add(resultSet.getString(1));
             }
             article.setOtherAuthors(authors);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return article;
+    }
+
+    public Article getArticleDetails(String articleID) {
+        Article article = new Article();
+
+        try (Connection connection = getDataSource().getConnection()) {
+
+            String sql = "SELECT a.*, j.JOURNAL_NAME FROM ARTICLES a " +
+                    "JOIN JOURNALS J ON J.ISSN = a.JOURNAL_ISSN WHERE ARTICLE_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, articleID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+
+                article.setArticleID(resultSet.getString(1));
+                article.setTitle(resultSet.getString(2));
+                article.setYear(resultSet.getString(3));
+                article.setJournalISSN(resultSet.getString(4));
+                article.setJournalTitle(resultSet.getString(5));
+
+                /* get quotations */
+                sql = "SELECT * FROM QUOTATIONS WHERE ARTICLE_ID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, articleID);
+
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Quotation quotation = new Quotation(resultSet);
+                    System.out.println("quot: " + quotation);
+                    article.addQuotation(quotation);
+
+
+                }
+                sql = "SELECT aa.ARTICLE_ID, aa.USER_ID, t.FIRST_NAME, t.LAST_NAME FROM ARTICLE_AUTHORS aa " +
+                        "JOIN USERS u ON u.USER_ID = aa.USER_ID " +
+                        "JOIN TEACHERS t ON t.EMAIL = u.EMAIL " +
+                        "WHERE aa.ARTICLE_ID = ?";
+
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, articleID);
+
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Teacher author = new Teacher();
+                    System.out.println(author);
+                    author.setFirstname(resultSet.getString(3));
+                    author.setLastname(resultSet.getString(4));
+                    article.addAuthor(author);
+                }
+            } else return null;
 
         } catch (SQLException e) {
             e.printStackTrace();

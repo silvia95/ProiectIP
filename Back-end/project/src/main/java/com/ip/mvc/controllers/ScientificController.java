@@ -172,6 +172,18 @@ public class ScientificController {
         return model;
     }
 
+    @RequestMapping(value = "/articleDetails", method = RequestMethod.GET)
+    public ModelAndView dispalyArticleDetails(@RequestParam(value = "articleID") String articleID) {
+        ModelAndView model = new ModelAndView("scientific/article");
+
+        Article article = myActivityService.getArticleDetails(articleID);
+
+        model.addObject("article", article);
+
+        System.out.println(article);
+
+        return model;
+    }
 
 
 }

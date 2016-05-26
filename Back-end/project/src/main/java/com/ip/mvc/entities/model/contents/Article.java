@@ -18,6 +18,8 @@ public class Article extends ScientificActivity {
     private String journalTitle;
     private String authorsText;
     private List<String> otherAuthors = new ArrayList<>();
+    private List<Quotation> quotationList = new ArrayList<>();
+
 
     public Article() {
 
@@ -32,6 +34,18 @@ public class Article extends ScientificActivity {
         setScore(resultSet.getInt(6));
     }
 
+
+    public List<Quotation> getQuotationList() {
+        return quotationList;
+    }
+
+    public void setQuotationList(List<Quotation> quotationList) {
+        this.quotationList = quotationList;
+    }
+
+    public void addQuotation(Quotation quotation) {
+        this.quotationList.add(quotation);
+    }
 
     public List<String> getOtherAuthors() {
         return otherAuthors;
@@ -49,19 +63,19 @@ public class Article extends ScientificActivity {
         this.userID = userID;
     }
 
-        public String getAuthorsText() {
-            return authorsText;
-        }
+    public String getAuthorsText() {
+        return authorsText;
+    }
 
-        public void setAuthorsText(String authorsText) {
-            this.authorsText = authorsText;
-            String[] authors = authorsText.split(",");
-            for (String author : authors) {
-                String[] names = author.split(" ");
-                Teacher teacher = new Teacher(names[0], names[1]);
-                this.authors.add(teacher);
-            }
+    public void setAuthorsText(String authorsText) {
+        this.authorsText = authorsText;
+        String[] authors = authorsText.split(",");
+        for (String author : authors) {
+            String[] names = author.split(" ");
+            Teacher teacher = new Teacher(names[0], names[1]);
+            this.authors.add(teacher);
         }
+    }
 
     public String getJournalTitle() {
         return journalTitle;
@@ -128,6 +142,7 @@ public class Article extends ScientificActivity {
                 ", journalTitle='" + journalTitle + '\'' +
                 ", authorsText='" + authorsText + '\'' +
                 ", otherAuthors=" + otherAuthors +
+                ", quotationList=" + quotationList +
                 "} " + super.toString();
     }
 }
