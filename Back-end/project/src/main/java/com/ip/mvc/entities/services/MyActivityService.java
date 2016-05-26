@@ -146,21 +146,28 @@ public class MyActivityService {
 
     public boolean addQuotation(Quotation quotation) {
         try (Connection connection = dataSource.getConnection()) {
-            String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
+
+            String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setString(1, quotation.getArticleID());
-            statement.setString(2, quotation.getText());
-            statement.setString(3, quotation.getYear());
-            statement.setString(4, quotation.getArticleName());
-            statement.setString(5, quotation.getLocation());
-            statement.setString(6, quotation.getAuthorsText());
+            statement.setString(1, quotation.getLocation());
 
-            statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
 
+                query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
+                statement = connection.prepareStatement(query);
 
+                statement.setString(1, quotation.getArticleID());
+                statement.setString(2, quotation.getText());
+                statement.setString(3, quotation.getYear());
+                statement.setString(4, quotation.getArticleName());
+                statement.setString(5, quotation.getLocation());
+                statement.setString(6, quotation.getAuthorsText());
 
+                statement.executeQuery();
 
+            }
         } catch (SQLException e) {
             return false;
         }
@@ -513,7 +520,6 @@ public class MyActivityService {
                     System.out.println("other: " + author);
                     article.addAuthor(author);
                 }
-
 
 
                 sql = "SELECT * FROM ARTICLE_OTHER_AUTHORS WHERE ARTICLE_ID = ?";

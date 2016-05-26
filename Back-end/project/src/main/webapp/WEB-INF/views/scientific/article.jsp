@@ -68,7 +68,7 @@
                 <th>Article Name</th>
                 <th>Year</th>
                 <th>Text</th>
-                <th>Location</th>
+                <th>Journal Name</th>
                 <th>Authors</th>
             </tr>
             <c:forEach items="${article.quotationList}" var="quotation" >

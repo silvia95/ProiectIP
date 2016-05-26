@@ -50,7 +50,7 @@
         <form:input cssClass="form-control" id="articleName" path="articleName"/>
     </div>
     <div class="form-group">
-        <form:label path="location">Location: </form:label>
+        <form:label path="location">Journal Name: </form:label>
         <form:input cssClass="form-control" id="location" path="location"/>
     </div>
     <div class="form-group">
