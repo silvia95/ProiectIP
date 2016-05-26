@@ -4,6 +4,7 @@ import com.ip.mvc.entities.model.users.Teacher;
 import com.ip.mvc.entities.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,12 @@ public class AdminController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
     public ModelAndView displayUpload() {
+        return new ModelAndView("/admin/upload");
+    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ModelAndView executeUpload(Object command) {
+
         return new ModelAndView("/admin/upload");
     }
 }

@@ -40,13 +40,13 @@
     <tr>
         <th>Title</th>
         <th>Year</th>
-        <th>Journal ISSN</th>
+        <th>Journal Name</th>
     </tr>
     <c:forEach items="${articleList}" var="article" >
         <tr>
             <td>${article.title}</td>
             <td>${article.year}</td>
-            <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalISSN} </a></td>
+            <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalTitle} </a></td>
             <td><a href="/edit/article?articleID=${article.articleID}" >Edit</a></td>
         </tr>
     </c:forEach>

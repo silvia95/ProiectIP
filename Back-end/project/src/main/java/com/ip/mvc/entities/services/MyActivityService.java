@@ -31,8 +31,9 @@ public class MyActivityService {
         List<Article> articleList = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT Articles.article_id, Articles.title, Articles.year, Articles.journal_issn FROM Articles " +
-                    "JOIN Article_Authors ON Article_Authors.article_id = Articles.article_id WHERE Article_Authors.user_id = ?";
+            String query = "SELECT Articles.article_id, Articles.title, Articles.year, Articles.journal_issn, J.JOURNAL_NAME FROM Articles " +
+                    "JOIN Article_Authors ON Article_Authors.article_id = Articles.article_id " +
+                    "JOIN JOURNALS J On J.ISSN = ARTICLES.JOURNAL_ISSN WHERE Article_Authors.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, userID);
 
@@ -43,6 +44,7 @@ public class MyActivityService {
                 article.setTitle(resultSet.getString("TITLE"));
                 article.setYear(resultSet.getString("YEAR"));
                 article.setJournalISSN(resultSet.getString("JOURNAL_ISSN"));
+                article.setJournalTitle(resultSet.getString("JOURNAL_NAME"));
                 articleList.add(article);
             }
         } catch (SQLException e) {
