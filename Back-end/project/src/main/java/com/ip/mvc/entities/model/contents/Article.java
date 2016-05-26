@@ -18,6 +18,7 @@ public class Article extends ScientificActivity {
     private String journalTitle;
     private String authorsText;
     private List<String> otherAuthors = new ArrayList<>();
+    private List<Teacher> others = new ArrayList<>();
     private List<Quotation> quotationList = new ArrayList<>();
 
 
@@ -144,5 +145,17 @@ public class Article extends ScientificActivity {
                 ", otherAuthors=" + otherAuthors +
                 ", quotationList=" + quotationList +
                 "} " + super.toString();
+    }
+
+    public List<Teacher> getOthers() {
+        return others;
+    }
+
+    public void setOthers(List<Teacher> others) {
+        this.others = others;
+    }
+
+    public void addOther(Teacher other) {
+        this.others.add(other);
     }
 }
