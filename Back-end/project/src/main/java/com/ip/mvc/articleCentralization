@@ -1,0 +1,78 @@
+public Centralization articleCentralization(int userID){
+
+    int abArticleScore = 0;
+    int totalArticleScore = 0;
+    int abNumerator, numerator, denominator;
+        try (Connection connection = dataSource.getConnection()) {
+            String query1 = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, userID);
+
+            ResultSet resultSet1 = statement1.executeQuery();
+            while(resultSet1.next()) {
+                numerator = 0;
+                denominator = 0;
+                String articleID = resultSet1.getString("ARTICLE_ID");
+                String query2 = "SELECT * FROM ARTICLE_AUTHORS WHERE ARTICLE_ID = ?";
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                statement2.setString(1, articleID);
+
+                ResultSet resultSet2 = statement2.executeQuery();
+                while(resultSet2.next()){
+                    denominator++;
+                }
+                denominator = (1 > denominator - 2) ? 1 : denominator - 2;
+
+                String query3 = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON J.ISSN = A.JOURNAL_ISSN WHERE A.ARTICLE_ID = ?";
+                PreparedStatement statement3 = connection.prepareStatement(query3);
+                statement3.setString(1, articleID);
+
+                ResultSet resultSet3 = statement3.executeQuery();
+                if(resultSet3.next()){
+                    numerator = resultSet3.getInt("SCORE");
+                    if(resultSet3.getInt("SCORE")>=4)
+                        abNumerator+ = resultSet3.getInt("SCORE");
+                }
+                totalArticleScore += numerator / denominator;
+                if(abNumerator!=0){
+                    abArticleScore += abNumerator / denominator;
+                }
+            }
+            cent.setABScore(abArticleScore);
+            cent.setTotalScore(totalArticleScore);
+            String query1 = "SELECT T.TYPE FROM TEACHERS T JOIN USERS U ON T.EMAIL = U.EMAIL WHERE U.USER_ID = ?";
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, userID);
+            ResultSet resultSet1 = statement1.executeQuery();
+            while(resultSet1.next()){
+                type = resultSet1.getString("TYPE");
+            }
+            //setam tipul actual
+            cent.setActualType(type);
+
+            if(type.startsWith("Lect")){
+                //criteriile pentru trecere la conferentiar
+                if(abArticleScore >=16 && totalArticleScore >= 32){
+                    cent.setPass(true);
+                    cent.setFutureType("Conferentiar");
+                }
+                else 
+                    cent.setPass(false);
+            }
+
+            else{
+                if(type.startsWith("Conf")){
+                    //criteriile pentru trecere la profesor
+                    if(abArticleScore >= 56 && totalQuotationsScore >= 24){
+                        cent.setPass(true);
+                        cent.setFutureType("Profesor");
+                    }
+                    else
+                        cent.setPass(false);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cent;
+}
