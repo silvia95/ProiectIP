@@ -44,7 +44,7 @@
     </tr>
     <c:forEach items="${articleList}" var="article" >
         <tr>
-            <td>${article.title}</td>
+            <td><a href="/scientific/articleDetails?articleID=${article.articleID}">${article.title}</a></td>
             <td>${article.year}</td>
             <td><a href="/scientific/journaldetails?journalISSN=${article.journalISSN}"> ${article.journalTitle} </a></td>
             <td><a href="/edit/article?articleID=${article.articleID}" >Edit</a></td>
