@@ -31,7 +31,7 @@ public class MyActivityService {
         List<Article> articleList = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT Articles.article_id, Articles.title, Articles.year, Articles.journal_issn, J.JOURNAL_NAME FROM Articles " +
+            String query = "SELECT DISTINCT Articles.article_id, Articles.title, Articles.year, Articles.journal_issn, J.JOURNAL_NAME FROM Articles " +
                     "JOIN Article_Authors ON Article_Authors.article_id = Articles.article_id " +
                     "JOIN JOURNALS J ON J.ISSN = ARTICLES.JOURNAL_ISSN WHERE Article_Authors.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
