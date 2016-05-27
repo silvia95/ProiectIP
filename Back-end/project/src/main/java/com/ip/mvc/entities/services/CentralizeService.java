@@ -33,7 +33,7 @@ public class CentralizeService {
      * @param userID
      * @return
      */
-    public Centralization compute(int userID){
+    public Centralization compute(String userID){
         try {
             this.connection = dataSource.getConnection();
             this.cent = new Centralization(userID);
@@ -139,27 +139,20 @@ public class CentralizeService {
         
         // set future type
         if (type.startsWith("Lect")) {
-            articlePass = abArticleScore >= 16 && totalArticleScore >= 32;
-            quotationsPass = abQuotationsScore >= 12 && totalQuotationsScore >= 48;
-
-            //criteriile pentru trecere la conferentiar
-            if (articlePass && quotationsPass) {
-                this.cent.setPass(true);
-                this.cent.setFutureType("Conferentiar");
-            } else
-                this.cent.setPass(false);
+            this.cent.setFutureType("Conferentiar");
         } else {
-            articlePass = abArticleScore >= 56 && totalArticleScore >= 24;
-            quotationsPass = abQuotationsScore >= 40 && totalQuotationsScore >= 120;
-            if (type.startsWith("Conf")) {
-                //criteriile pentru trecere la profesor
-                if (articlePass && quotationsPass) {
-                    this.cent.setPass(true);
-                    this.cent.setFutureType("Profesor");
-                } else
-                    this.cent.setPass(false);
-            }
+            this.cent.setFutureType("Profesor");
         }
+
+        // check and set the pass
+        articlePass = this.cent.passArticlesAB() && this.cent.passArticlesTotal();
+        quotationsPass = this.cent.passQuotationsAB() && this.cent.passQuotationsTotal();
+        if (articlePass && quotationsPass) {
+            this.cent.setPass(true);
+        } else {
+            this.cent.setPass(false);
+        }
+
     }
 
     
@@ -171,7 +164,7 @@ public class CentralizeService {
         String type = "";
         String actualTypeQuery = "SELECT T.TYPE FROM TEACHERS T JOIN USERS U ON T.EMAIL = U.EMAIL WHERE U.USER_ID = ?";
         PreparedStatement actualTypeStatement = connection.prepareStatement(actualTypeQuery);
-        actualTypeStatement.setInt(1, this.cent.getUserID());
+        actualTypeStatement.setString(1, this.cent.getUserID());
         ResultSet actualTypeResultSet1 = actualTypeStatement.executeQuery();
         while (actualTypeResultSet1.next()) {
             type = actualTypeResultSet1.getString("TYPE");
@@ -237,11 +230,11 @@ public class CentralizeService {
      * @throws SQLException
      */
     private ResultSet getArticlesForUser() throws SQLException {
-        int userID = this.cent.getUserID();
+        String userID = this.cent.getUserID();
 
         String query = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setInt(1, userID);
+        stmt.setString(1, userID);
 
         return stmt.executeQuery();
     }
