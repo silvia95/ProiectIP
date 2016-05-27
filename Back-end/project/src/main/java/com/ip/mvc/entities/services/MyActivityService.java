@@ -1,16 +1,10 @@
 package com.ip.mvc.entities.services;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Conference;
-import com.ip.mvc.entities.model.contents.Project;
-import com.ip.mvc.entities.model.contents.Quotation;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.model.users.Teacher;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +147,7 @@ public class MyActivityService {
             statement.setString(1, quotation.getLocation());
 
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
 
                 query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
                 statement = connection.prepareStatement(query);
@@ -610,6 +604,76 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return project;
+    }
+
+    public List<ScientificEvent> getEvents(String userID) {
+
+        List<ScientificEvent> scientificEvents = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql =
+                    "SELECT * FROM SCIENTIFIC_EVENTS e " +
+                            "JOIN SCIENTIFIC_EVENTS_ATTENDING a ON a.EVENT_ID = e.EVENT_ID " +
+                            "WHERE a.USER_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                ScientificEvent scientificEvent = new ScientificEvent(resultSet);
+                scientificEvents.add(scientificEvent);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return scientificEvents;
+    }
+
+    public void addEvent(ScientificEvent event, String userID) {
+
+        try (Connection connection = getDataSource().getConnection()) {
+
+            int eventID = 0;
+
+            String sql = "SELECT * FROM SCIENTIFIC_EVENTS WHERE EVENT_NAME = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, event.getName());
+
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                sql = "INSERT INTO scientific_events(event_name, event_year, event_link) VALUES (?, ?, ?)";
+                statement = connection.prepareStatement(sql, new String[]{"EVENT_ID"});
+
+                statement.setString(1, event.getName());
+                statement.setInt(2, event.getYear());
+                statement.setString(3, event.getLink());
+
+                statement.executeUpdate();
+
+                ResultSet rs = statement.getGeneratedKeys();
+                rs.next();
+                eventID = rs.getInt(1);
+            } else {
+                eventID = resultSet.getInt("EVENT_ID");
+            }
+
+
+
+            sql = "INSERT INTO SCIENTIFIC_EVENTS_ATTENDING(EVENT_ID, USER_ID, SCORE) VALUES (?, ?, ?)";
+
+            statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, eventID);
+            statement.setString(2, userID);
+            statement.setInt(3, event.getScore());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

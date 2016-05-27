@@ -45,6 +45,8 @@ public class ScientificController {
         List<Conference> conferenceList = myActivityService.getConferences(userID);
         model.addObject("conferenceList", conferenceList);
 
+        List<ScientificEvent> scientificEvents = myActivityService.getEvents(userID);
+        model.addObject("scientificEvents", scientificEvents);
         return model;
     }
 
@@ -195,6 +197,30 @@ public class ScientificController {
         Project project = myActivityService.getProjectDetails(projectID);
 
         model.addObject("project", project);
+
+        return model;
+
+    }
+
+    @RequestMapping(value = "/myactivity/addEvent", method = RequestMethod.GET)
+    public ModelAndView displayAddEvent() {
+
+        ModelAndView model = new ModelAndView("/scientific/addevent");
+
+        model.addObject("event", new ScientificEvent());
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addEvent", method = RequestMethod.POST)
+    public RedirectView executeAddEvent(@ModelAttribute ScientificEvent scientificEvent,
+                                        HttpServletRequest request) {
+
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+
+        myActivityService.addEvent(scientificEvent, userID);
 
         return model;
 
