@@ -36,7 +36,11 @@ public class ReportService {
         bindParameters.add(userID);
 
         try (Connection connection = getDataSource().getConnection()) {
-            String query = "SELECT A.ARTICLE_ID FROM ARTICLES A JOIN ARTICLE_AUTHORS AU ON A.ARTICLE_ID = AU.ARTICLE_ID JOIN USERS U ON AU.USER_ID = U.USER_ID JOIN TEACHERS T ON U.EMAIL = T.EMAIL JOIN JOURNALS j ON A.JOURNAL_ISSN = j.ISSN WHERE U.USER_ID = ?";
+            String query = "SELECT A.ARTICLE_ID FROM ARTICLES A " +
+                    "JOIN ARTICLE_AUTHORS AU ON A.ARTICLE_ID = AU.ARTICLE_ID " +
+                    "JOIN USERS U ON AU.USER_ID = U.USER_ID " +
+                    "JOIN TEACHERS T ON U.EMAIL = T.EMAIL " +
+                    "JOIN JOURNALS j ON A.JOURNAL_ISSN = j.ISSN WHERE U.USER_ID = ?";
 
             query = buildQuery(scientificProduction, bindParameters, query);
 

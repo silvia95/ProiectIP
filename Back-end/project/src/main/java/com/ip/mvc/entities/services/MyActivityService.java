@@ -1,16 +1,10 @@
 package com.ip.mvc.entities.services;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Conference;
-import com.ip.mvc.entities.model.contents.Project;
-import com.ip.mvc.entities.model.contents.Quotation;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.model.users.Teacher;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,21 +140,28 @@ public class MyActivityService {
 
     public boolean addQuotation(Quotation quotation) {
         try (Connection connection = dataSource.getConnection()) {
-            String query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
+
+            String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setString(1, quotation.getArticleID());
-            statement.setString(2, quotation.getText());
-            statement.setString(3, quotation.getYear());
-            statement.setString(4, quotation.getArticleName());
-            statement.setString(5, quotation.getLocation());
-            statement.setString(6, quotation.getAuthorsText());
+            statement.setString(1, quotation.getLocation());
 
-            statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
 
+                query = "INSERT INTO Quotations(ARTICLE_ID, text, year, articleName, location, AUTHORS) VALUES (?, ?, ?, ?, ?, ?)";
+                statement = connection.prepareStatement(query);
 
+                statement.setString(1, quotation.getArticleID());
+                statement.setString(2, quotation.getText());
+                statement.setString(3, quotation.getYear());
+                statement.setString(4, quotation.getArticleName());
+                statement.setString(5, quotation.getLocation());
+                statement.setString(6, quotation.getAuthorsText());
 
+                statement.executeQuery();
 
+            }
         } catch (SQLException e) {
             return false;
         }
@@ -275,6 +276,31 @@ public class MyActivityService {
             statement.setString(1, projectID);
             statement.setString(2, project.getUserID());
             statement.execute();
+
+            /* insert authors */
+            List<Teacher> authors = project.getAuthorsList();
+            if (authors.size() > 0) {
+                for (Teacher author : authors) {
+                    query = "SELECT  u.USER_ID FROM TEACHERS t JOIN USERS u ON t.EMAIL = u.EMAIL WHERE FIRST_NAME = ? AND LAST_NAME = ? ";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, author.getFirstname());
+                    statement.setString(2, author.getLastname());
+
+                    resultSet = statement.executeQuery();
+                    if (resultSet.next()) {
+                            /* author is already in db */
+                        query = "INSERT INTO PROJECT_AUTHORS(PROJECT_ID, USER_ID) VALUES (?, ?)";
+                        statement = connection.prepareStatement(query);
+
+                        statement.setString(1, projectID);
+                        statement.setString(2, resultSet.getString("USER_ID"));
+                        statement.execute();
+                    } else {
+                            /* author is not in db */
+
+                    }
+                }
+            }
 
 
             return true;
@@ -431,7 +457,14 @@ public class MyActivityService {
             statement.setString(1, articleID);
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) article = new Article(resultSet);
+            if (resultSet.next()) {
+                article.setArticleID(resultSet.getString(1));
+                article.setJournalISSN(resultSet.getString(2));
+                article.setTitle(resultSet.getString(3));
+                article.setYear(resultSet.getString(4));
+                article.setJournalTitle(resultSet.getString(5));
+                article.setScore(resultSet.getInt(6));
+            }
 
             sql = "SELECT DISTINCT T.first_name, T.last_name FROM Article_Authors A\n" +
                     "JOIN Users U ON U.user_id = A.user_id\n" +
@@ -515,7 +548,6 @@ public class MyActivityService {
                 }
 
 
-
                 sql = "SELECT * FROM ARTICLE_OTHER_AUTHORS WHERE ARTICLE_ID = ?";
                 statement = connection.prepareStatement(sql);
                 statement.setString(1, articleID);
@@ -536,6 +568,112 @@ public class MyActivityService {
             e.printStackTrace();
         }
         return article;
+    }
+
+    public Project getProjectDetails(String projectID) {
+
+        Project project = new Project();
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM PROJECTS WHERE PROJECT_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, projectID);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                project = new Project(resultSet);
+
+                sql = "SELECT DISTINCT t.FIRST_NAME, t.LAST_NAME FROM PROJECT_AUTHORS pa " +
+                        "JOIN USERS U ON U.USER_ID = pa.USER_ID " +
+                        "JOIN TEACHERS t ON t.EMAIL = u.EMAIL " +
+                        "WHERE PROJECT_ID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, projectID);
+
+                resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Teacher author = new Teacher();
+                    author.setFirstname(resultSet.getString(1));
+                    author.setLastname(resultSet.getString(2));
+
+                    project.addAuthor(author);
+                }
+            } else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
+    }
+
+    public List<ScientificEvent> getEvents(String userID) {
+
+        List<ScientificEvent> scientificEvents = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql =
+                    "SELECT * FROM SCIENTIFIC_EVENTS e " +
+                            "JOIN SCIENTIFIC_EVENTS_ATTENDING a ON a.EVENT_ID = e.EVENT_ID " +
+                            "WHERE a.USER_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                ScientificEvent scientificEvent = new ScientificEvent(resultSet);
+                scientificEvents.add(scientificEvent);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return scientificEvents;
+    }
+
+    public void addEvent(ScientificEvent event, String userID) {
+
+        try (Connection connection = getDataSource().getConnection()) {
+
+            int eventID = 0;
+
+            String sql = "SELECT * FROM SCIENTIFIC_EVENTS WHERE EVENT_NAME = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, event.getName());
+
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                sql = "INSERT INTO scientific_events(event_name, event_year, event_link) VALUES (?, ?, ?)";
+                statement = connection.prepareStatement(sql, new String[]{"EVENT_ID"});
+
+                statement.setString(1, event.getName());
+                statement.setInt(2, event.getYear());
+                statement.setString(3, event.getLink());
+
+                statement.executeUpdate();
+
+                ResultSet rs = statement.getGeneratedKeys();
+                rs.next();
+                eventID = rs.getInt(1);
+            } else {
+                eventID = resultSet.getInt("EVENT_ID");
+            }
+
+
+
+            sql = "INSERT INTO SCIENTIFIC_EVENTS_ATTENDING(EVENT_ID, USER_ID, SCORE) VALUES (?, ?, ?)";
+
+            statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, eventID);
+            statement.setString(2, userID);
+            statement.setInt(3, event.getScore());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

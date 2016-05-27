@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Article Details</title>
+    <title>Add Event</title>
     <link rel="stylesheet" href="<spring:url value="/resources/css/container.css"/>"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
@@ -31,60 +31,30 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
+        <a href="/logout" class="btn btn-default logout-btn">Logout</a>
         <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
     <section id="da_big_section">
-
-        <h3>Article Details</h3>
-
-        <div><b>Title:</b> ${article.title}</div>
-        <div><b>Journal Name:</b> ${article.journalTitle}</div>
-        <div><b>Year:</b> ${article.year}</div>
-
-        <h3>Authors</h3>
-
-        <table class="table table-bordered" border="1">
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-            </tr>
-            <c:forEach items="${article.authors}" var="author" >
-                <tr>
-                    <td>${author.firstname}</td>
-                    <td>${author.lastname}</td>
-                </tr>
-            </c:forEach>
-            <c:forEach items="${article.others}" var="author" >
-                <tr>
-                    <td>${author.firstname}</td>
-                    <td>${author.lastname}</td>
-                </tr>
-            </c:forEach>
-        </table>
-
-        <h3>Quotations</h3>
-
-        <table class="table table-bordered" border="1">
-            <tr>
-                <th>Article Name</th>
-                <th>Year</th>
-                <th>Text</th>
-                <th>Journal Name</th>
-                <th>Authors</th>
-            </tr>
-            <c:forEach items="${article.quotationList}" var="quotation" >
-                <tr>
-                    <td>${quotation.articleName}</td>
-                    <td>${quotation.year}</td>
-                    <td>${quotation.text}</td>
-                    <td>${quotation.location}</td>
-                    <td>${quotation.authorsText}</td>
-
-                </tr>
-            </c:forEach>
-        </table>
-
+        <form:form action="/scientific/myactivity/addEvent" method="post" modelAttribute="event">
+            <div class="form-group">
+                <form:label path="name">Event Name: </form:label>
+                <form:input cssClass="form-control" id="name" path="name"/>
+            </div>
+            <div class="form-group">
+                <form:label path="year">Event Year: </form:label>
+                <form:input cssClass="form-control" id="year" path="year"/>
+            </div>
+            <div class="form-group">
+                <form:label path="link">Event Link: </form:label>
+                <form:input cssClass="form-control" id="link" path="link"/>
+            </div>
+            <div class="form-group">
+                <form:label path="attendingType">Attending as</form:label>
+                <form:input cssClass="form-control" id="attendingType" path="attendingType"/>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Add Event"/>
+        </form:form>
     </section>
 
     <section id="footer_section">

@@ -31,6 +31,7 @@
         <a href="/scientific/myactivity" class="btn btn-default">My Activity</a>
         <a href="/report" class="btn btn-default">Generate Report</a>
 
+        <a href="/logout" class="btn btn-default logout-btn">Logout</a>
         <a href="/search/" class="btn btn-default search-btn">Search</a>
     </section>
 
@@ -45,7 +46,7 @@
         <form:input cssClass="form-control" id="domain" path="domain"/>
     </div>
     <div class="form-group">
-        <form:label path="director">Director: </form:label>
+        <form:label path="director">Direct: </form:label>
         <form:input cssClass="form-control" id="director" path="director"/>
     </div>
     <div class="form-group">
@@ -61,9 +62,15 @@
         <form:input cssClass="form-control" id="description" path="description"/>
     </div>
     <div class="form-group">
+        <form:label path="authorsText">Authors: </form:label>
+        <form:input cssClass="form-control" id="authorsText" path="authorsText"/>
+    </div>
+
+    <div class="form-group">
         <form:label path="budget">Budget: </form:label>
         <form:input cssClass="form-control" id="budget" path="budget"/>
     </div>
+
 
     <input type="submit" class="btn btn-primary" value="Add Project"/>
 </form:form>

@@ -1,5 +1,6 @@
 package com.ip.mvc.entities.services;
 
+import com.ip.mvc.entities.model.pdfImport.Jurnal;
 import com.ip.mvc.entities.model.users.Teacher;
 
 import javax.sql.DataSource;
@@ -47,6 +48,22 @@ public class AdminService {
             statement.setString(1, email);
 
             statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addJournal(Jurnal jurnal) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "INSERT INTO JOURNALS(ISSN, JOURNAL_NAME, SCORE) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, jurnal.getISSN());
+            statement.setString(2, jurnal.getName());
+            statement.setInt(3, jurnal.getScore());
+
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

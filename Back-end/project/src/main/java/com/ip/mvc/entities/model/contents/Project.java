@@ -2,6 +2,9 @@ package com.ip.mvc.entities.model.contents;
 
 import com.ip.mvc.entities.model.users.Teacher;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,50 @@ public class Project extends ScientificActivity {
     private List<Teacher> contributors;
     private int budget;
     private String userID;
+    private String authorsText;
+    private List<Teacher> authorsList = new ArrayList<>();
+
+
+    public Project() {
+
+    }
+
+    public Project(ResultSet resultSet) throws SQLException {
+        this.projectID = resultSet.getString(1);
+        this.director = resultSet.getString(2);
+        this.title = resultSet.getString(3);
+        this.domain = resultSet.getString(4);
+        this.startDate = resultSet.getString(5);
+        this.finishDate = resultSet.getString(6);
+        this.description = resultSet.getString(7);
+        this.budget = resultSet.getInt(8);
+    }
+
+    public String getAuthorsText() {
+        return authorsText;
+    }
+
+    public void setAuthorsText(String authorsText) {
+        this.authorsText = authorsText;
+        String[] authors = authorsText.split(",");
+        for (String author : authors) {
+            String[] names = author.split(" ");
+            Teacher teacher = new Teacher(names[0], names[1]);
+            this.authorsList.add(teacher);
+        }
+    }
+
+    public List<Teacher> getAuthorsList() {
+        return authorsList;
+    }
+
+    public void setAuthorsList(List<Teacher> authorsList) {
+        this.authorsList = authorsList;
+    }
+
+    public void addAuthor(Teacher author) {
+        this.authorsList.add(author);
+    }
 
     public String getUserID() {
         return userID;

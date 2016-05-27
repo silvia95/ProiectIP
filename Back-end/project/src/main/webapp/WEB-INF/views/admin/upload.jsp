@@ -32,7 +32,12 @@
     <section id="da_big_section">
 
         <h3>Upload</h3>
-        <input type="file" name="img">
+
+        <form method="POST" action="/uploadFile" enctype="multipart/form-data">
+            File to upload: <input type="file" name="multiPartFile"><br />
+            <input type="submit" value="Upload"> Press here to upload the file!
+        </form>
+
 
     </section>
 
