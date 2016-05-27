@@ -5,26 +5,33 @@ package com.ip.mvc.entities.model.contents;
  */
 public class Centralization {
 
-    private int abScore;
-    private int totalScore;
+    private int userID;
+    private int articlesABScore;
+    private int articlesTotalScore;
+    private int quotationsABScore;
+    private int quotationsTotalScore;
     private boolean pass;
     private String actualType;
     private String futureType;
 
-    public void setABScore(int score) {
-        this.abScore = score;
+    public Centralization(int userID){
+        this.userID = userID;
     }
 
-    public int getABSCore() {
-        return abScore;
+    public void setArticlesABScore(int score) {
+        this.articlesABScore = score;
     }
 
-    public void setTotalScore(int score) {
-        this.totalScore = score;
+    public int getArticlesABScore() {
+        return articlesABScore;
     }
 
-    public int getTotalScore() {
-        return totalScore;
+    public void setArticlesTotalScore(int score) {
+        this.articlesTotalScore = score;
+    }
+
+    public int getArticlesTotalScore() {
+        return articlesTotalScore;
     }
 
     public void setPass(boolean pas) {
@@ -49,5 +56,25 @@ public class Centralization {
 
     public String getFutureType() {
         return futureType;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public int getQuotationsABScore() {
+        return quotationsABScore;
+    }
+
+    public void setQuotationsABScore(int quotationsABScore) {
+        this.quotationsABScore = quotationsABScore;
+    }
+
+    public int getQuotationsTotalScore() {
+        return quotationsTotalScore;
+    }
+
+    public void setQuotationsTotalScore(int quotationsTotalScore) {
+        this.quotationsTotalScore = quotationsTotalScore;
     }
 }

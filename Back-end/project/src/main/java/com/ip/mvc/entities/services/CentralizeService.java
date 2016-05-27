@@ -13,6 +13,10 @@ import java.sql.SQLException;
  */
 public class CentralizeService {
 
+    private Centralization cent;
+
+    private Connection connection;
+
     private DataSource dataSource;
 
     public DataSource getDataSource() {
@@ -24,181 +28,236 @@ public class CentralizeService {
     }
 
     /**
+     * Computes all info for the user
      *
      * @param userID
      * @return
      */
-    public Centralization articleCentralization(int userID) {
+    public Centralization compute(int userID){
+        try {
+            this.connection = dataSource.getConnection();
+            this.cent = new Centralization(userID);
+            this.setActualType();
+            this.articleCentralization();
+            this.quotationsCentralization();
+            this.mainCheck();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return this.cent;
+    }
+
+    /**
+     * Computes the points for the articles
+     * owned by user
+     * @return
+     */
+    public void articleCentralization() {
         int abArticleScore = 0;
         int totalArticleScore = 0;
         int abNumerator = 0;
-        int numerator, denominator;
-        Centralization cent = new Centralization();
+        int numerator = 0;
+        int denominator;
 
-        try (Connection connection = dataSource.getConnection()) {
-            String query1 = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
-            PreparedStatement statement1 = connection.prepareStatement(query1);
-            statement1.setInt(1, userID);
-
-            ResultSet resultSet1 = statement1.executeQuery();
-            while (resultSet1.next()) {
-                numerator = 0;
-                denominator = 0;
-                String articleID = resultSet1.getString("ARTICLE_ID");
-                String query2 = "SELECT * FROM ARTICLE_AUTHORS WHERE ARTICLE_ID = ?";
-                PreparedStatement statement2 = connection.prepareStatement(query2);
-                statement2.setString(1, articleID);
-
-                ResultSet resultSet2 = statement2.executeQuery();
-                while (resultSet2.next()) {
-                    denominator++;
+        try {
+            ResultSet articles = getArticlesForUser();
+            while (articles.next()) {
+                String articleID = articles.getString("ARTICLE_ID");
+                denominator = getDenominator(articleID);
+                
+                // compute the score
+                ResultSet journals = getJournalsForArticles(articleID);
+                if (journals.next()) {
+                    numerator += journals.getInt("SCORE");
+                    if (journals.getInt("SCORE") >= 4)
+                        abNumerator += journals.getInt("SCORE");
                 }
-                denominator = (1 > denominator - 2) ? 1 : denominator - 2;
 
-                String query3 = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON J.ISSN = A.JOURNAL_ISSN WHERE A.ARTICLE_ID = ?";
-                PreparedStatement statement3 = connection.prepareStatement(query3);
-                statement3.setString(1, articleID);
-
-                ResultSet resultSet3 = statement3.executeQuery();
-                if (resultSet3.next()) {
-                    numerator = resultSet3.getInt("SCORE");
-                    if (resultSet3.getInt("SCORE") >= 4)
-                        abNumerator += resultSet3.getInt("SCORE");
-                }
                 totalArticleScore += numerator / denominator;
                 if (abNumerator != 0) {
                     abArticleScore += abNumerator / denominator;
                 }
             }
-            cent.setABScore(abArticleScore);
-            cent.setTotalScore(totalArticleScore);
+            this.cent.setArticlesABScore(abArticleScore);
+            this.cent.setArticlesTotalScore(totalArticleScore);
 
-
-            // get current&set type
-            String type = "";
-            String actualTypeQuery = "SELECT T.TYPE FROM TEACHERS T JOIN USERS U ON T.EMAIL = U.EMAIL WHERE U.USER_ID = ?";
-            PreparedStatement actualTypeStatement = connection.prepareStatement(actualTypeQuery);
-            actualTypeStatement.setInt(1, userID);
-            ResultSet actualTypeResultSet1 = actualTypeStatement.executeQuery();
-            while (actualTypeResultSet1.next()) {
-                type = actualTypeResultSet1.getString("TYPE");
-            }
-            cent.setActualType(type);
-
-
-            // set future type
-            if (type.startsWith("Lect")) {
-                //criteriile pentru trecere la conferentiar
-                if (abArticleScore >= 16 && totalArticleScore >= 32) {
-                    cent.setPass(true);
-                    cent.setFutureType("Conferentiar");
-                } else
-                    cent.setPass(false);
-            } else {
-                if (type.startsWith("Conf")) {
-                    //criteriile pentru trecere la profesor
-                    if (abArticleScore >= 56 && totalArticleScore >= 24) {
-                        cent.setPass(true);
-                        cent.setFutureType("Profesor");
-                    } else
-                        cent.setPass(false);
-                }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
-        return cent;
     }
 
-
     /**
-     *
-     * @param userID
+     * Computes the points for the user quotations
      * @return
      */
-    public Centralization quotationsCentralization(int userID) {
-
+    public void quotationsCentralization() {
         int abQuotationsScore = 0;
         int totalQuotationsScore = 0;
         int abNumerator = 0;
-        int numerator, denominator;
-        String type = "";
-        Centralization cent = new Centralization();
+        int numerator = 0;
+        int denominator;
 
-        try (Connection connection = dataSource.getConnection()) {
-            String query1 = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
-            PreparedStatement statement1 = connection.prepareStatement(query1);
-            statement1.setInt(1, userID);
+        try {
+            ResultSet articles = getArticlesForUser();
+            while (articles.next()) {
+                String articleID = articles.getString("ARTICLE_ID");
+                denominator = getDenominator(articleID);
 
-            ResultSet resultSet1 = statement1.executeQuery();
-            while (resultSet1.next()) {
-                numerator = 0;
-                denominator = 0;
-                String articleID = resultSet1.getString("ARTICLE_ID");
-                String query2 = "SELECT * FROM ARTICLE_AUTHORS WHERE ARTICLE_ID = ?";
-                PreparedStatement statement2 = connection.prepareStatement(query2);
-                statement2.setString(1, articleID);
-
-                ResultSet resultSet2 = statement2.executeQuery();
-                while (resultSet2.next()) {
-                    denominator++;
-                }
-                denominator = (1 > denominator - 2) ? 1 : denominator - 2;
-
-                String query3 = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON A.JOURNAL_ISSN = J.ISSN JOIN QUOTATIONS Q ON Q.ARTICLE_ID = A.ARTICLE_ID WHERE Q.ARTICLE_ID = ?";
-                PreparedStatement statement3 = connection.prepareStatement(query3);
-                statement3.setString(1, articleID);
-
-                ResultSet resultSet3 = statement3.executeQuery();
-                while (resultSet3.next()) {
-                    numerator += resultSet3.getInt("SCORE");
-                    if (resultSet3.getInt("SCORE") >= 4)
-                        abNumerator += resultSet3.getInt("SCORE");
+                ResultSet journals = getJournalsForQuotations(articleID);
+                while (journals.next()) {
+                    numerator += journals.getInt("SCORE");
+                    if (journals.getInt("SCORE") >= 4)
+                        abNumerator += journals.getInt("SCORE");
                 }
                 if (abNumerator != 0) {
                     abQuotationsScore += abNumerator / denominator;
                 }
                 totalQuotationsScore += numerator / denominator;
             }
-            cent.setABScore(abQuotationsScore);
-            cent.setTotalScore(totalQuotationsScore);
+            this.cent.setQuotationsABScore(abQuotationsScore);
+            this.cent.setQuotationsTotalScore(totalQuotationsScore);
 
-
-            // get&set actual type
-            String actualTypeQuery = "SELECT T.TYPE FROM TEACHERS T JOIN USERS U ON T.EMAIL = U.EMAIL WHERE U.USER_ID = ?";
-            PreparedStatement actualTypeStatement = connection.prepareStatement(actualTypeQuery);
-            actualTypeStatement.setInt(1, userID);
-            ResultSet actualTypeResultSet = actualTypeStatement.executeQuery();
-            while (actualTypeResultSet.next()) {
-                type = actualTypeResultSet.getString("TYPE");
-            }
-            cent.setActualType(type);
-
-
-            // set the future type
-            if (type.startsWith("Lect")) {
-                //criteriile pentru trecere la conferentiar
-                if (abQuotationsScore >= 12 && totalQuotationsScore >= 48) {
-                    cent.setPass(true);
-                    cent.setFutureType("Conferentiar");
-                } else
-                    cent.setPass(false);
-            } else {
-                if (type.startsWith("Conf")) {
-                    //criteriile pentru trecere la profesor
-                    if (abQuotationsScore >= 40 && totalQuotationsScore >= 120) {
-                        cent.setPass(true);
-                        cent.setFutureType("Profesor");
-                    } else
-                        cent.setPass(false);
-                }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return cent;
+
+    }
+
+    
+    /**
+     * Compute the main check
+     */
+    private void mainCheck() {
+        int abArticleScore = this.cent.getArticlesABScore();
+        int totalArticleScore = this.cent.getArticlesTotalScore();
+        int abQuotationsScore = this.cent.getQuotationsABScore();
+        int totalQuotationsScore = this.cent.getQuotationsTotalScore();
+        String type = this.cent.getActualType();
+        boolean articlePass, quotationsPass;
+        
+        // set future type
+        if (type.startsWith("Lect")) {
+            articlePass = abArticleScore >= 16 && totalArticleScore >= 32;
+            quotationsPass = abQuotationsScore >= 12 && totalQuotationsScore >= 48;
+
+            //criteriile pentru trecere la conferentiar
+            if (articlePass && quotationsPass) {
+                this.cent.setPass(true);
+                this.cent.setFutureType("Conferentiar");
+            } else
+                this.cent.setPass(false);
+        } else {
+            articlePass = abArticleScore >= 56 && totalArticleScore >= 24;
+            quotationsPass = abQuotationsScore >= 40 && totalQuotationsScore >= 120;
+            if (type.startsWith("Conf")) {
+                //criteriile pentru trecere la profesor
+                if (articlePass && quotationsPass) {
+                    this.cent.setPass(true);
+                    this.cent.setFutureType("Profesor");
+                } else
+                    this.cent.setPass(false);
+            }
+        }
+    }
+
+    
+    /**
+     * Sets the current type of the user
+     * @throws SQLException
+     */
+    private void setActualType() throws SQLException {
+        String type = "";
+        String actualTypeQuery = "SELECT T.TYPE FROM TEACHERS T JOIN USERS U ON T.EMAIL = U.EMAIL WHERE U.USER_ID = ?";
+        PreparedStatement actualTypeStatement = connection.prepareStatement(actualTypeQuery);
+        actualTypeStatement.setInt(1, this.cent.getUserID());
+        ResultSet actualTypeResultSet1 = actualTypeStatement.executeQuery();
+        while (actualTypeResultSet1.next()) {
+            type = actualTypeResultSet1.getString("TYPE");
+        }
+
+        cent.setActualType(type);
+    }
+
+
+    /**
+     * Gets journals with articles info
+     *
+     * @param articleID
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet getJournalsForArticles(String articleID) throws SQLException {
+        String query = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON J.ISSN = A.JOURNAL_ISSN WHERE A.ARTICLE_ID = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setString(1, articleID);
+
+        return stmt.executeQuery();
+    }
+
+    /**
+     * Gets journals with quotations info
+     *
+     * @param articleID
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet getJournalsForQuotations(String articleID) throws SQLException {
+        String query = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON A.JOURNAL_ISSN = J.ISSN JOIN QUOTATIONS Q ON Q.ARTICLE_ID = A.ARTICLE_ID WHERE Q.ARTICLE_ID = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setString(1, articleID);
+
+        return stmt.executeQuery();
+    }
+
+
+    /**
+     *
+     * @param articleID
+     * @return
+     * @throws SQLException
+     */
+    private int getDenominator(String articleID) throws SQLException {
+        int denominator = 0;
+
+        ResultSet authors = getAuthorsForArticle(articleID);
+        while (authors.next()) {
+            denominator++;
+        }
+        denominator = (1 > denominator - 2) ? 1 : denominator - 2;
+
+        return denominator;
+    }
+
+    /**
+     * Returns articles for an user
+     *
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet getArticlesForUser() throws SQLException {
+        int userID = this.cent.getUserID();
+
+        String query = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, userID);
+
+        return stmt.executeQuery();
+    }
+
+    /**
+     * Get the authors for an article
+     *
+     * @param articleID
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet getAuthorsForArticle(String articleID) throws SQLException {
+        String query = "SELECT * FROM ARTICLE_AUTHORS WHERE ARTICLE_ID = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setString(1, articleID);
+
+        return stmt.executeQuery();
     }
 }
