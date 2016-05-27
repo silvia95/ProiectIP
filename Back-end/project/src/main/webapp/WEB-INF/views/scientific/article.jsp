@@ -36,6 +36,8 @@
 
     <section id="da_big_section">
 
+        <h3>Article Details</h3>
+
         <div><b>Title:</b> ${article.title}</div>
         <div><b>Journal Name:</b> ${article.journalTitle}</div>
         <div><b>Year:</b> ${article.year}</div>
