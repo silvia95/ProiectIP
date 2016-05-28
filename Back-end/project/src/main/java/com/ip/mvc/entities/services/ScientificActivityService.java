@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Book;
 import com.ip.mvc.entities.model.contents.Journal;
 import com.ip.mvc.entities.model.contents.Quotation;
 

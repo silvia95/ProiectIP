@@ -2,6 +2,7 @@ package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.model.users.Teacher;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyActivityService {
+
+    @Autowired
+    private ProfileService profileService;
 
     private DataSource dataSource;
 
@@ -174,6 +178,8 @@ public class MyActivityService {
             String query = "SELECT ISSN FROM JOURNALS WHERE JOURNAL_NAME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
+
+            System.out.println(article.getJournalTitle());
             statement.setString(1, article.getJournalTitle());
 
             ResultSet resultSet = statement.executeQuery();
@@ -670,6 +676,88 @@ public class MyActivityService {
             statement.setInt(3, event.getScore());
 
             statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Book> getBooks(String userID) {
+        List<Book> bookList = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM BOOKS b " +
+                    "JOIN BOOK_AUTHORS a ON b.BOOK_ID = a.BOOK_ID " +
+                    "WHERE a.USER_ID = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Book book = new Book(resultSet);
+
+                int bookID = resultSet.getInt("BOOK_ID");
+
+                sql = "SELECT * FROM TEACHERS t " +
+                        "JOIN USERS u ON u.EMAIL = t.EMAIL " +
+                        "JOIN BOOK_AUTHORS b ON b.USER_ID = u.USER_ID " +
+                        "WHERE b.BOOK_ID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, bookID);
+
+                ResultSet resultSet1 = statement.executeQuery();
+                while (resultSet1.next()) {
+                    Teacher author = new Teacher(resultSet1);
+                    book.addAuthor(author);
+                }
+
+                bookList.add(book);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookList;
+    }
+
+    public void addBook(Book book) {
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "INSERT INTO BOOKS(BOOK_NAME, BOOK_YEAR, SCORE) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql, new String[]{"BOOK_ID"});
+            statement.setString(1, book.getName());
+            statement.setInt(2, book.getYear());
+            statement.setInt(3, book.getScore());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            String bookID = rs.getString(1);
+
+            if (book.getAuthors().size() > 0) {
+                List<Teacher> authorsList = book.getAuthors();
+                for (Teacher author : authorsList) {
+                    sql = "SELECT u.USER_ID FROM TEACHERS t " +
+                            "JOIN USERS u ON u.EMAIL = t.EMAIL " +
+                            "WHERE t.FIRST_NAME = ? AND t.LAST_NAME = ?";
+                    statement = connection.prepareStatement(sql);
+                    statement.setString(1, author.getFirstname());
+                    statement.setString(2, author.getLastname());
+
+                    ResultSet resultSet = statement.executeQuery();
+                    if (resultSet.next()) {
+                        String userID = resultSet.getString("USER_ID");
+                        sql = "INSERT INTO BOOK_AUTHORS(BOOK_ID, USER_ID) VALUES (?, ?)";
+                        statement = connection.prepareStatement(sql);
+                        statement.setString(1, bookID);
+                        statement.setString(2, userID);
+
+                        statement.executeUpdate();
+                    }
+                }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

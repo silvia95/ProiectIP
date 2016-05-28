@@ -157,6 +157,33 @@
         <a href="/scientific/myactivity/addEvent"> <input type="submit" class="btn btn-primary"
                                                                value="Add Event"></a>
 
+        <h3>My Books</h3>
+        <c:choose>
+            <c:when test="${!empty bookList}">
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>Name</th>
+                        <th>Year</th>
+                        <th>Authors</th>
+                        <th>Score</th>
+                    </tr>
+                    <c:forEach items="${bookList}" var="book">
+                        <tr>
+                            <th>${book.name}</th>
+                            <th>${book.year}</th>
+                            <th><c:forEach items="${book.authors}" var="author" varStatus="loop">${author.firstname} ${author.lastname}<c:if test="${!loop.last}">,</c:if> </c:forEach></th>
+                            <th>${book.score}</th>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:when>
+            <c:otherwise>
+                <h5>No Scientific Events yet</h5>
+            </c:otherwise>
+        </c:choose>
+        <a href="/scientific/myactivity/addBook"> <input type="submit" class="btn btn-primary"
+                                                          value="Add Book"></a>
+
     </section>
 
     <section id="footer_section">
