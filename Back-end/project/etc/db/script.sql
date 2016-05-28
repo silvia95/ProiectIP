@@ -1,3 +1,5 @@
+ALTER TABLE IPUSER.VISITATIONS DROP CONSTRAINT VISITATIONS_FK;
+ALTER TABLE IPUSER.SCIENTIFIC_EVENTS_ATTENDING DROP CONSTRAINT SCIENTIFIC_EVENTS_ATTENDING_FK;
 ALTER TABLE IPUSER.QUOTATIONS DROP CONSTRAINT QUOTATIONS_FK;
 ALTER TABLE IPUSER.PROJECT_AUTHORS DROP CONSTRAINT PROJECT_AUTHORS_FK1;
 ALTER TABLE IPUSER.PROJECT_AUTHORS DROP CONSTRAINT PROJECT_AUTHORS_FK2;
@@ -5,31 +7,29 @@ ALTER TABLE IPUSER.EMAILS DROP CONSTRAINT EMAILS_FK;
 ALTER TABLE IPUSER.DEPARTMENTS DROP CONSTRAINT DEPARTMENTS_FK;
 ALTER TABLE IPUSER.CONFERENCES_ATTENDING DROP CONSTRAINT CONFERENCES_ATTENDING_FK1;
 ALTER TABLE IPUSER.CONFERENCES_ATTENDING DROP CONSTRAINT CONFERENCES_ATTENDING_FK2;
+ALTER TABLE IPUSER.BOOK_AUTHORS DROP CONSTRAINT BOOK_AUTHORS_FK;
 ALTER TABLE IPUSER.ARTICLE_OTHER_AUTHORS DROP CONSTRAINT ARTICLE_OTHER_AUTHORS_FK1;
 ALTER TABLE IPUSER.ARTICLE_AUTHORS DROP CONSTRAINT ARTICLE_AUTHORS_FK1;
 ALTER TABLE IPUSER.ARTICLE_AUTHORS DROP CONSTRAINT ARTICLE_AUTHORS_FK2;
 ALTER TABLE IPUSER.TEACHERS DROP CONSTRAINT TEACHERS_FK;
-ALTER TABLE IPUSER.ARTICLES DROP CONSTRAINT ARTICLES_FK;
+DROP TABLE IPUSER.VISITATIONS;
+DROP TABLE IPUSER.SCIENTIFIC_EVENTS_ATTENDING;
 DROP TABLE IPUSER.QUOTATIONS;
 DROP TABLE IPUSER.PROJECT_AUTHORS;
 DROP TABLE IPUSER.EMAILS;
 DROP TABLE IPUSER.DEPARTMENTS;
 DROP TABLE IPUSER.CONFERENCES_ATTENDING;
+DROP TABLE IPUSER.BOOK_AUTHORS;
 DROP TABLE IPUSER.ARTICLE_OTHER_AUTHORS;
 DROP TABLE IPUSER.ARTICLE_AUTHORS;
 DROP TABLE IPUSER.TEACHERS;
-DROP TABLE IPUSER.ARTICLES;
 DROP TABLE IPUSER.USERS;
 DROP TABLE IPUSER.PROJECTS;
-DROP TABLE IPUSER.JOURNALS;
 DROP TABLE IPUSER.CONFERENCES;
-DROP TABLE IPUSER.VISITING;
-DROP TABLE IPUSER.SCIENTIFIC_EVENTS_ATTENDING;
+DROP TABLE IPUSER.ARTICLES;
 DROP TABLE IPUSER.SCIENTIFIC_EVENTS;
-DROP TABLE IPUSER.INVENTIONS_AUTHORS;
-DROP TABLE IPUSER.INVENTIONS;
+DROP TABLE IPUSER.JOURNALS;
 DROP TABLE IPUSER.BOOKS;
-DROP TABLE IPUSER.BOOK_AUTHORS;
 DROP TABLE IPUSER.ADMINS;
 
 DROP SEQUENCE ARTICLES_SEQ;
@@ -37,6 +37,9 @@ DROP SEQUENCE USERS_SEQ;
 DROP SEQUENCE projects_seq;
 DROP SEQUENCE conferences_seq;
 DROP SEQUENCE admins_seq;
+DROP SEQUENCE events_seq;
+DROP SEQUENCE books_seq;
+DROP SEQUENCE visitations_seq;
 
 CREATE TABLE Users (
     user_id      NUMBER(10) NOT NULL UNIQUE,
@@ -82,9 +85,8 @@ CREATE TABLE Departments (
 
 CREATE TABLE Journals (
     ISSN VARCHAR2(20),
-    journal_name VARCHAR2(50),
-    score NUMBER(1),
-    CONSTRAINT Journals_pk PRIMARY KEY (ISSN)
+    journal_name VARCHAR2(1000),
+    score NUMBER(1)
 );
 
 CREATE TABLE Articles (
@@ -92,8 +94,7 @@ CREATE TABLE Articles (
     title VARCHAR2(50),
     year VARCHAR2(4),
     journal_issn VARCHAR2(20),
-    CONSTRAINT Articles_pk PRIMARY KEY (article_id),
-    CONSTRAINT Articles_fk FOREIGN KEY (journal_issn) REFERENCES Journals(ISSN)
+    CONSTRAINT Articles_pk PRIMARY KEY (article_id)
 );
 
 CREATE SEQUENCE articles_seq;
@@ -128,40 +129,10 @@ CREATE TABLE Quotations (
     year VARCHAR2(4),
     articleName VARCHAR2(128),
     location VARCHAR2(128),
-    authors INT,
+    authors VARCHAR2(512),
 
     CONSTRAINT Quotations_fk FOREIGN KEY(article_id) REFERENCES Articles(article_id)
 );
-
-
-INSERT INTO Users(email, password)
-VALUES ('mmoruz@info.uaic.ro', 'a');
-
-INSERT INTO Users(email, password)
-VALUES ('adiftene@info.uaic.ro', 'a');
-
-INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
-VALUES ('adiftene@info.uaic.ro','Adrian', 'Iftene', 'Conf. dr.');
-INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
-VALUES ('mmoruz@info.uaic.ro', 'Mihai', 'Moruz', 'Lect. dr.');
-
-INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D1');
-INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D2');
-INSERT INTO Departments VALUES ('adiftene@info.uaic.ro', 'D1');
-
-INSERT INTO Emails VALUES ('mmoruz@info.uaic.ro', 'mmoruz@gmail.com');
-INSERT INTO Emails VALUES ('adiftene@info.uaic.ro', 'adiftene@gmail.com');
-
-INSERT INTO Journals VALUES ('03600300', 'ACM Computing Surveys', 8);
-INSERT INTO Journals VALUES ('01636804', 'IEEE Communications Magazine', 8);
-
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title1' , '2016', '03600300');
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title2' , '2016', '03600300');
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title3' , '2015', '01636804');
-
-INSERT INTO Article_Authors (article_id, user_id) VALUES ('1', '1');
-INSERT INTO Article_Authors (article_id, user_id) VALUES ('2', '1');
-INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
 
 CREATE TABLE Projects (
     project_id NUMBER(10),
@@ -253,47 +224,112 @@ create table scientific_events(
     event_id number(3, 0),
     event_name varchar2(200),
     event_year number(4, 0),
-    event_link varchar2(200),
-    score number(2, 0)
+    event_link varchar2(200)
 );
+
+CREATE SEQUENCE events_seq;
+
+CREATE OR REPLACE TRIGGER events_increment
+BEFORE INSERT ON scientific_events
+FOR EACH ROW
+
+    BEGIN
+        SELECT events_seq.NEXTVAL
+        INTO   :new.event_id
+        FROM   dual;
+    END;
 
 create table scientific_events_attending(
     event_id number(3, 0),
-    participant_id number(10, 0),
-    membership varchar2(50)
-);
+    user_id NUMBER(10),
+    score number(2, 0),
 
-create table inventions(
-    invention_id number(3, 0),
-    invention_name varchar2(200),
-    invention_year number(4, 0),
-    score number(2, 0)
-);
-
-create table inventions_authors(
-    invention_id number(3, 0),
-    inventor_id number(10, 0)
-);
-
-create table visiting(
-    visit_id number(3, 0),
-    visitor_id number(10, 0),
-    visit_name varchar2(200),
-    purpose varchar2(200),
-    nr_of_months number(3, 0),
-    visit_year number(4, 0),
-    score number(2, 0)
+    CONSTRAINT scientific_events_attending_fk FOREIGN KEY (user_id) REFERENCES USERS(user_id)
 );
 
 create table books(
     book_id number(3, 0),
     book_name varchar2(200),
     book_year number(4, 0),
-    publisher varchar2(200),
     score number(2, 0)
 );
 
+CREATE SEQUENCE books_seq;
+
+CREATE OR REPLACE TRIGGER books_increment
+BEFORE INSERT ON books
+FOR EACH ROW
+
+    BEGIN
+        SELECT events_seq.NEXTVAL
+        INTO   :new.book_id
+        FROM   dual;
+    END;
+
+
 create table book_authors(
     book_id number(3, 0),
-    author_id number(10, 0)
+    user_id NUMBER(10),
+
+    CONSTRAINT book_authors_fk FOREIGN KEY (user_id) REFERENCES USERS(user_id)
 );
+
+create table visitations(
+    visit_id number(3, 0),
+    user_id number(10, 0),
+    university_name varchar2(200),
+    nr_of_months number(3, 0),
+    score number(2, 0),
+
+    CONSTRAINT visitations_fk FOREIGN KEY (user_id) REFERENCES USERS(user_id)
+);
+
+CREATE SEQUENCE visitations_seq;
+
+CREATE OR REPLACE TRIGGER visitations_increment
+BEFORE INSERT ON visitations
+FOR EACH ROW
+
+    BEGIN
+        SELECT events_seq.NEXTVAL
+        INTO   :new.visit_id
+        FROM   dual;
+    END;
+
+
+
+
+INSERT INTO Users(email, password)
+VALUES ('mmoruz@info.uaic.ro', 'a');
+
+INSERT INTO Users(email, password)
+VALUES ('adiftene@info.uaic.ro', 'a');
+
+INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
+VALUES ('adiftene@info.uaic.ro','Adrian', 'Iftene', 'Conf. dr.');
+INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
+VALUES ('mmoruz@info.uaic.ro', 'Mihai', 'Moruz', 'Lect. dr.');
+
+INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D1');
+INSERT INTO Departments VALUES ('mmoruz@info.uaic.ro', 'D2');
+INSERT INTO Departments VALUES ('adiftene@info.uaic.ro', 'D1');
+
+INSERT INTO Emails VALUES ('mmoruz@info.uaic.ro', 'mmoruz@gmail.com');
+INSERT INTO Emails VALUES ('adiftene@info.uaic.ro', 'adiftene@gmail.com');
+
+INSERT INTO Journals VALUES ('03600300', 'ACM Computing Surveys', 8);
+INSERT INTO Journals VALUES ('01636804', 'IEEE Communications Magazine', 8);
+
+INSERT INTO Articles (title, year, journal_issn) VALUES ('Title1' , '2016', '03600300');
+INSERT INTO Articles (title, year, journal_issn) VALUES ('Title2' , '2016', '03600300');
+INSERT INTO Articles (title, year, journal_issn) VALUES ('Title3' , '2015', '01636804');
+
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('1', '1');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('2', '1');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
+
+INSERT INTO books(book_name, book_year, score)  VALUES ('name1', 1992, 3);
+INSErT INTO book_authors(book_id, user_id) VALUES (1, 1);
+
+INSERT INTO visitations(user_id, university_name, nr_of_months, score)
+VALUES (1, 'university', 3, 5);

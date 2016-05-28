@@ -184,6 +184,31 @@
         <a href="/scientific/myactivity/addBook"> <input type="submit" class="btn btn-primary"
                                                           value="Add Book"></a>
 
+        <h3>My Visitations</h3>
+        <c:choose>
+            <c:when test="${!empty visitationList}">
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>University Name</th>
+                        <th>Months</th>
+                        <th>Score</th>
+                    </tr>
+                    <c:forEach items="${visitationList}" var="visitation">
+                        <tr>
+                            <th>${visitation.universityName}</th>
+                            <th>${visitation.numberOfMonths}</th>
+                            <th>${visitation.score}</th>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:when>
+            <c:otherwise>
+                <h5>No Visitations yet</h5>
+            </c:otherwise>
+        </c:choose>
+        <a href="/scientific/myactivity/addVisitation"> <input type="submit" class="btn btn-primary"
+                                                         value="Add Visitation"></a>
+
     </section>
 
     <section id="footer_section">

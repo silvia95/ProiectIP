@@ -666,7 +666,6 @@ public class MyActivityService {
             }
 
 
-
             sql = "INSERT INTO SCIENTIFIC_EVENTS_ATTENDING(EVENT_ID, USER_ID, SCORE) VALUES (?, ?, ?)";
 
             statement = connection.prepareStatement(sql);
@@ -762,6 +761,45 @@ public class MyActivityService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Visitation> getVisitations(String userID) {
+        List<Visitation> visitationList = new ArrayList<>();
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "SELECT * FROM VISITATIONS WHERE USER_ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Visitation visitation = new Visitation(resultSet);
+                visitationList.add(visitation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return visitationList;
+    }
+
+    public void addVisitation(Visitation visitation) {
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String sql = "INSERT INTO VISITATIONS(USER_ID, UNIVERSITY_NAME, NR_OF_MONTHS, SCORE) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, visitation.getUserID());
+            statement.setString(2, visitation.getUniversityName());
+            statement.setInt(3, visitation.getNumberOfMonths());
+            statement.setInt(4, visitation.getScore());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

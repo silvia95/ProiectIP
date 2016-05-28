@@ -51,6 +51,9 @@ public class ScientificController {
         List<Book> bookList = myActivityService.getBooks(userID);
         model.addObject("bookList", bookList);
 
+        List<Visitation> visitationList = myActivityService.getVisitations(userID);
+        model.addObject("visitationList", visitationList);
+
         return model;
     }
 
@@ -246,6 +249,31 @@ public class ScientificController {
         RedirectView model = new RedirectView("/scientific/myactivity");
 
         myActivityService.addBook(book);
+
+        return model;
+
+    }
+
+    @RequestMapping(value = "/myactivity/addVisitation", method = RequestMethod.GET)
+    public ModelAndView displayAddVisitation() {
+
+        ModelAndView model = new ModelAndView("/scientific/addvisitation");
+
+        model.addObject("visitation", new Visitation());
+
+        return model;
+    }
+
+    @RequestMapping(value = "/myactivity/addVisitation", method = RequestMethod.POST)
+    public RedirectView executeAddVisitation(@ModelAttribute Visitation visitation,
+                                             HttpServletRequest request) {
+
+        RedirectView model = new RedirectView("/scientific/myactivity");
+
+        String userID = profileService.getUserID(request.getUserPrincipal().getName());
+        visitation.setUserID(userID);
+
+        myActivityService.addVisitation(visitation);
 
         return model;
 
