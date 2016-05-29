@@ -38,93 +38,105 @@
     <section id="da_big_section">
 
         <form:form action="/report" method="post" modelAttribute="reportForm">
-
-            <div>
+            <div class="form-group">
                 <label>
                     <input type="checkbox" name="centralizeCheckBox">
                 </label>Centralize
             </div>
-            <div>
+            <div class="form-group">
                 <label>
                     <input type="checkbox" name="productionCheckBox">
                 </label>Scientific Production
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificProduction.name">Article Name: </form:label>
-                <form:input path="scientificProduction.name"/>
+                <form:input cssClass="form-control" path="scientificProduction.name"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificProduction.authorsText">Authors: </form:label>
-                <form:input path="scientificProduction.authorsText"/>
+                <form:input cssClass="form-control" path="scientificProduction.authorsText"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificProduction.journalName">Journal Name: </form:label>
-                <form:input path="scientificProduction.journalName"/>
+                <form:input cssClass="form-control" path="scientificProduction.journalName"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificProduction.classification">Classification: </form:label>
-                <form:input path="scientificProduction.classification"/>
+                <form:input cssClass="form-control" path="scientificProduction.classification"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificProduction.articleType">Article Type: </form:label>
-                <form:input path="scientificProduction.articleType"/>
+                <form:input cssClass="form-control" path="scientificProduction.articleType"/>
             </div>
-            <div>
+            <div class="form-group">
                 Score
                 <form:label path="scientificProduction.fromScore">From: </form:label>
-                <form:input path="scientificProduction.fromScore"/>
+                <form:input cssClass="form-control" path="scientificProduction.fromScore"/>
                 <form:label path="scientificProduction.toScore">To: </form:label>
-                <form:input path="scientificProduction.toScore"/>
+                <form:input cssClass="form-control" path="scientificProduction.toScore"/>
             </div>
-            <div>
-                Year
-                <form:label path="scientificProduction.fromYear">From: </form:label>
-                <form:input path="scientificProduction.fromYear"/>
-                <form:label path="scientificProduction.toYear">To: </form:label>
-                <form:input path="scientificProduction.toYear"/>
+            <div class="form-group">
+                <span class="dual-title">Year</span>
+                <div class="half">
+                    <form:label path="scientificProduction.fromYear">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificProduction.fromYear"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificProduction.toYear">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificProduction.toYear"/>
+                </div>
             </div>
 
-            <br>
+            <br><br><br>
+            <br><br><br>
 
             <label>
-                <input type="checkbox" name="impactCheckBox">
-            </label>Scientific Impact
-            <div>
+                <input type="checkbox" name="impactCheckBox">Scientific Impact
+            </label>
+            <div class="form-group">
                 <form:label path="scientificImpact.name">Article Name: </form:label>
-                <form:input path="scientificImpact.name"/>
+                <form:input cssClass="form-control" path="scientificImpact.name"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificImpact.authorsText">Authors: </form:label>
-                <form:input path="scientificImpact.authorsText"/>
+                <form:input cssClass="form-control" path="scientificImpact.authorsText"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificImpact.journalName">Journal Name: </form:label>
-                <form:input path="scientificImpact.journalName"/>
+                <form:input cssClass="form-control" path="scientificImpact.journalName"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificImpact.classification">Classification: </form:label>
-                <form:input path="scientificImpact.classification"/>
+                <form:input cssClass="form-control" path="scientificImpact.classification"/>
             </div>
-            <div>
+            <div class="form-group">
                 <form:label path="scientificImpact.articleType">Article Type: </form:label>
-                <form:input path="scientificImpact.articleType"/>
+                <form:input cssClass="form-control" path="scientificImpact.articleType"/>
             </div>
-            <div>
-                Score
-                <form:label path="scientificImpact.fromScore">From: </form:label>
-                <form:input path="scientificImpact.fromScore"/>
-                <form:label path="scientificImpact.toScore">To: </form:label>
-                <form:input path="scientificImpact.toScore"/>
+            <div class="form-group">
+                <span class="dual-title">Score</span>
+                <div class="half">
+                    <form:label path="scientificImpact.fromScore">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificImpact.fromScore"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificImpact.toScore">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificImpact.toScore"/>
+                </div>
             </div>
-            <div>
-                Year
-                <form:label path="scientificImpact.fromYear">From: </form:label>
-                <form:input path="scientificImpact.fromYear"/>
-                <form:label path="scientificImpact.toYear">To: </form:label>
-                <form:input path="scientificImpact.toYear"/>
+            <div class="form-group">
+                <span class="dual-title">Year</span>
+                <div class="half">
+                    <form:label path="scientificImpact.fromYear">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificImpact.fromYear"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificImpact.toYear">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificImpact.toYear"/>
+                </div>
             </div>
 
-            <input type="submit" value="Generate Report">
+            <input type="submit" class="btn btn-primary" value="Generate Report">
         </form:form>
 
         <c:if test="${cent != null}">
@@ -238,7 +250,7 @@
                         <th>Journal Name</th>
                         <th>Authors</th>
                     </tr>
-                    <c:forEach items="${article.quotationList}" var="quotation" >
+                    <c:forEach items="${article.quotationList}" var="quotation">
                         <tr>
                             <td>${quotation.articleName}</td>
                             <td>${quotation.year}</td>

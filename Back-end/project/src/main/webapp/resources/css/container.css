@@ -183,3 +183,28 @@ body {
     margin-top: 20px;
     margin-right: 47px;
 }
+span.dual-title {
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.half {
+    width: 47%;
+    float: left;
+
+}
+.half:last-child {
+    margin-left: 6%;
+}
+.half label {
+    font-size: 12px;
+}
+.btn {
+    margin-left: 0;
+}
+form .btn {
+    margin-top: 20px;
+    margin-left: 0;
+}
