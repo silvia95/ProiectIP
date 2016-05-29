@@ -203,4 +203,42 @@ public class ProfileService {
         return score;
     }
 
+    public int getProjectScore(String userID){
+        int score = 0;
+        try (Connection connection = dataSource.getConnection()) {
+            String query1 =
+                    "SELECT P.PROJECT_ID, P.DIRECTOR, t.FIRST_NAME, t.LAST_NAME, P.BUDGET FROM PROJECTS P " +
+                            "JOIN PROJECT_AUTHORS PA ON P.PROJECT_ID = PA.PROJECT_ID " +
+                            "JOIN USERS U ON u.USER_ID = PA.USER_ID " +
+                            "JOIN TEACHERS t ON t.EMAIL = u.EMAIL " +
+                            "WHERE pa.USER_ID = ?";
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, userID);
+
+            ResultSet resultSet1 = statement1.executeQuery();
+            while(resultSet1.next()) {
+                int punctaj = 0;
+                if(resultSet1.getInt("BUDGET") < 50000){
+                    punctaj += 1;
+                }
+                if(resultSet1.getInt("BUDGET") >= 50000 && resultSet1.getInt("BUDGET") < 100000){
+                    punctaj += 2;
+                }
+                if(resultSet1.getInt("BUDGET") >= 100000 && resultSet1.getInt("BUDGET") < 200000){
+                    punctaj += 3;
+                }
+                if(resultSet1.getInt("BUDGET") >= 200000){
+                    punctaj += 4;
+                }
+                if(resultSet1.getString("DIRECTOR").equals(resultSet1.getString("LAST_NAME") + resultSet1.getString("FIRST_NAME"))){
+                    punctaj *= 2;
+                }
+                score += punctaj;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
 }

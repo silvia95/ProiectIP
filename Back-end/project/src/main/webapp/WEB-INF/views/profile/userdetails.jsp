@@ -59,6 +59,7 @@
         </ul>
         <h3>Article Score: ${articleScore}</h3>
         <h3>Quotation Score: ${quotationScore}</h3>
+        <h3>Project Score: ${projectScore}</h3>
     </c:when>
 </c:choose>
     </section>
