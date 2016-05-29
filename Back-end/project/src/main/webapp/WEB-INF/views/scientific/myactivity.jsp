@@ -193,12 +193,14 @@
                     <tr>
                         <th>University Name</th>
                         <th>Months</th>
+                        <th>Top Position</th>
                         <th>Score</th>
                     </tr>
                     <c:forEach items="${visitationList}" var="visitation">
                         <tr>
                             <th>${visitation.universityName}</th>
                             <th>${visitation.numberOfMonths}</th>
+                            <th>${visitation.topPosition}</th>
                             <th>${visitation.score}</th>
                         </tr>
                     </c:forEach>

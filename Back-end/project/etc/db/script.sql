@@ -278,6 +278,7 @@ create table visitations(
     visit_id number(3, 0),
     user_id number(10, 0),
     university_name varchar2(200),
+    rank NUMBER(10, 0),
     nr_of_months number(3, 0),
     score number(2, 0),
 

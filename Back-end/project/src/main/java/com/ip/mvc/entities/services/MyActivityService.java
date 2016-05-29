@@ -786,13 +786,14 @@ public class MyActivityService {
     public void addVisitation(Visitation visitation) {
 
         try (Connection connection = getDataSource().getConnection()) {
-            String sql = "INSERT INTO VISITATIONS(USER_ID, UNIVERSITY_NAME, NR_OF_MONTHS, SCORE) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO VISITATIONS(USER_ID, UNIVERSITY_NAME, NR_OF_MONTHS, SCORE, rank) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setString(1, visitation.getUserID());
             statement.setString(2, visitation.getUniversityName());
             statement.setInt(3, visitation.getNumberOfMonths());
             statement.setInt(4, visitation.getScore());
+            statement.setInt(5, visitation.getTopPosition());
 
             statement.executeUpdate();
 

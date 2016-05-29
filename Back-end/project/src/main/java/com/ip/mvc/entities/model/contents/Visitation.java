@@ -23,6 +23,7 @@ public class Visitation {
         this.universityName = resultSet.getString("UNIVERSITY_NAME");
         this.numberOfMonths = resultSet.getInt("NR_OF_MONTHS");
         this.score = resultSet.getInt("SCORE");
+        this.topPosition = resultSet.getInt("RANK");
     }
 
     public String getVisitID() {
