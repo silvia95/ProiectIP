@@ -1,8 +1,10 @@
 package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Centralization;
 import com.ip.mvc.entities.model.forms.ReportForm;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
+import com.ip.mvc.entities.services.CentralizeService;
 import com.ip.mvc.entities.services.MyActivityService;
 import com.ip.mvc.entities.services.ProfileService;
 import com.ip.mvc.entities.services.ReportService;
@@ -30,6 +32,8 @@ public class ReportController {
     private ProfileService profileService;
     @Autowired
     private MyActivityService myActivityService;
+    @Autowired
+    private CentralizeService centralizeService;
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ModelAndView displayReportView() {
@@ -44,6 +48,7 @@ public class ReportController {
     public ModelAndView executeReportView(@ModelAttribute ReportForm reportForm,
                                           @RequestParam(value = "productionCheckBox", required = false) String productionCheckBox,
                                           @RequestParam(value = "impactCheckBox", required = false) String impactCheckBox,
+                                          @RequestParam(value = "centralizeCheckBox", required = false) String centralizeCheckBox,
                                           HttpServletRequest request) {
 
         ModelAndView model = new ModelAndView("report");
@@ -67,6 +72,16 @@ public class ReportController {
                 articlesImpact.add(myActivityService.getArticleInfo(article.getArticleID()));
             }
         }
+        if (centralizeCheckBox != null) {
+            // create the centralize object
+            Centralization cent;
+            cent = centralizeService.compute(userID);
+            cent.setTeacher(profileService.getTeacherInfo(userID));
+
+            // send it to the view
+            model.addObject("cent", cent);
+        }
+
 
         model.addObject("articlesProduction", articlesProduction);
         model.addObject("articlesImpact", articlesImpact);
