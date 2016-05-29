@@ -69,11 +69,15 @@
                 <form:input cssClass="form-control" path="scientificProduction.articleType"/>
             </div>
             <div class="form-group">
-                Score
-                <form:label path="scientificProduction.fromScore">From: </form:label>
-                <form:input cssClass="form-control" path="scientificProduction.fromScore"/>
-                <form:label path="scientificProduction.toScore">To: </form:label>
-                <form:input cssClass="form-control" path="scientificProduction.toScore"/>
+                <span class="dual-title">Year</span>
+                <div class="half">
+                    <form:label path="scientificProduction.fromScore">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificProduction.fromScore"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificProduction.toScore">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificProduction.toScore"/>
+                </div>
             </div>
             <div class="form-group">
                 <span class="dual-title">Year</span>
