@@ -128,6 +128,8 @@
                 <h5>No conferences yet</h5>
             </c:otherwise>
         </c:choose>
+        <a href="/scientific/myactivity/addConference"> <input type="submit" class="btn btn-primary"
+                                                          value="Add Conference"></a>
 
         <h3>My Scientific Events</h3>
         <c:choose>
