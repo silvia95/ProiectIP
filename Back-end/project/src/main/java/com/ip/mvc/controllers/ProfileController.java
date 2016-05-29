@@ -29,7 +29,7 @@ public class ProfileController {
         teacherInfo.setDepartments(profileService.getDepartments(teacherInfo.getEmail()));
         int articleScore = profileService.articleScore(userID);
         int quotationScore = profileService.quotationScore(userID);
-        int projectScore = profileService.getProjectScore(userID);
+        int projectScore = profileService.getTotalProjectScore(userID);
 
         model.addObject("articleScore", articleScore);
         model.addObject("quotationScore", quotationScore);
