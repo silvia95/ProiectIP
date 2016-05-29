@@ -50,7 +50,7 @@
                 <form:label path="topPosition">Top Position</form:label>
                 <form:input cssClass="form-control" id="topPosition" path="topPosition"/>
             </div>
-            <input type="submit" class="btn btn-primary" value="Add Book"/>
+            <input type="submit" class="btn btn-primary" value="Add Visitation"/>
         </form:form>
     </section>
 

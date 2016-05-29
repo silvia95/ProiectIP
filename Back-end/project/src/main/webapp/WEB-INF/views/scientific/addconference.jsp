@@ -54,7 +54,7 @@
         <form:input cssClass="form-control" id="details" path="details"/>
     </div>
     <input type="hidden" name="conferenceID" value=${conference.conferenceID}>
-    <input type="submit" class="btn btn-primary" value="Add Quotation"/>
+    <input type="submit" class="btn btn-primary" value="Add Conference"/>
 </form:form>
     </section>
 

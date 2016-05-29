@@ -46,7 +46,7 @@
         <form:input cssClass="form-control" id="domain" path="domain"/>
     </div>
     <div class="form-group">
-        <form:label path="director">Direct: </form:label>
+        <form:label path="director">Director: </form:label>
         <form:input cssClass="form-control" id="director" path="director"/>
     </div>
     <div class="form-group">

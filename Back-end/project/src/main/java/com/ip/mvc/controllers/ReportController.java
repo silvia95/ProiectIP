@@ -69,7 +69,7 @@ public class ReportController {
             ScientificProduction scientificImpact = reportForm.getScientificImpact();
             List<Article> articleList = reportService.getScientificImpact(userID, scientificImpact);
             for (Article article : articleList) {
-                articlesImpact.add(myActivityService.getArticleInfo(article.getArticleID()));
+                articlesImpact.add(myActivityService.getArticleDetails(article.getArticleID()));
             }
         }
         if (centralizeCheckBox != null) {

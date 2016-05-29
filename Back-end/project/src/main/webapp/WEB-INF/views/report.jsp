@@ -204,17 +204,19 @@
 
         <c:if test="${articlesImpact.size() > 0}">
             <h3>Scientific Impact</h3>
-            <table class="table table-bordered" border="1">
-                <tr>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>JournalISSN</th>
-                    <th>Journal Name</th>
-                    <th>Score</th>
-                    <th>Authors</th>
-                    <th>Other Authors</th>
-                </tr>
-                <c:forEach items="${articlesImpact}" var="article">
+
+            <c:forEach items="${articlesImpact}" var="article">
+                <h3>Article Details</h3>
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>JournalISSN</th>
+                        <th>Journal Name</th>
+                        <th>Score</th>
+                        <th>Authors</th>
+                        <th>Other Authors</th>
+                    </tr>
                     <tr>
                         <th>${article.title}</th>
                         <th>${article.year}</th>
@@ -227,8 +229,27 @@
                         <th><c:forEach items="${article.otherAuthors}" var="author" varStatus="loop">${author}<c:if
                                 test="${!loop.last}">,</c:if> </c:forEach></th>
                     </tr>
-                </c:forEach>
-            </table>
+                </table>
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>Article Name</th>
+                        <th>Year</th>
+                        <th>Text</th>
+                        <th>Journal Name</th>
+                        <th>Authors</th>
+                    </tr>
+                    <c:forEach items="${article.quotationList}" var="quotation" >
+                        <tr>
+                            <td>${quotation.articleName}</td>
+                            <td>${quotation.year}</td>
+                            <td>${quotation.text}</td>
+                            <td>${quotation.location}</td>
+                            <td>${quotation.authorsText}</td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:forEach>
         </c:if>
 
     </section>
