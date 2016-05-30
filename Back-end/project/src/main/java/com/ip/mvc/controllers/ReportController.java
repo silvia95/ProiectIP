@@ -98,6 +98,17 @@ public class ReportController {
 
             // get books
             scientificBooks = reportService.getBooks(userID, reportForm.getScientificPerformance());
+
+            List<Project> projectList = reportService.filterProjects(userID, reportForm.getScientificPerformance());
+            List<Project> projectsDetails = new ArrayList<>();
+            for (Project project : projectList) {
+                Project projectDetails = myActivityService.getProjectDetails(project.getProjectID());
+                projectsDetails.add(projectDetails);
+                int score = profileService.getProjectScore(Integer.parseInt(project.getProjectID()), userID);
+                projectDetails.setScore(score);
+            }
+            model.addObject("projectDetails", projectsDetails);
+
         }
 
 

@@ -179,9 +179,11 @@ public class ReportService {
 
 
     private String buildQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
-        if (scientificProduction.getName().length() > 0) {
-            query += " AND TITLE LIKE ?";
-            bindParameters.add("%" + scientificProduction.getName() + "%");
+        if(scientificProduction.getName() != null) {
+            if (scientificProduction.getName().length() > 0) {
+                query += " AND TITLE LIKE ?";
+                bindParameters.add("%" + scientificProduction.getName() + "%");
+            }
         }
 
         if (scientificProduction.getAuthors().size() > 0) {
@@ -293,7 +295,7 @@ public class ReportService {
                     "JOIN PROJECT_AUTHORS a ON a.PROJECT_ID = p.PROJECT_ID " +
                     "WHERE a.USER_ID = ?";
 
-            query = buildQuery(scientificProduction, bindParameters, query);
+            query = buildProjectQuery(scientificProduction, bindParameters, query);
 
             PreparedStatement statement = connection.prepareStatement(query);
             for(int i = 0; i < bindParameters.size(); i++) {
@@ -312,6 +314,18 @@ public class ReportService {
         }
 
         return projectList;
+    }
+
+    private String buildProjectQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
+        if(scientificProduction.getFromYear() != null && scientificProduction.getToYear()!= null) {
+            if (scientificProduction.getFromYear().length() > 0 &&
+                    scientificProduction.getToYear().length() > 0) {
+                query += " AND ( START_DATE <= ? AND ? <= FINISH_DATE)";
+                bindParameters.add(scientificProduction.getFromYear());
+                bindParameters.add(scientificProduction.getToYear());
+            }
+        }
+        return query;
     }
 
 }
