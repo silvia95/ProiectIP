@@ -185,7 +185,15 @@
                     <td>${cent.getQuotationsTotalScore()}</td>
                     <td>${cent.passQuotationsTotal()}</td>
                 </tr>
+                <tr>
+                    <td>d</td>
+                    <td></td>
+                    <td>36</td>
+                    <td>${cent.performanceScore}</td>
+                    <td>${cent.passPerformance()}</td>
+                </tr>
             </table>
+
         </c:if>
 
         <c:if test="${articlesProduction.size() > 0}">

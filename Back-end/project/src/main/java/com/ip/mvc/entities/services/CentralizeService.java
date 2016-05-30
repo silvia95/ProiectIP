@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Centralization;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -251,4 +252,69 @@ public class CentralizeService {
 
         return stmt.executeQuery();
     }
+
+    public int getBooksScore(String userID) {
+        int score = 0;
+        try (Connection connection = getDataSource().getConnection()) {
+
+            String sql = "SELECT SUM(score) FROM books b " +
+                    "JOIN book_authors a ON b.book_id = a.book_id " +
+                    "WHERE a.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                score = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
+    public int getEventsScore(String userID) {
+        int score = 0;
+        try (Connection connection = getDataSource().getConnection()) {
+
+            String sql = "SELECT SUM(score) FROM scientific_events e " +
+                    "JOIN scientific_events_attending a ON e.event_id= a.event_id " +
+                    "WHERE a.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                score = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
+    public int getVisitationsScore(String userID) {
+        int score = 0;
+        try (Connection connection = getDataSource().getConnection()) {
+
+            String sql = "SELECT SUM(score) FROM visitations " +
+                    "WHERE user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                score = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
+    public int getPerformanceScore(String userID) {
+        int booksScore = this.getBooksScore(userID);
+        int eventsScore = this.getEventsScore(userID);
+        int visitationsScore = this.getVisitationsScore(userID);
+
+        return booksScore + eventsScore + visitationsScore;
+    }
+
 }

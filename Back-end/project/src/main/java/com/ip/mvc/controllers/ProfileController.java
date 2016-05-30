@@ -2,6 +2,7 @@ package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.forms.ProfileForm;
 import com.ip.mvc.entities.model.users.Teacher;
+import com.ip.mvc.entities.services.CentralizeService;
 import com.ip.mvc.entities.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
+    @Autowired
+    private CentralizeService centralizeService;
+
     @RequestMapping(value = "/userdetails", method = RequestMethod.GET)
     public ModelAndView displayUserDetails(@RequestParam(value = "userID") String userID) {
         ModelAndView model = new ModelAndView("profile/userdetails");
@@ -36,6 +40,9 @@ public class ProfileController {
         model.addObject("projectScore", projectScore);
         model.addObject("teacherInfo", teacherInfo);
 
+        int performanceScore = centralizeService.getPerformanceScore(userID);
+        performanceScore += profileService.getTotalProjectScore(userID);
+        model.addObject("performanceScore", performanceScore);
 
         return model;
     }

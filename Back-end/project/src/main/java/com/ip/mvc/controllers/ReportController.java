@@ -73,6 +73,11 @@ public class ReportController {
             }
         }
         if (centralizeCheckBox != null) {
+
+            int performanceScore = centralizeService.getPerformanceScore(userID);
+            performanceScore += profileService.getTotalProjectScore(userID);
+            model.addObject("performanceScore", performanceScore);
+
             // create the centralize object
             Centralization cent;
             cent = centralizeService.compute(userID);
@@ -80,6 +85,9 @@ public class ReportController {
 
             // send it to the view
             model.addObject("cent", cent);
+
+
+            cent.setPerformanceScore(performanceScore);
         }
 
 

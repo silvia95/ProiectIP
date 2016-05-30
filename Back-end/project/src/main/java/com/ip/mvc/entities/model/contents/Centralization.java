@@ -12,6 +12,7 @@ public class Centralization {
     private int articlesTotalScore;
     private int quotationsABScore;
     private int quotationsTotalScore;
+    private int performanceScore;
     private boolean pass;
     private String actualType;
     private String futureType;
@@ -20,6 +21,14 @@ public class Centralization {
 
     public Centralization(String userID){
         this.userID = userID;
+    }
+
+    public int getPerformanceScore() {
+        return performanceScore;
+    }
+
+    public void setPerformanceScore(int performanceScore) {
+        this.performanceScore = performanceScore;
     }
 
     public void setArticlesABScore(int score) {
@@ -134,6 +143,14 @@ public class Centralization {
         }
     }
 
+    public int minPerformance(){
+        if (actualType.startsWith("Lect")) {
+            return 36;
+        }  else {
+            return 60;
+        }
+    }
+
     /**
      * Checks if teacher passes Articles AB Score
      * @return
@@ -164,6 +181,9 @@ public class Centralization {
      */
     public boolean passQuotationsTotal(){
         return quotationsTotalScore >= minQuotationsTotal();
+    }
+    public boolean passPerformance(){
+        return performanceScore >= minPerformance();
     }
 
 }
