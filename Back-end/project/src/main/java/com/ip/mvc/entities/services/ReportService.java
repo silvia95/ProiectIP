@@ -111,7 +111,7 @@ public class ReportService {
         bindParameters.add(userID);
 
         try (Connection connection = getDataSource().getConnection()) {
-            String query = "SELECT * FROM SCIENTIFIC_EVENTS se" +
+            String query = "SELECT * FROM SCIENTIFIC_EVENTS se " +
                     "JOIN SCIENTIFIC_EVENTS_ATTENDING sea On sea.event_id = se.event_id\n" +
                     "JOIN USERS u ON u.user_id = sea.user_id\n" +
                     "WHERE u.user_id = ?";
@@ -202,13 +202,8 @@ public class ReportService {
      * @return
      */
     private String buildEventsQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
-        if (scientificProduction.getName().length() > 0) {
-            query += " AND SE.EVENT_NAME LIKE ?";
-            bindParameters.add("%" + scientificProduction.getName() + "%");
-        }
-
         if (scientificProduction.getFromScore() != 0 || scientificProduction.getToScore() != 0) {
-            query += " AND (? <= SEA.SCORE AND  SEA.SCORE <= ?)";
+            query += " AND (? <= SCORE AND  SEA.SCORE <= ?)";
             bindParameters.add(String.valueOf(scientificProduction.getFromScore()));
             bindParameters.add(String.valueOf(scientificProduction.getToScore()));
         }
