@@ -312,44 +312,73 @@
 
         <c:if test="${scientificEvents.size() > 0}">
             <h3>Events</h3>
-            <c:forEach items="${scientificEvents}" var="event">
-                <h3>Article Details</h3>
-                <table class="table table-bordered" border="1">
-                    <tr>
-                        <th>Name</th>
-                        <th>Year</th>
-                        <th>Link</th>
-                        <th>Score</th>
-                    </tr>
+            <table class="table table-bordered" border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Link</th>
+                    <th>Score</th>
+                    <th>Attending as</th>
+                </tr>
+                <c:forEach items="${scientificEvents}" var="event">
                     <tr>
                         <th>${event.name}</th>
                         <th>${event.year}</th>
                         <th>${event.link}</th>
                         <th>${event.score}</th>
+                        <th>${event.attendingType}</th>
                     </tr>
-                </table>
-            </c:forEach>
+                </c:forEach>
+            </table>
         </c:if>
 
         <c:if test="${scientificBooks.size() > 0}">
-            <h3>Events</h3>
+            <h3>Books</h3>
+            <table class="table table-bordered" border="1">
+            <tr>
+                <th>ID</th>
+                <th>Year</th>
+                <th>Link</th>
+                <th>Score</th>
+            </tr>
             <c:forEach items="${scientificBooks}" var="book">
-                <h3>Article Details</h3>
-                <table class="table table-bordered" border="1">
-                    <tr>
-                        <th>ID</th>
-                        <th>Year</th>
-                        <th>Link</th>
-                        <th>Score</th>
-                    </tr>
                     <tr>
                         <th>${book.bookID}</th>
                         <th>${book.name}</th>
                         <th>${book.year}</th>
                         <th>${book.score}</th>
                     </tr>
-                </table>
             </c:forEach>
+            </table>
+        </c:if>
+
+        <c:if test="${!empty projectDetails}">
+            <h3>Projects</h3>
+            <table class="table table-bordered" border="1">
+                <tr>
+                    <th>Title</th>
+                    <th>Director</th>
+                    <th>Domain</th>
+                    <th>Star date</th>
+                    <th>Finish Date</th>
+                    <th>Description</th>
+                    <th>Budget</th>
+                    <th>Score</th>
+                </tr>
+                <c:forEach items="${projectDetails}" var="project">
+                    <tr>
+                        <th><a href="/scientific/projectDetails?projectID=${project.projectID}">${project.title}</a>
+                        </th>
+                        <th>${project.director}</th>
+                        <th>${project.domain}</th>
+                        <th>${project.startDate}</th>
+                        <th>${project.finishDate}</th>
+                        <th>${project.description}</th>
+                        <th>${project.budget}</th>
+                        <th>${project.score}</th>
+                    </tr>
+                </c:forEach>
+            </table>
         </c:if>
 
 

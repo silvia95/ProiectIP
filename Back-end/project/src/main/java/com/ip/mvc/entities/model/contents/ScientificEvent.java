@@ -22,6 +22,9 @@ public class ScientificEvent {
         this.year = resultSet.getInt("EVENT_YEAR");
         this.link = resultSet.getString("EVENT_LINK");
         this.score = resultSet.getInt("SCORE");
+        if (score == 1) {
+            this.attendingType = "Member";
+        } else this.attendingType = "Director";
     }
 
     public String getAttendingType() {
