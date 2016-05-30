@@ -20,6 +20,16 @@ public class CentralizeService {
 
     private DataSource dataSource;
 
+    private ProfileService profileService;
+
+    public ProfileService getProfileService() {
+        return profileService;
+    }
+
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+
     public DataSource getDataSource() {
         return dataSource;
     }
@@ -310,11 +320,12 @@ public class CentralizeService {
     }
 
     public int getPerformanceScore(String userID) {
+        int projectsScore = profileService.getTotalProjectScore(userID);
         int booksScore = this.getBooksScore(userID);
         int eventsScore = this.getEventsScore(userID);
         int visitationsScore = this.getVisitationsScore(userID);
 
-        return booksScore + eventsScore + visitationsScore;
+        return projectsScore + booksScore + eventsScore + visitationsScore;
     }
 
 }
