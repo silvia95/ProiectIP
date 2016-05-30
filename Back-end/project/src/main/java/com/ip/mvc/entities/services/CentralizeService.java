@@ -56,27 +56,28 @@ public class CentralizeService {
     public void articleCentralization() {
         int abArticleScore = 0;
         int totalArticleScore = 0;
-        int abNumerator = 0;
-        int numerator = 0;
+        int jabNumerator = 0;
+        int jNumerator = 0;
         int denominator;
 
         try {
             ResultSet articles = getArticlesForUser();
             while (articles.next()) {
+                jNumerator = jabNumerator = 0;
                 String articleID = articles.getString("ARTICLE_ID");
                 denominator = getDenominator(articleID);
-                
+
                 // compute the score
                 ResultSet journals = getJournalsForArticles(articleID);
                 if (journals.next()) {
-                    numerator += journals.getInt("SCORE");
+                    jNumerator += journals.getInt("SCORE");
                     if (journals.getInt("SCORE") >= 4)
-                        abNumerator += journals.getInt("SCORE");
+                        jabNumerator += journals.getInt("SCORE");
                 }
 
-                totalArticleScore += numerator / denominator;
-                if (abNumerator != 0) {
-                    abArticleScore += abNumerator / denominator;
+                totalArticleScore += jNumerator / denominator;
+                if (jabNumerator != 0) {
+                    abArticleScore += jabNumerator / denominator;
                 }
             }
             this.cent.setArticlesABScore(abArticleScore);
@@ -95,26 +96,27 @@ public class CentralizeService {
     public void quotationsCentralization() {
         int abQuotationsScore = 0;
         int totalQuotationsScore = 0;
-        int abNumerator = 0;
-        int numerator = 0;
+        int jabNumerator = 0;
+        int jnumerator = 0;
         int denominator;
 
         try {
             ResultSet articles = getArticlesForUser();
             while (articles.next()) {
+                jabNumerator = jnumerator = 0;
                 String articleID = articles.getString("ARTICLE_ID");
                 denominator = getDenominator(articleID);
 
                 ResultSet journals = getJournalsForQuotations(articleID);
                 while (journals.next()) {
-                    numerator += journals.getInt("SCORE");
+                    jnumerator += journals.getInt("SCORE");
                     if (journals.getInt("SCORE") >= 4)
-                        abNumerator += journals.getInt("SCORE");
+                        jabNumerator += journals.getInt("SCORE");
                 }
-                if (abNumerator != 0) {
-                    abQuotationsScore += abNumerator / denominator;
+                if (jabNumerator != 0) {
+                    abQuotationsScore += jabNumerator / denominator;
                 }
-                totalQuotationsScore += numerator / denominator;
+                totalQuotationsScore += jnumerator / denominator;
             }
             this.cent.setQuotationsABScore(abQuotationsScore);
             this.cent.setQuotationsTotalScore(totalQuotationsScore);
@@ -125,18 +127,14 @@ public class CentralizeService {
 
     }
 
-    
+
     /**
      * Compute the main check
      */
     private void mainCheck() {
-        int abArticleScore = this.cent.getArticlesABScore();
-        int totalArticleScore = this.cent.getArticlesTotalScore();
-        int abQuotationsScore = this.cent.getQuotationsABScore();
-        int totalQuotationsScore = this.cent.getQuotationsTotalScore();
         String type = this.cent.getActualType();
         boolean articlePass, quotationsPass;
-        
+
         // set future type
         if (type.startsWith("Lect")) {
             this.cent.setFutureType("Conferentiar");
@@ -155,7 +153,7 @@ public class CentralizeService {
 
     }
 
-    
+
     /**
      * Sets the current type of the user
      * @throws SQLException
@@ -197,7 +195,7 @@ public class CentralizeService {
      * @throws SQLException
      */
     private ResultSet getJournalsForQuotations(String articleID) throws SQLException {
-        String query = "SELECT J.SCORE FROM JOURNALS J JOIN ARTICLES A ON A.JOURNAL_ISSN = J.ISSN JOIN QUOTATIONS Q ON Q.ARTICLE_ID = A.ARTICLE_ID WHERE Q.ARTICLE_ID = ?";
+        String query = "SELECT DISTINCT * FROM JOURNALS J JOIN ARTICLES A ON A.JOURNAL_ISSN = J.ISSN JOIN QUOTATIONS Q ON Q.ARTICLE_ID = A.ARTICLE_ID WHERE Q.ARTICLE_ID = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, articleID);
 
@@ -229,10 +227,10 @@ public class CentralizeService {
      * @return
      * @throws SQLException
      */
-    private ResultSet getArticlesForUser() throws SQLException {
+    private ResultSet   getArticlesForUser() throws SQLException {
         String userID = this.cent.getUserID();
 
-        String query = "SELECT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
+        String query = "SELECT DISTINCT ARTICLE_ID FROM ARTICLE_AUTHORS WHERE USER_ID = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, userID);
 
