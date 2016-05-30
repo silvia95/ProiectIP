@@ -43,6 +43,9 @@
                     <input type="checkbox" name="centralizeCheckBox">
                 </label>Centralize
             </div>
+
+            <br><br>
+
             <div class="form-group">
                 <label>
                     <input type="checkbox" name="productionCheckBox">
@@ -140,8 +143,38 @@
                 </div>
             </div>
 
+            <br><br><br>
+            <br><br><br>
+
+            <label>
+                <input type="checkbox" name="performanceImpact">Scientific Performance
+            </label>
+            <div class="form-group">
+                <span class="dual-title">Score</span>
+                <div class="half">
+                    <form:label path="scientificImpact.fromScore">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificPerformance.fromScore"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificImpact.toScore">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificPerformance.toScore"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="dual-title">Year</span>
+                <div class="half">
+                    <form:label path="scientificImpact.fromYear">From: </form:label>
+                    <form:input cssClass="form-control" path="scientificPerformance.fromYear"/>
+                </div>
+                <div class="half">
+                    <form:label path="scientificImpact.toYear">To: </form:label>
+                    <form:input cssClass="form-control" path="scientificPerformance.toYear"/>
+                </div>
+            </div>
+
             <input type="submit" class="btn btn-primary" value="Generate Report">
         </form:form>
+
 
         <c:if test="${cent != null}">
             <div class="info">

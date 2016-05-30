@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
 import com.ip.mvc.entities.model.users.Teacher;
 
@@ -97,21 +98,21 @@ public class ReportService {
 
     private String buildQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
         if (scientificProduction.getName().length() > 0) {
-            query += " AND A.TITLE LIKE ?";
+            query += " AND TITLE LIKE ?";
             bindParameters.add("%" + scientificProduction.getName() + "%");
         }
 
         if (scientificProduction.getAuthors().size() > 0) {
             List<Teacher> authors = scientificProduction.getAuthors();
             for (Teacher author : authors) {
-                query += " AND (T.LAST_NAME = ? OR T.FIRST_NAME = ?)";
+                query += " AND (LAST_NAME = ? OR FIRST_NAME = ?)";
                 bindParameters.add(author.getLastname());
                 bindParameters.add(author.getFirstname());
             }
         }
         if (scientificProduction.getJournalName().length() > 0) {
             System.out.println("journal not null");
-            query += " AND J.JOURNAL_NAME LIKE ?";
+            query += " AND JOURNAL_NAME LIKE ?";
             bindParameters.add("%" + scientificProduction.getJournalName() + "%");
         }
         if (scientificProduction.getClassification().length() > 0) {
@@ -134,21 +135,53 @@ public class ReportService {
                     score = 0;
                     break;
             }
-            query += "AND J.SCORE LIKE ?";
+            query += "AND SCORE LIKE ?";
             bindParameters.add(String.valueOf(score));
         }
         if (scientificProduction.getFromScore() != 0 || scientificProduction.getToScore() != 0) {
-            query += " AND (? <= J.SCORE AND  J.SCORE <= ?)";
+            query += " AND (? <= SCORE AND  SCORE <= ?)";
             bindParameters.add(String.valueOf(scientificProduction.getFromScore()));
             bindParameters.add(String.valueOf(scientificProduction.getToScore()));
         }
         if (scientificProduction.getFromYear().length() > 0 &&
                 scientificProduction.getToYear().length() > 0) {
-            query += " AND ( ? <= A.YEAR AND A.YEAR <= ?)";
+            query += " AND ( ? <= YEAR AND YEAR <= ?)";
             bindParameters.add(scientificProduction.getFromYear());
             bindParameters.add(scientificProduction.getToYear());
         }
         return query;
+    }
+
+    public List<Project> filterProjects(String userID, ScientificProduction scientificProduction) {
+        List<Project> projectList = new ArrayList<>();
+
+        List<String> bindParameters = new ArrayList<>();
+        bindParameters.add(userID);
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String query = "SELECT p.PROJECT_ID FROM PROJECTS p " +
+                    "JOIN PROJECT_AUTHORS a ON a.PROJECT_ID = p.PROJECT_ID " +
+                    "WHERE a.USER_ID = ?";
+
+            query = buildQuery(scientificProduction, bindParameters, query);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            for(int i = 0; i < bindParameters.size(); i++) {
+                statement.setString(i + 1, bindParameters.get(i));
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Project project = new Project();
+                project.setProjectID(resultSet.getString(1));
+                projectList.add(project);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return projectList;
     }
 
 }
