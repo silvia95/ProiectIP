@@ -1,9 +1,6 @@
 package com.ip.mvc.controllers;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Centralization;
-import com.ip.mvc.entities.model.contents.Project;
-import com.ip.mvc.entities.model.contents.ScientificEvent;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.model.forms.ReportForm;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
 import com.ip.mvc.entities.services.CentralizeService;
@@ -60,6 +57,8 @@ public class ReportController {
 
         List<Article> articlesProduction = new ArrayList<>();
         List<Article> articlesImpact = new ArrayList<>();
+        List<ScientificEvent> scientificEvents = new ArrayList<>();
+        List<Book> scientificBooks = new ArrayList<>();
 
         if (productionCheckBox != null) {
             ScientificProduction scientificProduction = reportForm.getScientificProduction();
@@ -93,13 +92,19 @@ public class ReportController {
         }
 
         if (performanceImpact != null) {
-            List<ScientificEvent> scientificEvents = reportService.getScientificEvents(userID, reportForm.getScientificPerformance());
-            System.out.println(scientificEvents);
+
+            //get events
+            scientificEvents = reportService.getScientificEvents(userID, reportForm.getScientificPerformance());
+
+            // get books
+            scientificBooks = reportService.getBooks(userID, reportForm.getScientificPerformance());
         }
 
 
         model.addObject("articlesProduction", articlesProduction);
         model.addObject("articlesImpact", articlesImpact);
+        model.addObject("scientificEvents", scientificEvents);
+        model.addObject("scientificBooks", scientificBooks);
         model.addObject("reportForm", new ReportForm());
 
         return model;

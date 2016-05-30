@@ -309,6 +309,50 @@
             </c:forEach>
         </c:if>
 
+
+        <c:if test="${scientificEvents.size() > 0}">
+            <h3>Events</h3>
+            <c:forEach items="${scientificEvents}" var="event">
+                <h3>Article Details</h3>
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>Name</th>
+                        <th>Year</th>
+                        <th>Link</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr>
+                        <th>${event.name}</th>
+                        <th>${event.year}</th>
+                        <th>${event.link}</th>
+                        <th>${event.score}</th>
+                    </tr>
+                </table>
+            </c:forEach>
+        </c:if>
+
+        <c:if test="${scientificBooks.size() > 0}">
+            <h3>Events</h3>
+            <c:forEach items="${scientificBooks}" var="book">
+                <h3>Article Details</h3>
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Year</th>
+                        <th>Link</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr>
+                        <th>${book.bookID}</th>
+                        <th>${book.name}</th>
+                        <th>${book.year}</th>
+                        <th>${book.score}</th>
+                    </tr>
+                </table>
+            </c:forEach>
+        </c:if>
+
+
     </section>
 
     <section id="footer_section">
