@@ -97,8 +97,8 @@ public class ReportService {
 
     private String buildQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
         if (scientificProduction.getName().length() > 0) {
-            query += " AND A.TITLE = ?";
-            bindParameters.add(scientificProduction.getName());
+            query += " AND A.TITLE LIKE ?";
+            bindParameters.add("%" + scientificProduction.getName() + "%");
         }
 
         if (scientificProduction.getAuthors().size() > 0) {
@@ -111,8 +111,8 @@ public class ReportService {
         }
         if (scientificProduction.getJournalName().length() > 0) {
             System.out.println("journal not null");
-            query += " AND J.JOURNAL_NAME = ?";
-            bindParameters.add(scientificProduction.getJournalName());
+            query += " AND J.JOURNAL_NAME LIKE ?";
+            bindParameters.add("%" + scientificProduction.getJournalName() + "%");
         }
         if (scientificProduction.getClassification().length() > 0) {
             String classification = scientificProduction.getClassification();

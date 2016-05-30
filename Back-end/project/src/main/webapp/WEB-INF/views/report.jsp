@@ -69,7 +69,7 @@
                 <form:input cssClass="form-control" path="scientificProduction.articleType"/>
             </div>
             <div class="form-group">
-                <span class="dual-title">Year</span>
+                <span class="dual-title">Score</span>
                 <div class="half">
                     <form:label path="scientificProduction.fromScore">From: </form:label>
                     <form:input cssClass="form-control" path="scientificProduction.fromScore"/>
