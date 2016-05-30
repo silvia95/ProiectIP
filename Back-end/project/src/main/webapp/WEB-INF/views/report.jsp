@@ -352,6 +352,30 @@
             </table>
         </c:if>
 
+        <c:if test="${scientificVisitations.size() > 0}">
+            <h3>Visitations</h3>
+            <table class="table table-bordered" border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>University</th>
+                    <th>Research purpose</th>
+                    <th>Months</th>
+                    <th>Year</th>
+                    <th>Score</th>
+                </tr>
+                <c:forEach items="${scientificVisitations}" var="visitation">
+                    <tr>
+                        <th>${visitation.visitID}</th>
+                        <th>${visitation.universityName} (${visitation.topPosition})</th>
+                        <th>${visitation.purpose}</th>
+                        <th>${visitation.numberOfMonths}</th>
+                        <th>${visitation.year}</th>
+                        <th>${visitation.score}</th>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+
         <c:if test="${!empty projectDetails}">
             <h3>Projects</h3>
             <table class="table table-bordered" border="1">

@@ -59,6 +59,7 @@ public class ReportController {
         List<Article> articlesImpact = new ArrayList<>();
         List<ScientificEvent> scientificEvents = new ArrayList<>();
         List<Book> scientificBooks = new ArrayList<>();
+        List<Visitation> scientificVisitations = new ArrayList<>();
 
         if (productionCheckBox != null) {
             ScientificProduction scientificProduction = reportForm.getScientificProduction();
@@ -99,6 +100,9 @@ public class ReportController {
             // get books
             scientificBooks = reportService.getBooks(userID, reportForm.getScientificPerformance());
 
+            // get visitations
+            scientificVisitations = reportService.getVisitations(userID, reportForm.getScientificPerformance());
+
             List<Project> projectList = reportService.filterProjects(userID, reportForm.getScientificPerformance());
             List<Project> projectsDetails = new ArrayList<>();
             for (Project project : projectList) {
@@ -116,6 +120,7 @@ public class ReportController {
         model.addObject("articlesImpact", articlesImpact);
         model.addObject("scientificEvents", scientificEvents);
         model.addObject("scientificBooks", scientificBooks);
+        model.addObject("scientificVisitations", scientificVisitations);
         model.addObject("reportForm", new ReportForm());
 
         return model;

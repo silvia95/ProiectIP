@@ -51,6 +51,10 @@
                 <form:input cssClass="form-control" id="numberOfMonths" path="numberOfMonths"/>
             </div>
             <div class="form-group">
+                <form:label path="year">Year: </form:label>
+                <form:input cssClass="form-control" id="year" path="year"/>
+            </div>
+            <div class="form-group">
                 <form:label path="topPosition">Top Position</form:label>
                 <form:input cssClass="form-control" id="topPosition" path="topPosition"/>
             </div>
