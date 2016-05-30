@@ -145,7 +145,7 @@
                         <tr>
                             <th>${event.name}</th>
                             <th>${event.year}</th>
-                            <th>${event.link}</th>
+                            <th><a href="${event.link}">${event.link}</a></th>
                             <th>${event.score}</th>
                             <td><a href="/edit/event?eventID=${conference.conferenceID}">Edit</a></td>
                         </tr>
