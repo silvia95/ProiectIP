@@ -2,6 +2,7 @@ package com.ip.mvc.controllers;
 
 import com.ip.mvc.entities.model.contents.Article;
 import com.ip.mvc.entities.model.contents.Centralization;
+import com.ip.mvc.entities.model.contents.Project;
 import com.ip.mvc.entities.model.forms.ReportForm;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
 import com.ip.mvc.entities.services.CentralizeService;
@@ -49,6 +50,7 @@ public class ReportController {
                                           @RequestParam(value = "productionCheckBox", required = false) String productionCheckBox,
                                           @RequestParam(value = "impactCheckBox", required = false) String impactCheckBox,
                                           @RequestParam(value = "centralizeCheckBox", required = false) String centralizeCheckBox,
+                                          @RequestParam(value = "performanceImpact", required = false) String performanceImpact,
                                           HttpServletRequest request) {
 
         ModelAndView model = new ModelAndView("report");
@@ -87,6 +89,12 @@ public class ReportController {
 
 
             cent.setPerformanceScore(performanceScore);
+        }
+
+        if (performanceImpact != null) {
+            ScientificProduction scientificPerformance = reportForm.getScientificPerformance();
+            List<Project> projects = reportService.filterProjects(userID, scientificPerformance);
+            System.out.println(projects);
         }
 
 

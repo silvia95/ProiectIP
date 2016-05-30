@@ -7,6 +7,15 @@ public class ReportForm {
 
     private ScientificProduction scientificProduction;
     private ScientificProduction scientificImpact;
+    private ScientificProduction scientificPerformance;
+
+    public ScientificProduction getScientificPerformance() {
+        return scientificPerformance;
+    }
+
+    public void setScientificPerformance(ScientificProduction scientificPerformance) {
+        this.scientificPerformance = scientificPerformance;
+    }
 
     public ScientificProduction getScientificImpact() {
         return scientificImpact;
