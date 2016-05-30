@@ -1,6 +1,7 @@
 package com.ip.mvc.entities.services;
 
 import com.ip.mvc.entities.model.contents.Article;
+import com.ip.mvc.entities.model.contents.ScientificEvent;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
 import com.ip.mvc.entities.model.users.Teacher;
 
@@ -95,6 +96,45 @@ public class ReportService {
         return articleList;
     }
 
+    /**
+     * Get scientific events
+     *
+     * @param userID
+     * @param scientificProduction
+     * @return
+     */
+    public List<ScientificEvent> getScientificEvents(String userID, ScientificProduction scientificProduction) {
+        List<ScientificEvent> eventsList = new ArrayList<>();
+
+        List<String> bindParameters = new ArrayList<>();
+        bindParameters.add(userID);
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String query = "SELECT * FROM SCIENTIFIC_EVENTS se" +
+                    "JOIN SCIENTIFIC_EVENTS_ATTENDING sea On sea.event_id = se.event_id\n" +
+                    "JOIN USERS u ON u.user_id = sea.user_id\n" +
+                    "WHERE u.user_id = ?";
+
+            query = buildEventsQuery(scientificProduction, bindParameters, query);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            for(int i = 0; i < bindParameters.size(); i++) {
+                statement.setString(i + 1, bindParameters.get(i));
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                ScientificEvent event = new ScientificEvent(resultSet);
+                eventsList.add(event);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return eventsList;
+    }
+
     private String buildQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
         if (scientificProduction.getName().length() > 0) {
             query += " AND A.TITLE LIKE ?";
@@ -145,6 +185,35 @@ public class ReportService {
         if (scientificProduction.getFromYear().length() > 0 &&
                 scientificProduction.getToYear().length() > 0) {
             query += " AND ( ? <= A.YEAR AND A.YEAR <= ?)";
+            bindParameters.add(scientificProduction.getFromYear());
+            bindParameters.add(scientificProduction.getToYear());
+        }
+        return query;
+    }
+
+    /**
+     * Builds events query
+     *
+     *
+     * @param scientificProduction
+     * @param bindParameters
+     * @param query
+     * @return
+     */
+    private String buildEventsQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
+        if (scientificProduction.getName().length() > 0) {
+            query += " AND SE.EVENT_NAME LIKE ?";
+            bindParameters.add("%" + scientificProduction.getName() + "%");
+        }
+
+        if (scientificProduction.getFromScore() != 0 || scientificProduction.getToScore() != 0) {
+            query += " AND (? <= SEA.SCORE AND  SEA.SCORE <= ?)";
+            bindParameters.add(String.valueOf(scientificProduction.getFromScore()));
+            bindParameters.add(String.valueOf(scientificProduction.getToScore()));
+        }
+        if (scientificProduction.getFromYear().length() > 0 &&
+                scientificProduction.getToYear().length() > 0) {
+            query += " AND ( ? <= SE.EVENT_YEAR AND SE.EVENT_YEAR <= ?)";
             bindParameters.add(scientificProduction.getFromYear());
             bindParameters.add(scientificProduction.getToYear());
         }

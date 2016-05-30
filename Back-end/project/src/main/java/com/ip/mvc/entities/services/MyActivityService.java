@@ -642,7 +642,7 @@ public class MyActivityService {
 
             int eventID = 0;
 
-            String sql = "SELECT * FROM SCIENTIFIC_EVENTS WHERE EVENT_NAME = ?";
+            String sql = "SELECT * FROM SCIENTIFIC_EVENTS WHERE TITLE = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setString(1, event.getName());
