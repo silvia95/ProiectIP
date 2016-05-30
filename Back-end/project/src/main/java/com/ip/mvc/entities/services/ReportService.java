@@ -1,9 +1,6 @@
 package com.ip.mvc.entities.services;
 
-import com.ip.mvc.entities.model.contents.Article;
-import com.ip.mvc.entities.model.contents.Book;
-import com.ip.mvc.entities.model.contents.ScientificEvent;
-import com.ip.mvc.entities.model.contents.Project;
+import com.ip.mvc.entities.model.contents.*;
 import com.ip.mvc.entities.model.forms.ScientificProduction;
 import com.ip.mvc.entities.model.users.Teacher;
 
@@ -177,6 +174,44 @@ public class ReportService {
     }
 
 
+    /**
+     * Get visitationList
+     *
+     * @param userID
+     * @param scientificProduction
+     * @return
+     */
+    public List<Visitation> getVisitations(String userID, ScientificProduction scientificProduction) {
+        List<Visitation> visitationsList = new ArrayList<>();
+
+        List<String> bindParameters = new ArrayList<>();
+        bindParameters.add(userID);
+
+        try (Connection connection = getDataSource().getConnection()) {
+            String query = "SELECT * FROM VISITATIONS v " +
+                    "JOIN USERS u ON u.user_id = v.user_id\n" +
+                    "WHERE u.user_id = ?";
+
+            query = buildVisitationsQuery(scientificProduction, bindParameters, query);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            for(int i = 0; i < bindParameters.size(); i++) {
+                statement.setString(i + 1, bindParameters.get(i));
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Visitation visitation = new Visitation(resultSet);
+                visitationsList.add(visitation);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return visitationsList;
+    }
+
 
     private String buildQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
         if (scientificProduction.getName().length() > 0) {
@@ -280,6 +315,30 @@ public class ReportService {
         }
         return query;
     }
+
+    /**
+     * Builds books query
+     *
+     * @param scientificProduction
+     * @param bindParameters
+     * @param query
+     * @return
+     */
+    private String buildVisitationsQuery(ScientificProduction scientificProduction, List<String> bindParameters, String query) {
+        if (scientificProduction.getFromScore() != 0 || scientificProduction.getToScore() != 0) {
+            query += " AND (? <= v.SCORE AND  v.SCORE <= ?)";
+            bindParameters.add(String.valueOf(scientificProduction.getFromScore()));
+            bindParameters.add(String.valueOf(scientificProduction.getToScore()));
+        }
+        if (scientificProduction.getFromYear().length() > 0 &&
+                scientificProduction.getToYear().length() > 0) {
+            query += " AND ( ? <= v.YEAR AND v.YEAR <= ?)";
+            bindParameters.add(scientificProduction.getFromYear());
+            bindParameters.add(scientificProduction.getToYear());
+        }
+        return query;
+    }
+
 
 
     public List<Project> filterProjects(String userID, ScientificProduction scientificProduction) {

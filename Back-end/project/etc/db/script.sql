@@ -279,6 +279,7 @@ create table visitations(
     user_id number(10, 0),
     university_name varchar2(200),
     purpose varchar2(255),
+    year number(4, 0),
     rank NUMBER(10, 0),
     nr_of_months number(3, 0),
     score number(2, 0),
@@ -333,5 +334,5 @@ INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
 INSERT INTO books(book_name, book_year, score)  VALUES ('name1', 1992, 3);
 INSErT INTO book_authors(book_id, user_id) VALUES (1, 1);
 
-INSERT INTO visitations(user_id, university_name, purpose, nr_of_months, score)
-VALUES (1, 'university', 'purpose', 3, 5);
+INSERT INTO visitations(user_id, university_name, purpose, year, nr_of_months, score)
+VALUES (1, 'university', 'purpose', 2009, 3, 5);
