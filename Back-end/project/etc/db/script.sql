@@ -1,4 +1,3 @@
-ALTER TABLE IPUSER.VISITATIONS DROP CONSTRAINT VISITATIONS_FK;
 ALTER TABLE IPUSER.SCIENTIFIC_EVENTS_ATTENDING DROP CONSTRAINT SCIENTIFIC_EVENTS_ATTENDING_FK;
 ALTER TABLE IPUSER.QUOTATIONS DROP CONSTRAINT QUOTATIONS_FK;
 ALTER TABLE IPUSER.PROJECT_AUTHORS DROP CONSTRAINT PROJECT_AUTHORS_FK1;
@@ -91,7 +90,7 @@ CREATE TABLE Journals (
 
 CREATE TABLE Articles (
     article_id NUMBER(10),
-    title VARCHAR2(50),
+    title VARCHAR2(1024),
     year VARCHAR2(4),
     journal_issn VARCHAR2(20),
     CONSTRAINT Articles_pk PRIMARY KEY (article_id)
@@ -128,7 +127,7 @@ CREATE TABLE Quotations (
     text VARCHAR2(128),
     year VARCHAR2(4),
     articleName VARCHAR2(128),
-    location VARCHAR2(128),
+    location VARCHAR2(1024),
     authors VARCHAR2(512),
 
     CONSTRAINT Quotations_fk FOREIGN KEY(article_id) REFERENCES Articles(article_id)
@@ -261,7 +260,7 @@ BEFORE INSERT ON books
 FOR EACH ROW
 
     BEGIN
-        SELECT events_seq.NEXTVAL
+        SELECT books_seq.NEXTVAL
         INTO   :new.book_id
         FROM   dual;
     END;
@@ -294,22 +293,20 @@ BEFORE INSERT ON visitations
 FOR EACH ROW
 
     BEGIN
-        SELECT events_seq.NEXTVAL
+        SELECT visitations_seq.NEXTVAL
         INTO   :new.visit_id
         FROM   dual;
     END;
 
 
-
-
-INSERT INTO Users(email, password)
+INSERT INTO Users (email, password)
 VALUES ('mmoruz@info.uaic.ro', 'a');
 
-INSERT INTO Users(email, password)
+INSERT INTO Users (email, password)
 VALUES ('adiftene@info.uaic.ro', 'a');
 
 INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
-VALUES ('adiftene@info.uaic.ro','Adrian', 'Iftene', 'Conf. dr.');
+VALUES ('adiftene@info.uaic.ro', 'Adrian', 'Iftene', 'Conf. dr.');
 INSERT INTO TEACHERS (EMAIL, FIRST_NAME, LAST_NAME, TYPE)
 VALUES ('mmoruz@info.uaic.ro', 'Mihai', 'Moruz', 'Lect. dr.');
 
@@ -322,17 +319,73 @@ INSERT INTO Emails VALUES ('adiftene@info.uaic.ro', 'adiftene@gmail.com');
 
 INSERT INTO Journals VALUES ('03600300', 'ACM Computing Surveys', 8);
 INSERT INTO Journals VALUES ('01636804', 'IEEE Communications Magazine', 8);
+INSERT INTO Journals
+VALUES ('01636801', 'Notebook Paper for the CLEF 2013 LABs Workshop - QA4MRE, 23-26 September, Valencia, Spain.', 8);
 
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title1' , '2016', '03600300');
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title2' , '2016', '03600300');
-INSERT INTO Articles (title, year, journal_issn) VALUES ('Title3' , '2015', '01636804');
+INSERT INTO Journals VALUES ('01632304', 'Proceedings of TAC, Gaithersburg, Maryland', 8);
+
+
+INSERT INTO Articles (title, year, journal_issn) VALUES
+    ('A Procedural DTD Project for Dictionary Entry Parsing Described with Parameterized Grammars', '2016', '03600300');
+INSERT INTO Articles (title, year, journal_issn) VALUES
+    ('An Optimal and Portable Parsing Method for Romanian, French, and German Large Dictionaries', '2016', '03600300');
+INSERT INTO Articles (title, year, journal_issn) VALUES
+    ('Extracting Sense Trees from the Romanian Thesaurus by Sense Segmentation & Dependency Parsing', '2015',
+     '01636804');
+INSERT INTO Articles (title, year, journal_issn) VALUES ('UAIC Participation at QA@CLEF2008', '2012', '01636801');
 
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('1', '1');
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('2', '1');
 INSERT INTO Article_Authors (article_id, user_id) VALUES ('3', '1');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('4', '1');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('4', '2');
 
-INSERT INTO books(book_name, book_year, score)  VALUES ('name1', 1992, 3);
-INSErT INTO book_authors(book_id, user_id) VALUES (1, 1);
+INSERT INTO Projects (director, title, domain, start_date, finish_date, description, budget)
+VALUES ('Mihai Moruz', 'MetaNet4U (Enhancing the European Linguistic Infrastructure), CIP-270893', 'IT', '2010', '2015',
+        'Project', 240000);
+INSERT INTO Project_Authors (project_id, user_id) VALUES (1, 1);
 
-INSERT INTO visitations(user_id, university_name, purpose, year, nr_of_months, score)
-VALUES (1, 'university', 'purpose', 2009, 3, 5);
+INSERT INTO Projects (director, title, domain, start_date, finish_date, description, budget)
+VALUES ('Adrian Iftene', 'eDTLR – PNCDI II, 910013/18.09.2007', 'IT', '2007', '2009', 'Project', 246520);
+INSERT INTO Project_Authors (project_id, user_id) VALUES (2, 2);
+INSERT INTO Project_Authors (project_id, user_id) VALUES (2, 1);
+
+INSERT INTO CONFERENCES (CONFERENCE_NAME, YEAR, LOCATION, DETAILS)
+VALUES ('Parameterized Grammars for Dependency Hypergraphs', 2013, 'Bucharest', 'Thesaurus-Dictionary Parsing, ORDA');
+INSERT INTO CONFERENCES_ATTENDING (user_id, CONFERENCE_ID) VALUES (1, 1);
+
+INSERT INTO scientific_events (event_name, event_year, event_link)
+VALUES ('Scoala de vara Eurolan 2007, Iasi', '2007', 'http://eurolan.info.uaic.ro/html/people.html');
+INSERT INTO scientific_events_attending (event_id, user_id, score) VALUES (1, 1, 1);
+INSERT INTO scientific_events(event_name, event_year, event_link)
+VALUES ('Consilr 2006, Iasi', '2006', 'http://consilr.info.uaic.ro/ro/atelier2006/index.php?showpage=0402');
+INSERT INTO scientific_events_attending (event_id, user_id, score) VALUES (2, 1, 2);
+
+
+INSERT INTO books( book_name, book_year, score)
+VALUES('Linguistic Resources And Tools For Processing The Romanian Language', '2013', 3);
+INSERT INTO book_authors(book_id, user_id) VALUES (1, 1);
+INSERT INTO books( book_name, book_year, score)
+VALUES('Linguistic Resources And Tools For Processing The Romanian Language', '2012', 3);
+INSERT INTO book_authors(book_id, user_id) VALUES (2, 1);
+
+INSERT INTO visitations(user_id, university_name, purpose, rank, nr_of_months, score, year)
+VALUES (1, 'Albert Ludwigs Universitat, Freiburg im Breisgau', 'Alcatuirea unei editii online a dictionarului Tiktin', 154, 1, 4, 2013);
+INSERT INTO visitations(user_id, university_name, purpose, rank, nr_of_months, score, year)
+VALUES (1, 'National University of Singapore', 'Imbunatatirea unui motor de rezolutia anaforei folosind dezambiguizare semantica', 116, 4, 16, 2013);
+
+
+INSERT INTO Articles(title, year, journal_issn)
+VALUES ('Uaic participation at rte5', '2009', '01632304');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('5', '1');
+INSERT INTO Article_Authors (article_id, user_id) VALUES ('5', '2');
+
+INSERT INTO Quotations(article_id, text, year, articleName, location, authors)
+VALUES (5, '', 2010, 'A Machine Learning Approach for Recognizing Textual Entailment in Spanish',
+        'Proceedings of the NAACL HLT 2010 Young Investigators Workshop on Computational Approaches to Languages of the Americas, Los Angeles, California',
+        'Adrian Iftene, Moruz Mihai');
+
+INSERT INTO Quotations(article_id, text, year, articleName, location, authors)
+VALUES (5, '', 2010, 'Mining Wikipedia for Large-scale Repositories of Context-Sensitive Entailment Rules',
+        'LREC-2010',
+        'Adrian Iftene, Moruz Mihai');
