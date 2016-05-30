@@ -9,6 +9,7 @@ public class Visitation {
     private String visitID;
     private String userID;
     private String universityName;
+    private String purpose;
     private int numberOfMonths;
     private int score;
     private int topPosition;
@@ -21,6 +22,7 @@ public class Visitation {
         this.visitID = resultSet.getString("VISIT_ID");
         this.userID = resultSet.getString("USER_ID");
         this.universityName = resultSet.getString("UNIVERSITY_NAME");
+        this.setPurpose(resultSet.getString("PURPOSE"));
         this.numberOfMonths = resultSet.getInt("NR_OF_MONTHS");
         this.score = resultSet.getInt("SCORE");
         this.topPosition = resultSet.getInt("RANK");
@@ -89,8 +91,17 @@ public class Visitation {
                 "visitID='" + visitID + '\'' +
                 ", userID='" + userID + '\'' +
                 ", universityName='" + universityName + '\'' +
+                ", purpose='" + purpose + '\'' +
                 ", numberOfMonths=" + numberOfMonths +
                 ", score=" + score +
                 '}';
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 }

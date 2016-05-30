@@ -192,6 +192,7 @@
                 <table class="table table-bordered" border="1">
                     <tr>
                         <th>University Name</th>
+                        <th>Purpose</th>
                         <th>Months</th>
                         <th>Top Position</th>
                         <th>Score</th>
@@ -199,6 +200,7 @@
                     <c:forEach items="${visitationList}" var="visitation">
                         <tr>
                             <th>${visitation.universityName}</th>
+                            <th>${visitation.purpose}</th>
                             <th>${visitation.numberOfMonths}</th>
                             <th>${visitation.topPosition}</th>
                             <th>${visitation.score}</th>

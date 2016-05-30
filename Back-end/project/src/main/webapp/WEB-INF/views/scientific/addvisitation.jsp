@@ -43,6 +43,10 @@
                 <form:input cssClass="form-control" id="universityName" path="universityName"/>
             </div>
             <div class="form-group">
+                <form:label path="purpose">Purpose:</form:label>
+                <form:input cssClass="form-control" id="purpose" path="purpose"/>
+            </div>
+            <div class="form-group">
                 <form:label path="numberOfMonths">Number of Months: </form:label>
                 <form:input cssClass="form-control" id="numberOfMonths" path="numberOfMonths"/>
             </div>
